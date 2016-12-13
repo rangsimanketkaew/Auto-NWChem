@@ -1,10 +1,12 @@
 #!/bin/bash
-#### Bash script for NWChem's compilation on Centos 6.x & 7.x Linux distributions.
+#### Bash script for NWChem's compilation with MPI variable on Centos 6.x & 7.x Linux distributions.
 #### Written by Rangsiman Ketkaew, Master degree student in Chemistry, CCRU, Thammasat U., Thailand.
 #### (1) Environmental configuration & Compilation using Make
 
 ## export NWCHEM_TOP=/nwchem/install/folder/
 ## I use an openmpi-1.6.5 as mpirun which is installed at /usr/local/openmpi/
+## I use python version 2.7.x (checking by $ python --version)
+## Watch a library for MPI by using command $ mpif90 -show
 
 echo "Let's build NWCHEM"
 
@@ -14,6 +16,13 @@ cd $NWCHEM_TOP/src
 # export ARMCI_NETWORK=OPENIB
 
 export USE_MPI=y
+export USE_MPIF=y
+export USE_MPIF4=y
+export MPI_LOC=/usr/local/openmpi
+export MPI_LIB=$MPI_LOC/lib
+export MPI_INCLUDE=$MPI_LOC/include
+export LIBMPI="-lmpi_f90 -lmpi_f77 -lmpi -ldl -Wl,--export-dynamic -lnsl -lutil"
+
 export NWCHEM_TARGET=LINUX64
 export USE_PYTHONCONFIG=y
 export PYTHONVERSION=2.7
