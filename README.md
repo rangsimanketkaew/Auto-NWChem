@@ -2,7 +2,7 @@
 This repository includes scripts for NWChem's automatic compilation on Centos 6.x &amp; 7.x <br />
 and example test file of optimization calculation of azulene molecule using DFT at M06-2X/6-31G(d) level of theory.
 <br />
-If there is error like ' ', you have to use this command to fix this
+If there is error like " libmpi_f90.so.1: cannot open ", you have to use this command to fix the issue.
 ```
 export LD_LIBRARY_PATH=/usr/local/openmpi/lib/:$LD_LIBRARY_PATH
 source $HOME/.bashrc
