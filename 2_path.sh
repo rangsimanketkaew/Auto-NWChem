@@ -7,6 +7,9 @@
 # Determine the local storage path for the install files. (e.g., /usr/local/nwchem).
 # Make directories
 
+  export NWCHEM_TOP=/usr/local/src/NWCHEM/nwchem-6.6
+  export NWCHEM_TARGET=LINUX64
+
   mkdir /usr/local/nwchem/
   mkdir /usr/local/nwchem/bin
   mkdir /usr/local/nwchem/data
