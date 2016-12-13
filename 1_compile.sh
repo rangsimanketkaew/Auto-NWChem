@@ -11,7 +11,8 @@ echo "Let's build NWCHEM"
 export NWCHEM_TOP=/usr/local/src/NWCHEM/nwchem-6.6
 cd $NWCHEM_TOP/src
 
-export ARMCI_NETWORK=OPENIB
+# export ARMCI_NETWORK=OPENIB
+
 export USE_MPI=y
 export NWCHEM_TARGET=LINUX64
 export USE_PYTHONCONFIG=y
