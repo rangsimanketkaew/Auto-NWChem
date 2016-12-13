@@ -33,6 +33,7 @@ echo " Finished configuration setting up using python "
 make 64_to_32
 wait
 echo " Finished changing 64 to 32 "
+echo " Making install, please wait for a while ! "
 make >& make.log
 wait
 echo " Don't forget to check make.log at $NWCHEM_TOP/src/make.log if any error occur. "
