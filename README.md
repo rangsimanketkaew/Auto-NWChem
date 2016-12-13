@@ -1,7 +1,12 @@
 # NWChem
-Sript for NWChem's automatic compilation on Centos 6.x &amp; 7.x
+This repository includes scripts for NWChem's automatic compilation on Centos 6.x &amp; 7.x <br />
+and example test file of optimization calculation of azulene molecule using DFT at M06-2X/6-31G(d) level of theory.
 
-# Before compile
+# Usage
+Very easy to use, download a nwchem-x.x.tar.gz from NWChem website using wget command. <br />
+Then run script no.1 and then no.2, respectively. More instruction can find in script no.1 !
+
+## Before compile
 The required packages of MPI variable compilation are following <br />
 * OpenMPI (recommend OpenMPI 1.6.5) <br />
 * Intel Compilers <br />
