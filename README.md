@@ -7,6 +7,8 @@ If there is error like " libmpi_f90.so.1: cannot open ", you have to use this co
 export LD_LIBRARY_PATH=/usr/local/openmpi/lib/:$LD_LIBRARY_PATH
 source $HOME/.bashrc
 ```
+Then appending a default.nwchemrc file to your home as $HOME/.nwchemrc <br />
+Finish !!!!
 
 # Usage
 Very easy to use, download a nwchem-x.x.tar.gz from NWChem website using wget command. <br />
