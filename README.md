@@ -4,7 +4,7 @@ and example test file of optimization calculation of azulene molecule using DFT 
 
 # Usage
 Very easy to use, download a nwchem-x.x.tar.gz from NWChem website using wget command. <br />
-Then run script no.1 and then no.2, respectively. More instruction can find in script no.1 !
+Then run script [1_compile.sh](https://github.com/rangsimanketkaew/NWChem/blob/master/1_compile.sh) and then [2_path.sh](https://github.com/rangsimanketkaew/NWChem/blob/master/2_path.sh), respectively. More instruction can be found in script [1_compile.sh](https://github.com/rangsimanketkaew/NWChem/blob/master/1_compile.sh). !
 
 ## Before compile
 The required packages of MPI variable compilation are following <br />
