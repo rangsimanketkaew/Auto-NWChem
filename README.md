@@ -26,13 +26,28 @@ If you want system to call automatically nwchem for next log-in time, each user 
 echo export PATH=/usr/local/nwchem-6.6/bin/LINUX/nwchem:$PATH >> /home/$USER/.bashrc
 ```
 
-# Error recognition & fixxing
+# Error recognition & fixing
 During compilation using **make** or **configuration setting up** It is possible to meet an error in which caused by calling library mistake. <br />
 E.g. *libmpi_f90.so.1: cannot open*, you have to use the following command to fix the issue.
 ```
 export LD_LIBRARY_PATH=/usr/local/openmpi/lib/:$LD_LIBRARY_PATH
 source $HOME/.bashrc
 ```
+---
+When you run NWChem with MPI, and you meet the error like this
+```
+utilfname: cannot allocate
+or
+utilfname: cannot allocate:Received an Error in Communication
+```
+This error is telling that it cannot allocate the memory with number of processors. The user have to specify the amount of memory **PER PROCESSOR CORE** that NWChem can use for a calculation. <br />
+This issue can be easily fixed by adding a memory keyword into INPUT-FILE.nw, e.g.
+```
+memory 1 gb
+or
+memory total 1 gb
+```
+If you run NWChem using, says, *"mpirun -np N nwchem INPUT-FILE.nw"* This mean that the total of used memory for this calculation is = (1 gb)*(N processors). 
 
 # How to run easily NWChem
 let's try to run nwchem with some test files from **/usr/local/src/NWCHEM/nwchem-6.6/examples/** or **/usr/local/src/NWCHEM/nwchem-6.6/QA/tests** by using the following command run
