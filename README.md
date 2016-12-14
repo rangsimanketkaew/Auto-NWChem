@@ -3,18 +3,18 @@ This repository includes scripts for NWChem's automatic compilation on Centos 6.
   * **(0)**  Setting up. Make directory NWCHEM at /usr/local/src/ via sudo command or **root**. Check the required package *Before Compile*.
   * **(1)**  Download a program source of *nwchem-x.x.tar.gz* from NWChem website using **wget** command first. (I am using nwchem version 6.6 on the day I wrote this script). Save it at */usr/local/src/NWCHEM/* , then extract the program from tar file using *tar -xf nwchem-x.x.tar.gz*. So far you should have a nwchem-x.x directory in the present location.
   * **(2)**  Download a scripts to */usr/local/src/NWCHEM/nwchem-x.x*. Then run script [1_compile.sh](https://github.com/rangsimanketkaew/NWChem/blob/master/1_compile.sh). After finishing and there's no any error, then run [2_path.sh](https://github.com/rangsimanketkaew/NWChem/blob/master/2_path.sh), respectively. More instruction can be found in script [1_compile.sh](https://github.com/rangsimanketkaew/NWChem/blob/master/1_compile.sh). ! <br />
-  * **(3)**  Up to now, let's create a **.nwchemrc** file which included following commands at your home directory, $HOME/.nwchemrc <br /> Noted that I use nwchem version 6.6 for this compilation.
+  * **(3)**  Up to now, let's create a **.nwchemrc** file which included following commands at your home directory, /home/$USER/.nwchemrc <br /> Noted that I use nwchem version 6.6 for this compilation.
 ```
-  nwchem_basis_library /usr/local/nwchem-6.6/data/libraries/
-  nwchem_nwpw_library /usr/local/nwchem-6.6/data/libraryps/
+  nwchem_basis_library /usr/local/nwchem/data/libraries/
+  nwchem_nwpw_library /usr/local/nwchem/data/libraryps/
   ffield amber
-  amber_1 /usr/local/nwchem-6.6/data/amber_s/
-  amber_2 /usr/local/nwchem-6.6m/data/amber_q/
-  amber_3 /usr/local/nwchem-6.6/data/amber_x/
-  amber_4 /usr/local/nwchem-6.6/data/amber_u/
-  spce    /usr/local/nwchem-6.6/data/solvents/spce.rst
-  charmm_s /usr/local/nwchem-6.6/data/charmm_s/
-  charmm_x /usr/local/nwchem-6.6/data/charmm_x/
+  amber_1 /usr/local/nwchem/data/amber_s/
+  amber_2 /usr/local/nwchem/data/amber_q/
+  amber_3 /usr/local/nwchem/data/amber_x/
+  amber_4 /usr/local/nwchem/data/amber_u/
+  spce    /usr/local/nwchem/data/solvents/spce.rst
+  charmm_s /usr/local/nwchem/data/charmm_s/
+  charmm_x /usr/local/nwchem/data/charmm_x/
 ```
 ---
 ***Optional: PATH SETTING.** Instead of running nwchem via direct path, you can make a alias path to call nwchem by using following command
