@@ -1,14 +1,13 @@
-## Make this file to your home as name as $HOME/.nwchemrc
+## Make a .nwchemrc file at yout own home directory ( $HOME/.nwchemrc ) which includes following commands
 
-  nwchem_basis_library /usr/local/NWChem/data/libraries/
-  nwchem_nwpw_library /usr/local/NWChem/data/libraryps/
+  nwchem_basis_library /usr/local/nwchem-6.6/data/libraries/
+  nwchem_nwpw_library /usr/local/nwchem-6.6/data/libraryps/
   ffield amber
-  amber_1 /usr/local/NWChem/data/amber_s/
-  amber_2 /usr/local/NWChem/data/amber_q/
-  amber_3 /usr/local/NWChem/data/amber_x/
-  amber_4 /usr/local/NWChem/data/amber_u/
-  spce    /usr/local/NWChem/data/solvents/spce.rst
-  charmm_s /usr/local/NWChem/data/charmm_s/
-  charmm_x /usr/local/NWChem/data/charmm_x/
-  
-  
+  amber_1 /usr/local/nwchem-6.6/data/amber_s/
+  amber_2 /usr/local/nwchem-6.6m/data/amber_q/
+  amber_3 /usr/local/nwchem-6.6/data/amber_x/
+  amber_4 /usr/local/nwchem-6.6/data/amber_u/
+  spce    /usr/local/nwchem-6.6/data/solvents/spce.rst
+  charmm_s /usr/local/nwchem-6.6/data/charmm_s/
+  charmm_x /usr/local/nwchem-6.6/data/charmm_x/
+ 
