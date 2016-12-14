@@ -44,10 +44,13 @@ This error is telling that it cannot allocate the memory with number of processo
 This issue can be easily fixed by adding a memory keyword into INPUT-FILE.nw, e.g.
 ```
 memory 1 gb
-or
+```
+If you run NWChem using, says, *"mpirun -np N nwchem INPUT-FILE.nw"* This mean that the total of used memory for this calculation is = (1 gb)*(N processors). <br />
+However, safety first, you can limit the total of memory usage for calculation by specifying optional keyword of memory keyword, says
+```
 memory total 1 gb
 ```
-If you run NWChem using, says, *"mpirun -np N nwchem INPUT-FILE.nw"* This mean that the total of used memory for this calculation is = (1 gb)*(N processors). 
+More details about memory arrangement can be found this [website](http://www.nwchem-sw.org/index.php/Release66:Top-level#MEMORY)
 
 # How to run easily NWChem
 let's try to run nwchem with some test files from **/usr/local/src/NWCHEM/nwchem-6.6/examples/** or **/usr/local/src/NWCHEM/nwchem-6.6/QA/tests** by using the following command run
