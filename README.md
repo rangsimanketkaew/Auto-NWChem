@@ -3,7 +3,9 @@ This repository includes scripts for NWChem's automatic compilation on Centos 6.
   * **(0)**  Setting up. Make directory NWCHEM at /usr/local/src/ via sudo command or **root**. Check the required package *Before Compile*.
   * **(1)**  Download a program source of *nwchem-x.x.tar.gz* from NWChem website using **wget** command first. (I am using nwchem version 6.6 on the day I wrote this script). Save it at */usr/local/src/NWCHEM/* , then extract the program from tar file using *tar -xf nwchem-x.x.tar.gz*. So far you should have a nwchem-x.x directory in the present location.
   * **(2)**  Download a scripts to */usr/local/src/NWCHEM/nwchem-x.x*. Then run script [1_compile.sh](https://github.com/rangsimanketkaew/NWChem/blob/master/1_compile.sh). After finishing and there's no any error, then run [2_path.sh](https://github.com/rangsimanketkaew/NWChem/blob/master/2_path.sh), respectively. More instruction can be found in script [1_compile.sh](https://github.com/rangsimanketkaew/NWChem/blob/master/1_compile.sh). ! <br />
-  * **(3)**  Up to now, let's create a **.nwchemrc** file which included following commands at your home directory, /home/$USER/.nwchemrc <br /> Noted that I use nwchem version 6.6 for this compilation.
+  * **(3)**  Up to now, let's move to your home directory. Then create a **.nwchemrc** file which includes following commands. Says, /home/$USER/.nwchemrc <br /> 
+  * Noted that the day I created this manual and testing the compilation, I were using nwchem version 6.6 (However, this way should be work well with any 6.x & 7.x version of nwchem.
+  
 ```
   nwchem_basis_library /usr/local/nwchem/data/libraries/
   nwchem_nwpw_library /usr/local/nwchem/data/libraryps/
@@ -61,11 +63,11 @@ or
 ```
 nohup mpirun -np N nwchem INPUT-FILE.nw >& OUTPUT-FILE.log
 ```
-Just in case of MPI, the following might be useful
+Just in case of MPI, the following command might be useful
 ```
 export OMP_NUM_THREADS=N
 ```
-where N = number of processors
+where N = number of processors (integer & positive number).
 
 ## Before compile
 The required packages of MPI variable compilation are following <br />
@@ -90,7 +92,7 @@ Source file [Download here](https://www.open-mpi.org/software/ompi/v1.6/) <br />
 [Installation guide](https://github.com/xianyi/OpenBLAS/wiki/Installation-Guide)
 
 ## More details
-[NWChem Compilation website](http://www.nwchem-sw.org/index.php/Compiling_NWChem)
+Visit this wevsite [NWChem Compilation website](http://www.nwchem-sw.org/index.php/Compiling_NWChem) for more details.
 
-## Contact me
-ragnsiman1993 (at) gmail.com
+## Contact info
+You can contact me by e-mail: ragnsiman1993(at)gmail.com.
