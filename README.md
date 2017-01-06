@@ -36,13 +36,13 @@ export LD_LIBRARY_PATH=/usr/local/openmpi/lib/:$LD_LIBRARY_PATH
 source $HOME/.bashrc
 ```
 ---
-When you run NWChem with MPI, and you meet the error like this
+Since you run NWChem with MPI and suddenly meet the error like following
 ```
 utilfname: cannot allocate
 or
 utilfname: cannot allocate:Received an Error in Communication
 ```
-This error is telling that it cannot allocate the memory with number of processors. The user have to specify the amount of memory **PER PROCESSOR CORE** that NWChem can use for a calculation. <br />
+This error is telling that NWChem cannot allocate the memory with number of processors. The user have to specify the amount of memory **PER PROCESSOR CORE** that NWChem can use for a calculation. <br />
 This issue can be easily fixed by adding a memory keyword into INPUT-FILE.nw, e.g.
 ```
 memory 1 gb
