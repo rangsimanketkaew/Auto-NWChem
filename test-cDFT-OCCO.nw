@@ -1,0 +1,26 @@
+echo
+Title "Constrained DFT calculation of O=C=C=O molecule."
+
+geometry
+symmetry
+ C  0.0  0.0  0.0
+ O  1.2  0.0  0.0
+ C  0.0  0.0  2.0
+ O  1.2  0.0  2.0
+end
+
+basis
+ * library 6-311++G**  ## Just for fun, you can reduce the size of basis set
+end
+
+dft
+ xc M06-2X
+ convergence nolevelshifting
+ odft
+ mult 1
+ vectors swap beta 14 15
+ cdft 1 2 charge 1.0
+end
+task dft optimize
+
+echo "JOB DONE"
