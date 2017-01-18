@@ -1,0 +1,77 @@
+title "Water TD-PBE0 absorption spectrum"
+echo
+start water
+
+geometry "system" units angstroms nocenter noautoz noautosym
+  O     0.00000000    -0.00001441    -0.34824012
+  H    -0.00000000     0.76001092    -0.93285191
+  H     0.00000000    -0.75999650    -0.93290797
+end
+
+set geometry "system"
+basis
+ * library 6-31G
+end
+######################################################################
+dft
+ xc pbe0
+end
+task dft energy
+######################################################################
+unset rt_tddft:*
+rt_tddft
+  tmax 200.0
+  dt 0.2
+
+  tag "kick_x"
+
+  field "kick"
+    type delta
+    polarization x
+    max 0.0001
+  end
+
+  excite "system" with "kick"
+ end
+task dft rt_tddft
+######################################################################
+unset rt_tddft:*
+rt_tddft
+  tmax 200.0
+  dt 0.2
+
+  tag "kick_y"
+
+  field "kick"
+    type delta
+    polarization y
+    max 0.0001
+  end
+
+  excite "system" with "kick"
+ end
+task dft rt_tddft
+######################################################################
+unset rt_tddft:*
+rt_tddft
+  tmax 200.0
+  dt 0.2
+
+  tag "kick_z"
+
+  field "kick"
+    type delta
+    polarization z
+    max 0.0001
+  end
+
+  excite "system" with "kick"
+ end
+task dft rt_tddft
+######################################################################
+
+memory total 8000 mb
+scratch_dir /home/$USER/test/SCR/   #### change this path !!
+permanent_dir /home/$USER/test/     #### change this path !!
+
+echo " $$$$$$$$$$$$$$$$$$$$$$$ JOB DONE $$$$$$$$$$$$$$$$$$$$$$$ "
