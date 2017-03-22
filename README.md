@@ -30,9 +30,10 @@ Additionally, after completing compilation, normally you should test program by 
   charmm_s /usr/local/nwchem/data/charmm_s/
   charmm_x /usr/local/nwchem/data/charmm_x/
 ```
-  * Noted that the day I created this manual and testing the compilation, I were using nwchem version 6.6 (However, this way should be work well with any 6.x & 7.x version of nwchem.
+Please Note that the day I created this manual and testing the compilation, I were compiling NWChem version 6.6 (However, this way that I proposed should work well with any version of 6.x or 7.x and so on.
+
 ---
-***Optional: PATH SETTING.** Instead of running nwchem via direct path, you can make a alias path to call nwchem by using following command
+**Optional: PATH SETTING.** Instead of running nwchem via direct path, you can make a alias path to call nwchem by using following command
 ```
 export PATH=/usr/local/nwchem-6.6/bin/LINUX/nwchem:$PATH
 ```
