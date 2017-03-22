@@ -13,10 +13,10 @@ Additionally, after completing compilation, normally you should test program by 
 
 ### Installation
 
-  * **(0)**  Setting up. Make directory NWCHEM at /usr/local/src/ via sudo command or **root**. Check the required package *Before Compile*.
-  * **(1)**  Download a program source of *nwchem-x.x.tar.gz* from NWChem website using **wget** command first. (I am using nwchem version 6.6 on the day I wrote this script). Save it at */usr/local/src/NWCHEM/* , then extract the program from tar file using *tar -xf nwchem-x.x.tar.gz*. So far you should have a nwchem-x.x directory in the present location.
-  * **(2)**  Download a scripts to */usr/local/src/NWCHEM/nwchem-x.x*. Then run script [1_compile.sh](https://github.com/rangsimanketkaew/NWChem/blob/master/1_compile.sh). After finishing and there's no any error, then run [2_path.sh](https://github.com/rangsimanketkaew/NWChem/blob/master/2_path.sh), respectively. More instruction can be found in script [1_compile.sh](https://github.com/rangsimanketkaew/NWChem/blob/master/1_compile.sh). ! <br />
-  * **(3)**  Up to now, let's move to your home directory. Then create a **.nwchemrc** file which includes following commands. Says, /home/$USER/.nwchemrc <br /> 
+  * **(0)**  Set up: Make directory NWCHEM at /usr/local/src/ via sudo command or **root**. Check the required package *Before Compile*.
+  * **(1)**  Download: Download a program source of *nwchem-x.x.tar.gz* from NWChem website using **wget** command first. (I am using nwchem version 6.6 on the day I wrote this script). Save it at */usr/local/src/NWCHEM/* , then extract the program from tar file using *tar -xf nwchem-x.x.tar.gz*. So far you should have a nwchem-x.x directory in the present location.
+  * **(2)**  Compile: Download a scripts to */usr/local/src/NWCHEM/nwchem-x.x*. Then run script [1_compile.sh](https://github.com/rangsimanketkaew/NWChem/blob/master/1_compile.sh). After finishing and there's no any error, then run [2_path.sh](https://github.com/rangsimanketkaew/NWChem/blob/master/2_path.sh), respectively. More instruction can be found in script [1_compile.sh](https://github.com/rangsimanketkaew/NWChem/blob/master/1_compile.sh). ! <br />
+  * **(3)**  NWChem: Up to now, let's move to your home directory. Then create a **.nwchemrc** file which includes following commands. /home/$USER/.nwchemrc and running an example calculation to check if NWChem is installed perfectly. <br /> 
   * Noted that the day I created this manual and testing the compilation, I were using nwchem version 6.6 (However, this way should be work well with any 6.x & 7.x version of nwchem.
   
 ```
