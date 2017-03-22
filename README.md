@@ -46,33 +46,35 @@ source /home/$USER/.bashrc
 ```
 Try to log-out and log-in again.
 
-# Error recognition & fixing
-During compilation using **make** or **configuration setting up** It is possible to meet an error in which caused by calling library mistake. <br />
+# Error recognition & Fixing
+While the system installs NWChem by using **make** or **configuration setting up** commands, you may be met an error which caused by calling library mistake. <br />
 E.g. *libmpi_f90.so.1: cannot open*, you have to use the following command to fix the issue.
 ```
 export LD_LIBRARY_PATH=/usr/local/openmpi/lib/:$LD_LIBRARY_PATH
 source $HOME/.bashrc
 ```
 ---
-Since you run NWChem with MPI and suddenly meet the error like following
+Since you run NWChem with MPI and suddenly see the error like following
 ```
 utilfname: cannot allocate
+```
 or
+```
 utilfname: cannot allocate:Received an Error in Communication
 ```
-This error is telling that NWChem cannot allocate the memory with number of processors. The user have to specify the amount of memory **PER PROCESSOR CORE** that NWChem can use for a calculation. <br />
+This error message is telling you that NWChem cannot allocate the memory with number of processors. The user have to specify the amount of memory **PER** processor core that NWChem can possibly employs for a calculation. <br />
 This issue can be easily fixed by adding a memory keyword into INPUT-FILE.nw, e.g.
 ```
 memory 1 gb
 ```
-If you run NWChem using, says, *"mpirun -np N nwchem INPUT-FILE.nw"* This mean that the total of used memory for this calculation is = (1 gb)*(N processors). <br />
+If you run NWChem using command like this *"mpirun -np N nwchem INPUT-FILE.nw"*, this mean that the total of used memory for this calculation = (1 GB)*(N processors). <br />
 However, safety first, you can limit the total of memory usage for calculation by specifying optional keyword of memory keyword, says
 ```
 memory total 1 gb
 ```
 More details about memory arrangement can be found this [website](http://www.nwchem-sw.org/index.php/Release66:Top-level#MEMORY)
 
-# How to run easily NWChem
+# How to run NWChem
 let's try to run nwchem with some test files from **/usr/local/src/NWCHEM/nwchem-6.6/examples/** or **/usr/local/src/NWCHEM/nwchem-6.6/QA/tests** by using the following command run
 ```
 nohup mpirun -np N /usr/local/nwchem/bin/nwchem INPUT-FILE.nw >& OUTPUT-FILE.log
