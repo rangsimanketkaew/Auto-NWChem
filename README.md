@@ -1,6 +1,6 @@
 # NWChem Compilation
 ### Abstract
-I write this script to help and guide CentOS' user who want to install NWChem program. This repository includes shell script for auto compiling NWChem on CentOS 6.x &amp; 7.x. However, this script could be adjusted and adapted to perform on other Linux distribution. 
+To help and to guide CentOS' user who want to install NWChem program. This repository includes shell script for auto compiling NWChem on CentOS 6.x &amp; 7.x. However, this script could be adjusted and adapted to perform on other Linux distribution. 
 
 Additionally, after completing compilation, normally you should test program by running some calculation, such as the example calculation of optimization of azulene using DFT at M06-2X/6-31G(d) level of theory. Alright, it's such a friendly user script, very easy to use. The admin/user are expected to rapidly understand and be able to easily follow the instruction of my script through seccessive step (0) to (3).
 
@@ -112,7 +112,7 @@ Source file [Download here](https://www.open-mpi.org/software/ompi/v1.6/) <br />
 [Installation guide](https://github.com/xianyi/OpenBLAS/wiki/Installation-Guide)
 
 ## More details
-Visit this wevsite [NWChem Compilation website](http://www.nwchem-sw.org/index.php/Compiling_NWChem) for more details.
+Visit this website [NWChem Compilation website](http://www.nwchem-sw.org/index.php/Compiling_NWChem) for more details.
 
 ## Contact info
 You can contact me by e-mail: rangsiman1993(at)gmail.com (preferable) and rangsiman_k(at)sci.tu.ac.th (official).
