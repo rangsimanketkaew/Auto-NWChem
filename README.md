@@ -8,8 +8,7 @@ Additionally, after completing compilation, normally you should test program by 
 * CentOS version 6.x or 7.x (or other Linux distro)
 * PC or Laptop
 * Keyboard
-* Electric
-* You and a pot of coffee
+* Mouse
 
 ### Installation
 
