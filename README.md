@@ -6,13 +6,13 @@ Additionally, after completing compilation, normally you should test program by 
 
 ### Requirement
 * CentOS version 6.x or 7.x (or other Linux distro)
-* PC or Laptop
-* Keyboard
-* Mouse
+* NWChem version 6.6
+* Python version 2.x or 3.x
+* MPI package
 
 ### Installation
 
-  * **(0)**  Set up: Make directory NWCHEM at /usr/local/src/ via sudo command or **root**. Check the required package *Before Compile*.
+  * **(0)**  Setup: Make directory NWCHEM at /usr/local/src/ via sudo command or **root**. Check the required package *Before Compile*.
   * **(1)**  Download: Download a program source of *nwchem-x.x.tar.gz* from NWChem website using **wget** command first. (I am using nwchem version 6.6 on the day I wrote this script). Save it at */usr/local/src/NWCHEM/* , then extract the program from tar file using *tar -xf nwchem-x.x.tar.gz*. So far you should have a nwchem-x.x directory in the present location.
   * **(2)**  Compile: Download a scripts to */usr/local/src/NWCHEM/nwchem-x.x*. Then run script [1_compile.sh](https://github.com/rangsimanketkaew/NWChem/blob/master/1_compile.sh). After finishing and there's no any error, then run [2_path.sh](https://github.com/rangsimanketkaew/NWChem/blob/master/2_path.sh), respectively. More instruction can be found in script [1_compile.sh](https://github.com/rangsimanketkaew/NWChem/blob/master/1_compile.sh). ! <br />
   * **(3)**  NWChem: Up to now, let's move to your home directory. Then create a **.nwchemrc** file which includes following commands. /home/$USER/.nwchemrc and running an example calculation to check if NWChem is installed perfectly. <br /> 
@@ -36,15 +36,15 @@ Please Note that the day I created this manual and testing the compilation, I we
 ```
 export PATH=/usr/local/nwchem-6.6/bin/LINUX/nwchem:$PATH
 ```
-If you want to call NWChem automatically for next time of log-in or ssh, each user have to use following command for appending the environment path of nwchem to their own $HOME/.bashrc file.
+If you want to call NWChem automatically for next time of login to your machine, each user have to make environment path of nwchem by appending the following command to their perosonal $HOME/.bashrc file.
 ```
 echo export PATH=/usr/local/nwchem-6.6/bin/LINUX/nwchem:$PATH >> /home/$USER/.bashrc
 ```
-Then active the .bashrc file
+Then activate the .bashrc file
 ```
 source /home/$USER/.bashrc
 ```
-Try to log-out and log-in again.
+Then logout and login, now you can call nwchem.
 
 # Error recognition & Fixing
 While the system installs NWChem by using **make** or **configuration setting up** commands, you may be met an error which caused by calling library mistake. <br />
@@ -116,5 +116,3 @@ Visit this website [NWChem Compilation website](http://www.nwchem-sw.org/index.p
 
 ## Contact info
 You can contact me by e-mail: rangsiman1993(at)gmail.com (preferable) and rangsiman_k(at)sci.tu.ac.th (official).
-
-## Enjoy !!!!
