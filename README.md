@@ -1,8 +1,8 @@
 # NWChem Compilation
 ### Abstract
-To help and to guide CentOS' user who want to install NWChem program. This repository includes shell script for auto compiling NWChem on CentOS 6.x &amp; 7.x. However, this script could be adjusted and adapted to perform on other Linux distribution. 
+To help and to guide CentOS' user who want to install NWChem program, this repository is included the script for auto compiling NWChem on CentOS 6.x &amp; 7.x. However, this script could be adjusted and adapted to perform an installation on other Linux distribution as well. 
 
-Additionally, after completing compilation, normally you should test program by running some calculation, such as the example calculation of optimization of azulene using DFT at M06-2X/6-31G(d) level of theory. Alright, it's such a friendly user script, very easy to use. The admin/user are expected to rapidly understand and be able to easily follow the instruction of my script through seccessive step (0) to (3).
+Additionally, after completing compilation, normally we test the program by running some calculation, such as the example calculation of optimization of azulene using DFT at M06-2X/6-31G(d) level of theory. Alright, it's such a friendly user script and very easy to use. The admin/user are expected to rapidly understand and be able to easily follow the instruction of my script through seccessive step (0) to (3).
 
 ### Requirement
 * CentOS version 6.x or 7.x (or other Linux distro)
