@@ -1,7 +1,6 @@
-** The way to install NWChem program
-** Proposed by Nutt
+** The way to install NWChem program **
 
--- Setup and install th neccessary package --
+======================================== Setup and install th neccessary package
 
 $ su
 enter passwd for root
@@ -15,7 +14,7 @@ export PATH=/usr/lib64/openmpi/bin/:$PATH
 export LD_LIBRARY_PATH=/usr/lib64/openmpi/lib/:$LD_LIBRARY_PATH
 $ source /etc/bashrc
 
--- Download nwchem from its website and extract file to /opt/ --
+======================================== Download nwchem from its website and extract file to /opt/ --
 
 $ cd /opt/nwchem-6.6/src
 $ vi nwchem_env.sh
@@ -39,7 +38,7 @@ $ make 64_to_32
 $ make
 If successfully finished, it should have nwchem executeable file at /opt/nwchem-6.6/bin/LINUX64/
 
--- path and environment setting --
+======================================== path and environment setting --
 
 $ sudo mkdir -p /usr/local/NWChem/bin
 $ sudo mkdir -p /usr/local/NWChem/data
@@ -64,8 +63,10 @@ charmm_x /usr/local/NWChem/data/charmm_x/
 $ cp /usr/local/NWChem/data/default.nwchemrc ~/.nwchemrc
 $ sudo cp /usr/local/NWChem/data/default.nwchemrc /etc/skel/.nwchemrc
 
-Add
+Adding following command
 export PATH=$PATH:/usr/local/NWChem/bin
-to /etc/bashrc .
+to /etc/bashrc
 
--- Try to run some tests file --
+Logout and login again.
+
+======================================== Try to run some tests file --
