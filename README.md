@@ -1,21 +1,22 @@
 # NWChem Compilation
-### Abstract
-To help and to guide CentOS' user who want to install NWChem program, this repository is included the script for auto compiling NWChem on CentOS 6.x &amp; 7.x. However, this script could be adjusted and adapted to perform an installation on other Linux distribution as well. 
 
-Additionally, after completing compilation, normally we test the program by running some calculation, such as the example calculation of optimization of azulene using DFT at M06-2X/6-31G(d) level of theory. Alright, it's such a friendly user script and very easy to use. The admin/user are expected to rapidly understand and be able to easily follow the instruction of my script through seccessive step (0) to (3).
+My personal shell script for auto compile NWChem program on CentOS 6.x &amp; 7.x Linux-based. Don't trust the script but it works for me. However, this script could be adjusted and adapted to perform an installation on other Linux distribution as well. 
 
 ### Requirement
 * CentOS version 6.x or 7.x (or other Linux distro)
-* NWChem version 6.6
+* NWChem version 6.6 or higher
 * Python version 2.x or 3.x
 * MPI package
 
 ### Installation
-
-  * **(0)**  Setup: Make directory NWCHEM at /usr/local/src/ via sudo command or **root**. Check the required package *Before Compile*.
-  * **(1)**  Download: Download a program source of *nwchem-x.x.tar.gz* from NWChem website using **wget** command first. (I am using nwchem version 6.6 on the day I wrote this script). Save it at */usr/local/src/NWCHEM/* , then extract the program from tar file using *tar -xf nwchem-x.x.tar.gz*. So far you should have a nwchem-x.x directory in the present location.
-  * **(2)**  Compile: Download a scripts to */usr/local/src/NWCHEM/nwchem-x.x*. Then run script [1_compile.sh](https://github.com/rangsimanketkaew/NWChem/blob/master/1_compile.sh). After finishing and there's no any error, then run [2_path.sh](https://github.com/rangsimanketkaew/NWChem/blob/master/2_path.sh), respectively. More instruction can be found in script [1_compile.sh](https://github.com/rangsimanketkaew/NWChem/blob/master/1_compile.sh). ! <br />
-  * **(3)**  NWChem: Up to now, let's move to your home directory. Then create a **.nwchemrc** file which includes following commands. /home/$USER/.nwchemrc and running an example calculation to check if NWChem is installed perfectly. <br /> 
+  * **(1)**  Install neccessary package by using command 
+  ```
+  yum install python-devel gcc-gfortran openblas-devel openblas-serial64 openmpi-devel scalapack-openmpi-devel blacs-openmpi-devel elpa-openmpi-devel tcsh --enablerepo=epel
+        ```
+  * **(2)**  Make directory NWCHEM at /usr/local/src/ via sudo command or **root**. Check the required package *Before Compile*.
+  * **(3)**  Download a program source of *nwchem-x.x.tar.gz* from NWChem website using **wget** command first. (I am using nwchem version 6.6 on the day I wrote this script). Save it at */usr/local/src/NWCHEM/* , then extract the program from tar file using *tar -xf nwchem-x.x.tar.gz*. So far you should have a nwchem-x.x directory in the present location.
+  * **(4)**  Download a scripts to */usr/local/src/NWCHEM/nwchem-x.x*. Then run script [1_compile.sh](https://github.com/rangsimanketkaew/NWChem/blob/master/1_compile.sh). After finishing and there's no any error, then run [2_path.sh](https://github.com/rangsimanketkaew/NWChem/blob/master/2_path.sh), respectively. More instruction can be found in script [1_compile.sh](https://github.com/rangsimanketkaew/NWChem/blob/master/1_compile.sh). ! <br />
+  * **(5)**  Move to your home directory. Then create a **.nwchemrc** file which includes following commands. /home/$USER/.nwchemrc and running an example calculation optimization of azulene using DFT at M06-2X/6-31G(d) to check if NWChem is installed perfectly. <br /> 
   
 ```
   nwchem_basis_library /usr/local/nwchem/data/libraries/
@@ -29,6 +30,8 @@ Additionally, after completing compilation, normally we test the program by runn
   charmm_s /usr/local/nwchem/data/charmm_s/
   charmm_x /usr/local/nwchem/data/charmm_x/
 ```
+  * **(6)** Running a calculation of optimization of azulene using DFT at M06-2X/6-31G(d) to check if NWChem is installed perfectly.
+
 Please Note that the day I created this manual and testing the compilation, I were compiling NWChem version 6.6 (However, this way that I proposed should work well with any version of 6.x or 7.x and so on.
 
 ---
