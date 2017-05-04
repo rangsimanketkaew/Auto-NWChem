@@ -1,3 +1,5 @@
+** The way to install NWChem program
+
 -- Setup and install th neccessary package --
 
 $ su
