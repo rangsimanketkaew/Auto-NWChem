@@ -9,7 +9,7 @@ My personal shell script for auto compile NWChem program on CentOS 6.x &amp; 7.x
 * MPI package
 
 ### Installation
-  * **(1)**  Install neccessary package by using command 
+  * **(1)**  Install required package by using following command 
 ```
   yum install python-devel gcc-gfortran openblas-devel openblas-serial64 openmpi-devel scalapack-openmpi-devel blacs-openmpi-devel elpa-openmpi-devel tcsh --enablerepo=epel
 ```
@@ -32,7 +32,7 @@ My personal shell script for auto compile NWChem program on CentOS 6.x &amp; 7.x
 ```
   * **(6)** Running a calculation of optimization of azulene using DFT at M06-2X/6-31G(d) to check if NWChem is installed perfectly.
 
-Please Note that the day I created this manual and testing the compilation, I were compiling NWChem version 6.6 (However, this way that I proposed should work well with any version of 6.x or 7.x and so on.
+Please Note that the day I did this I were using NWChem version 6.6. However, this way that I proposed should work with another version as well.
 
 ---
 **Optional: PATH SETTING.** Instead of running nwchem via direct path, you can make a alias path to call nwchem by using following command
@@ -49,7 +49,7 @@ source /home/$USER/.bashrc
 ```
 Then logout and login, now you can call nwchem.
 
-# Error recognition & Fixing
+# Error & Fixing
 While the system installs NWChem by using **make** or **configuration setting up** commands, you may be met an error which caused by calling library mistake. <br />
 E.g. *libmpi_f90.so.1: cannot open*, you have to use the following command to fix the issue.
 ```
@@ -77,7 +77,7 @@ memory total 1 gb
 ```
 More details about memory arrangement can be found this [website](http://www.nwchem-sw.org/index.php/Release66:Top-level#MEMORY)
 
-# How to run NWChem
+# Running NWChem
 let's try to run nwchem with some test files from **/usr/local/src/NWCHEM/nwchem-6.6/examples/** or **/usr/local/src/NWCHEM/nwchem-6.6/QA/tests** by using the following command run
 ```
 nohup mpirun -np N /usr/local/nwchem/bin/nwchem INPUT-FILE.nw >& OUTPUT-FILE.log
@@ -92,21 +92,6 @@ export OMP_NUM_THREADS=N
 ```
 where N = number of processors (integer & positive number).
 
-## Before compile
-The required packages of MPI variable compilation are following <br />
-* OpenMPI (recommend OpenMPI 1.6.5) <br />
-* Intel Compilers <br />
-* Intel MKL <br />
-* python-devel <br />
-* gcc-gfortran <br />
-* openblas-devel <br />
-* openblas-serial64 <br />
-* scalapack-openmpi-devel <br />
-* elpa-openmpi-devel <br />
-* tcsh <br />
-* openssh-clients <br />
-* which
-
 ## OpenMPI 1.6.5 Installation
 [Please visit this website](http://lsi.ugr.es/~jmantas/pdp/ayuda/datos/instalaciones/Install_OpenMPI_en.pdf)
 
@@ -118,4 +103,4 @@ Source file [Download here](https://www.open-mpi.org/software/ompi/v1.6/) <br />
 Visit this website [NWChem Compilation website](http://www.nwchem-sw.org/index.php/Compiling_NWChem) for more details.
 
 ## Contact info
-You can contact me by e-mail: rangsiman1993(at)gmail.com (preferable) and rangsiman_k(at)sci.tu.ac.th (official).
+E-mail: rangsiman1993(at)gmail.com and rangsiman_k(at)sci.tu.ac.th
