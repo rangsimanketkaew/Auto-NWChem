@@ -1,4 +1,5 @@
 ** The way to install NWChem program
+** Proposed by Nutt
 
 -- Setup and install th neccessary package --
 
