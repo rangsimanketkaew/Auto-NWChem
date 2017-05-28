@@ -13,7 +13,7 @@ My personal shell script for auto compile NWChem program on CentOS 6.x &amp; 7.x
 ```
   yum install python-devel gcc-gfortran openblas-devel openblas-serial64 openmpi-devel scalapack-openmpi-devel blacs-openmpi-devel elpa-openmpi-devel tcsh --enablerepo=epel
 ```
-  * **(2)**  Make directory NWCHEM at /usr/local/src/ via sudo command or **root**. Check the required package *Before Compile*.
+  * **(2)**  Make directory NWCHEM at */usr/local/src/* via sudo command or **root**. Check the required package *Before Compile*.
   * **(3)**  Download a program source of *nwchem-x.x.tar.gz* from NWChem website using **wget** command first. (I am using nwchem version 6.6 on the day I wrote this script). Save it at */usr/local/src/NWCHEM/* , then extract the program from tar file using *tar -xf nwchem-x.x.tar.gz*. So far you should have a nwchem-x.x directory in the present location.
   * **(4)**  Download a scripts to */usr/local/src/NWCHEM/nwchem-x.x*. Then run script [1_compile.sh](https://github.com/rangsimanketkaew/NWChem/blob/master/1_compile.sh). After finishing and there's no any error, then run [2_path.sh](https://github.com/rangsimanketkaew/NWChem/blob/master/2_path.sh), respectively. More instruction can be found in script [1_compile.sh](https://github.com/rangsimanketkaew/NWChem/blob/master/1_compile.sh). ! <br />
   * **(5)**  Move to your home directory. Then create a **.nwchemrc** file which includes following commands. /home/$USER/.nwchemrc and running an example calculation optimization of azulene using DFT at M06-2X/6-31G(d) to check if NWChem is installed perfectly. <br /> 
@@ -32,14 +32,14 @@ My personal shell script for auto compile NWChem program on CentOS 6.x &amp; 7.x
 ```
   * **(6)** Running a calculation of optimization of azulene using DFT at M06-2X/6-31G(d) to check if NWChem is installed perfectly.
 
-Please Note that the day I did this I were using NWChem version 6.6. However, this way that I proposed should work with another version as well.
+Note that the day I posted this script I was using NWChem version 6.6. So this way that I proposed should work with another version though.
 
 ---
 **Optional: PATH SETTING.** Instead of running nwchem via direct path, you can make a alias path to call nwchem by using following command
 ```
 export PATH=/usr/local/nwchem-6.6/bin/LINUX/nwchem:$PATH
 ```
-If you want to call NWChem automatically for next time of login to your machine, each user have to make environment path of nwchem by appending the following command to their perosonal $HOME/.bashrc file.
+If you want to call NWChem automatically for next time of login, each user have to make an environment path of nwchem by appending the following command to their personal $HOME/.bashrc file.
 ```
 echo export PATH=/usr/local/nwchem-6.6/bin/LINUX/nwchem:$PATH >> /home/$USER/.bashrc
 ```
@@ -47,7 +47,7 @@ Then activate the .bashrc file
 ```
 source /home/$USER/.bashrc
 ```
-Then logout and login, now you can call nwchem.
+May try to logout and login again, so you should be ablt to call nwchem. If you have any problem, please ask google, he is your friend.
 
 # Error & Fixing
 While the system installs NWChem by using **make** or **configuration setting up** commands, you may be met an error which caused by calling library mistake. <br />
@@ -57,7 +57,7 @@ export LD_LIBRARY_PATH=/usr/local/openmpi/lib/:$LD_LIBRARY_PATH
 source $HOME/.bashrc
 ```
 ---
-Since you run NWChem with MPI and suddenly see the error like following
+Since you have run NWChem with MPI and suddenly see the following error
 ```
 utilfname: cannot allocate
 ```
@@ -65,7 +65,7 @@ or
 ```
 utilfname: cannot allocate:Received an Error in Communication
 ```
-This error message is telling you that NWChem cannot allocate the memory with number of processors. The user have to specify the amount of memory **PER** processor core that NWChem can possibly employs for a calculation. <br />
+This error message is telling you that NWChem cannot allocate the memory with number of processors. The user must specify the amount of memory **PER** processor core that NWChem can possibly employs for a calculation. <br />
 This issue can be easily fixed by adding a memory keyword into INPUT-FILE.nw, e.g.
 ```
 memory 1 gb
