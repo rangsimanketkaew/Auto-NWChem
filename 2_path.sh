@@ -1,7 +1,7 @@
 #!/bin/bash
-#### Bash script for NWChem's compilation on Centos 6.x & 7.x Linux distributions.
+#### Bash script for compilation of NWChem program with MPI on Centos 6.x & 7.x Linux distributions.
 #### Written by Rangsiman Ketkaew, Master degree student in Chemistry, CCRU, Thammasat U., Thailand.
-#### (2) set environment & path to nwchem
+#### (2) set environmental variable path of NWChem
 
 # ----------------------------- #
 # Determine the local storage path for the install files. (e.g., /usr/local/nwchem).
