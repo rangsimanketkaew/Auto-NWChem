@@ -16,3 +16,4 @@ rpm -ivh nwchem-openmpi-6.6.27746-22.el7.x86_64.rpm
 
 # Check where nwchem-openmpi is installed.
 # rpm -qi --filesbypkg nwchem-openmpi
+# Normally, /usr/lib64/openmpi/bin/nwchem-openmpi/nwchem-openmpi
