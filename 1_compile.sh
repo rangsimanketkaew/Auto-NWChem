@@ -1,5 +1,5 @@
 #!/bin/bash
-#### Bash script for NWChem's compilation with MPI variable on Centos 6.x & 7.x Linux distributions.
+#### Bash script for compilation of NWChem program with MPI on Centos 6.x & 7.x Linux distributions.
 #### Written by Rangsiman Ketkaew, Master degree student in Chemistry, CCRU, Thammasat U., Thailand.
 #### (1) Environmental configuration & Compilation using Make
 
