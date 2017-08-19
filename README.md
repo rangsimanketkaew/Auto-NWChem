@@ -1,6 +1,6 @@
 # NWChem Compilation
 
-My personal shell script for auto compile NWChem program on CentOS 6.x &amp; 7.x Linux-based. Don't trust the script but it works for me. However, this script could be adjusted and adapted to perform an installation on other Linux distribution as well. 
+My personal shell script for auto compile NWChem program on CentOS 6.x &amp; 7.x Linux-based. Don't trust the script but it works for me. However, this script could be adjusted and adapted to perform an installation on other Linux distribution as well. Moreover, if you have any problems you can visit the [Q&A forum of NWChem](http://www.nwchem-sw.org/index.php/Special:AWCforum).
 
 ### Requirement
 * CentOS version 6.x or 7.x (or other Linux distro)
@@ -92,15 +92,21 @@ export OMP_NUM_THREADS=N
 ```
 where N = number of processors (integer & positive number).
 
+or using the following command
+
+```
+nwchem -np N INPUT-FILE.nw >& OUTPUT-FILE.log
+```
+
 ## OpenMPI 1.6.5 Installation
-[Please visit this website](http://lsi.ugr.es/~jmantas/pdp/ayuda/datos/instalaciones/Install_OpenMPI_en.pdf)
+[Please visit this website](http://lsi.ugr.es/~jmantas/pdp/ayuda/datos/instalaciones/Install_OpenMPI_en.pdf). Not only version 1.6.5, but also other version says 2.x are also used in conjunction with NWChem compilation as long as you set the linkink and compatible libraries correctly.
 
 ## OpenBLAS Installation
-Source file [Download here](https://www.open-mpi.org/software/ompi/v1.6/) <br />
-[Installation guide](https://github.com/xianyi/OpenBLAS/wiki/Installation-Guide)
+You may need to install OpenBLAS yourself. Download source file at [Download here](https://www.open-mpi.org/software/ompi/v1.6/) <br />
+Explanation of installation is here [Installation guide](https://github.com/xianyi/OpenBLAS/wiki/Installation-Guide).
 
 ## More details
-Visit this website [NWChem Compilation website](http://www.nwchem-sw.org/index.php/Compiling_NWChem) for more details.
+I also provide the script for alternative way to install and compile NWChem program which those scripts can be found on this repository. Additionally, apart from manually compiling NWChem through running script, using RPM could help you to install that via typing a few command. The binary rpm file of various flavor of NWChem v. 6.6, i.e. nwchem-common, nwchem-openmpi, nwchem-mpich, can be found at [PKGS.org](https://pkgs.org/download/nwchem) and [RPM Find](https://www.rpmfind.net/linux/rpm2html/search.php?query=nwchem&submit=Search+...). For more details you should visit [NWChem Compilation website](http://www.nwchem-sw.org/index.php/Compiling_NWChem) for more details.
 
 ## Contact info
 E-mail: rangsiman1993(at)gmail.com and rangsiman_k(at)sci.tu.ac.th
