@@ -1,0 +1,45 @@
+## Rangsiman Ketkaew
+## Test file
+
+ start out-h2o
+ title "Water in 6-31g basis set"
+ 
+ geometry units au
+   O      0.00000000    0.00000000    0.00000000
+   H      0.00000000    1.43042809   -1.10715266
+   H      0.00000000   -1.43042809   -1.10715266
+ end
+ basis
+   H library 6-31g*
+   O library 6-31g*
+ end
+
+## HF
+task scf optimize
+
+### DFT
+dft
+ XC b3lyp
+ convergence lshift 0.25
+ iterations 300
+ grid xfine
+ print kinetic_energy
+end
+
+driver
+   nptopt 300
+   cvgopt 0.00005
+end
+
+task dft optimize
+task dft frequencies numerical
+
+start out-ccsd-water
+
+## CCSD
+ccsd
+end
+task ccsd optimize
+
+
+
