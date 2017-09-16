@@ -78,25 +78,34 @@ memory total 1 gb
 More details about memory arrangement can be found this [website](http://www.nwchem-sw.org/index.php/Release66:Top-level#MEMORY)
 
 # Running NWChem
-let's try to run nwchem with some test files from **/usr/local/src/NWCHEM/nwchem-6.6/examples/** or **/usr/local/src/NWCHEM/nwchem-6.6/QA/tests** by using the following command run
+let's try to run nwchem with some test files from **/usr/local/src/NWCHEM/nwchem-6.6/examples/** or **/usr/local/src/NWCHEM/nwchem-6.6/QA/tests** 
+Running on standalone or cluster using OpenMPI (straightforward command)
 ```
-nohup mpirun -np N /usr/local/nwchem/bin/nwchem INPUT-FILE.nw >& OUTPUT-FILE.log 
+mpirun -np N nwchem INPUT-FILE.nw >& OUTPUT-FILE.log
 ```
-or
+To run an OpenMPI program multithreaded 
 ```
-nohup mpirun -np N nwchem INPUT-FILE.nw >& OUTPUT-FILE.log
+mpirun -np N -map-by socket -bind-to socket nwchem INPUT-FILE.nw >& OUTPUT-FILE.log
 ```
-Just in case of MPI, the following command might be useful
+However, the following command might be useful
 ```
-export OMP_NUM_THREADS=N
+export OMP_NUM_THREADS=M
 ```
-where N = number of processors (integer & positive number).
-
-or using the following command
-
+where N and M = number of processors and threads (integer & positive number), respectively. Set number of threads = 1 is recommended if the cluster/machine do not do I/O or even you do not know. This value provides the best performance.
+You can add optional to set the calculation for either single or multi-threaded process.
 ```
-nwchem -np N INPUT-FILE.nw >& OUTPUT-FILE.log
+mpirun -genv OMP_NUM_THREADS M -np N nwchem INPUT-FILE.nw >& OUTPUT-FILE.log 
 ```
+---
+Running on MPI Cluster using MPICH
+```
+mpirun -np $NSLOTS nwchem INPUT-FILE.nw >& OUTPUT-FILE.log 
+```
+Running on MPI Cluster using MVAPICH2
+```
+mpirun -genv OMP_NUM_THREADS M -genv MV2_ENABLE_AFFINITY 0 -np N nwchem INPUT-FILE.nw >& OUTPUT-FILE.log 
+```
+The total number of cpu cores used for this calculation will be M x N.
 
 ## OpenMPI 1.6.5 Installation
 [Please visit this website](http://lsi.ugr.es/~jmantas/pdp/ayuda/datos/instalaciones/Install_OpenMPI_en.pdf). Not only version 1.6.5, but also other version says 2.x are also used in conjunction with NWChem compilation as long as you set the linkink and compatible libraries correctly.
