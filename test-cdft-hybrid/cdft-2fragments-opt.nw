@@ -1,0 +1,75 @@
+#=====================================================
+# Study of Electron Transfer in Ru-Re bridged Complex
+#=====================================================
+
+title "======== Environment Setup for Calculation ========"
+echo
+start Dump-Ru-BL12-Re-CDFT-2Frags-in-Solvation-298K-Before
+#memory total 2000 stack 1000 heap 100 global 900 mb
+memory total 5000 stack 3500 heap 100 global 1400 mb
+#scratch_dir /home/users/scratch/c1321hp/scratch/nwchem/
+scratch_dir /lustre/rangsiman/scratch/nwchem/
+permanent_dir .
+geometry hybrid units angstroms print xyz noautoz noautosym; load ../hybrid-opted-dft.xyz format xyz; end
+geometry strc1 units angstroms print xyz noautoz noautosym; load ../strc1-opted-dft.xyz format xyz; end
+geometry strc2 units angstroms print xyz noautoz noautosym; load ../strc2-opted-dft.xyz format xyz; end
+
+#----- Basis Set Assignment --------------------------------------------------------
+ basis spherical; H library 6-31g*; O library 6-31g*; C library 6-31g*; N library 6-31g*; Cl library 6-31g*
+ Ru library stuttgart_rsc_1997_ecp; Re library stuttgart_rsc_1997_ecp; end
+ ecp; Ru library stuttgart_rsc_1997_ecp; Re library stuttgart_rsc_1997_ecp; end
+#-----------------------------------------------------------------------------------
+
+#----- Driver Control --------------------------------------------------------------
+ cosmo; dielec 78.4; lineq 0; end
+ freq; temp 1 298.15; end
+ driver; maxiter 200; loose; end
+ set driver:linopt 0
+#-----------------------------------------------------------------------------------
+
+#----- Recipe of DFT ---------------------------------------------------------------
+ dft; xc b3lyp; direct; grid coarse; maxiter 500; convergence energy 1e-5
+ odft; mulliken; print "mulliken ao"; noprint "final vectors analysis"; end
+#-----------------------------------------------------------------------------------
+
+#===================== Situation 1: BEFORE Electron Transfer =======================
+title "---TASK---> Calc MOs of Donor for Before ET"
+set geometry strc1; cosmo; off; end
+charge 1
+dft; mult 1; vectors input atomic output strc1-before-et-neutral.mos; end
+task dft
+#-----------------------------------------------------------------------------------
+title "---TASK---> Calc MOs of Acceptor for Before ET"
+set geometry strc2
+charge 0
+dft; mult 2; vectors input atomic output strc2-before-et-neutral.mos; end
+task dft
+#-----------------------------------------------------------------------------------
+title "---TASK---> CDFT Optimization of Complex for Before ET"
+title "---STATE---> E0E0(S0S0)"
+set geometry hybrid; cosmo; end
+driver; xyz hybrid-before-et; end
+charge 1
+dft
+ mult 2; vectors fragment strc1-before-et-neutral.mos strc2-before-et-neutral.mos output hybrid-before-et-neutral.mos
+ cdft 1 81 charge 1
+ cdft 82 117 charge 0
+ convergence nolevelshifting
+end
+set dft:cdft_maxiter 500
+task dft optimize
+#task dft freq
+#-----------------------------------------------------------------------------------
+title "---TASK---> CDFT Single Point Energy of Complex for Before ET %%%%%%%%%%%%%%%%%"
+title "---STATE---> E+E-(S0S0)"
+set geometry hybrid
+charge 1
+dft
+ mult 2; vectors fragment hybrid-before-et-neutral.mos output hybrid-before-et-sp-charged.mos
+ cdft 1 81 charge 2
+ cdft 82 117 charge -1
+ convergence nolevelshifting
+end
+set dft:cdft_maxiter 500
+task dft energy #freq
+#-----------------------------------------------------------------------------------
