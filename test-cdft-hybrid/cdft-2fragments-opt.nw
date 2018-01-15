@@ -73,3 +73,46 @@ end
 set dft:cdft_maxiter 500
 task dft energy #freq
 #-----------------------------------------------------------------------------------
+
+#===================== Situation 2: AFTER Electron Transfer ========================
+unset dft:cdft_maxiter 500
+title "---TASK---> Calc MOs of Donor for After ET"
+set geometry strc1; cosmo; off; end
+charge 2
+dft; mult 2; vectors input atomic output strc1-after-et-charged.mos; end
+#task dft energy
+#-----------------------------------------------------------------------------------
+title "---TASK---> Calc MOs of Acceptor for After ET"
+set geometry strc2
+charge -1
+dft; mult 1; vectors input atomic output strc2-after-et-charged.mos; end
+#task dft energy
+#-----------------------------------------------------------------------------------
+title "---TASK---> CDFT Optimization of Complex for After ET"
+title "---STATE---> E+E-(S+S-)"
+set geometry hybrid; cosmo; end
+driver; xyz hybrid-after-et; end
+charge 1
+dft
+ mult 2; vectors fragment strc1-after-et-charged.mos strc2-after-et-charged.mos output hybrid-after-et-charged.mos
+ cdft 1 81 charge 2
+ cdft 82 117 charge -1
+ convergence nolevelshifting
+end
+set dft:cdft_maxiter 500
+#task dft optimize
+#task dft freq
+#-----------------------------------------------------------------------------------
+title "---TASK---> CDFT Single Point Energy of Complex for After ET"
+title "---STATE---> E0E0(S+S-)"
+set geometry hybrid
+charge 1
+dft
+ mult 2; vectors fragment hybrid-after-et-charged.mos output hybrid-after-et-sp-neutral.mos
+ cdft 1 81 charge 1
+ cdft 82 117 charge 0
+ convergence nolevelshifting
+end
+set dft:cdft_maxiter 500
+#task dft energy #freq
+#-----------------------------------------------------------------------------------
