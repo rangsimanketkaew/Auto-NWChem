@@ -1,6 +1,7 @@
 #!/bin/bash
 ## Rangsiman Ketkaew
 ## Compile NWChem with mvapich2-2.2b_intel2013 & SGE on Chalawan cluster (http://chalawan.narit.or.th)
+## NWChem that compile by this script should be able to make use of a larger number of CPUs across distributed nodes.
 
 module purge
 module load /share/apps/modulefiles/gcc48 mvapich2-2.2b_intel2013 python2.7
