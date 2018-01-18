@@ -1,4 +1,5 @@
 #!/bin/bash
+# For running NWChem on single node using OpenMPI
 
 export NWCHEM_TOP=/builddir/build/BUILD/nwchem-6.6
 export NWCHEM_TARGET=LINUX64
