@@ -1,4 +1,6 @@
 #!/bin/bash
+## Rangsiman Ketkaew
+## Compile NWChem with mvapich2-2.2b_intel2013 & SGE on Chalawan cluster (http://chalawan.narit.or.th)
 
 module purge
 module load /share/apps/modulefiles/gcc48 mvapich2-2.2b_intel2013 python2.7
@@ -40,3 +42,8 @@ export MPI_INCLUDE=/share/apps/mpi/mvapich2-2.2b_intel2013/include
 export LDFLAGS="-L/export/apps/compilers/intel2013/composer_xe_2013_sp1.3.174/compiler/lib/intel64/"
 
 #$MAKE realclean
+$MAKE nwchem_config NWCHEM_MODULES="all python" 2>&1 | tee ../make_nwchem_config_mpich.log
+$MAKE 64_to_32 2>&1 | tee ../make_64_to_32_mpich.log
+export MAKEOPTS="USE_64TO32=y"
+$MAKE ${MAKEOPTS} 2>&1 | tee ../makefile.log
+
