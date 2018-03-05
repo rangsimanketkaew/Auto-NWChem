@@ -11,11 +11,11 @@
 # You should have /usr/local/nwchem-6.6 so far.
 ## -------------------------
 
-## Define where you save nwchem-6.x folder, says /home/rangsiman/nwchem-6.8
+## Define your home directory and your nwchem-6.x folder, says /home/rangsiman and /home/rangsiman/nwchem-6.8
+MYHOME=/home/rangsiman
+MYNWChem=/home/rangsiman/nwchem-6.8
 
-MYNWchem=
-
-cd /usr/local/nwchem-6.6/src/
+cd $MYNWChem/src
 
 export NWCHEM_TOP=/usr/local/nwchem-6.6
 export NWCHEM_TARGET=LINUX64
@@ -34,6 +34,7 @@ export ELPA="-I/usr/lib64/gfortran/modules/openmpi -L/usr/lib64/openmpi/lib -lel
 make nwchem_config
 make 64_to_32
 make
+
 ## -------------------------
 ## So far it should have nwchem executable file at /usr/local/nwchem-6.6/bin/LINUX64/
 
