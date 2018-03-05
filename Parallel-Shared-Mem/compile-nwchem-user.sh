@@ -13,11 +13,12 @@
 
 ## Define your home directory and your nwchem-6.x folder, says /home/rangsiman and /home/rangsiman/nwchem-6.8
 MYHOME=/home/rangsiman
-MYNWChem=/home/rangsiman/nwchem-6.8
+MYNWCHEM=/home/rangsiman/nwchem-6.8
 
-cd $MYNWChem/src
+#------ Press ... E n t e r ... and ... W a i t ------
 
-export NWCHEM_TOP=/usr/local/nwchem-6.6
+cd $MYNWCHEM/src
+export NWCHEM_TOP=$MYNWCHEM
 export NWCHEM_TARGET=LINUX64
 export NWCHEM_MODULES=all
 export USE_MPI=y
