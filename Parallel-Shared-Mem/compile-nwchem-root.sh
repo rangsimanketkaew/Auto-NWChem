@@ -2,15 +2,15 @@
 
 ## Compilation of NWChem.
 ## You must be root.
-## -------------------------
+## ----------------------------------------------------------------------------------
 ## Required package
 # MPI, Python 2.6.x or 2.7.x, GCC, GFortran compiler, BLAS & Lapack optimized math libraries
 # yum install python-devel gcc-gfortran openblas-devel openblas-serial64 openmpi-devel scalapack-openmpi-devel blacs-openmpi-devel elpa-openmpi-devel tcsh --enablerepo=epel
-## -------------------------
+## ----------------------------------------------------------------------------------
 # Download NWChem to /usr/local/
 # Extract tar file and rename the folder of NWChem source file to nwchem-6.6
 # You should have /usr/local/nwchem-6.6 so far.
-## -------------------------
+## ----------------------------------------------------------------------------------
 
 cd /usr/local/nwchem-6.6/src/
 
@@ -31,7 +31,7 @@ export ELPA="-I/usr/lib64/gfortran/modules/openmpi -L/usr/lib64/openmpi/lib -lel
 make nwchem_config
 make 64_to_32
 make
-## -------------------------
+## ----------------------------------------------------------------------------------
 ## So far it should have nwchem executable file at /usr/local/nwchem-6.6/bin/LINUX64/
 
 mkdir -p /usr/local/NWChem/bin
