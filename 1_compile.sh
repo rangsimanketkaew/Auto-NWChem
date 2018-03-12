@@ -6,7 +6,7 @@
 ## export NWCHEM_TOP=/nwchem/install/folder/
 ## I use an openmpi-1.6.5 as mpirun which is installed at /usr/local/openmpi/
 ## I use python version 2.7.x (checking by $ python --version)
-## Watch a library for MPI by using command $ mpif90 -show
+## Show a library for MPI using command $ mpif90 -show
 
 echo "Let's build NWCHEM"
 
@@ -47,9 +47,7 @@ make >& make.log
 wait
 echo " Don't forget to check make.log at $NWCHEM_TOP/src/make.log if any error occur. "
 echo " Also check if nwchem.exe is installed at $NWCHEM_TOP/bin/LINUX64/ "
-echo "------------------------ Make done --------------------------"
-echo "Please follow the 2nd script --> run_NWchem_Nutt_setpath.sh"
+echo " ------------------------ Make done --------------------------"
+echo " Please follow the 2nd script --> run_NWchem_Nutt_setpath.sh"
 
-#### (2) Let's go to run_NWchem_Nutt_setpath.sh 
 #### Note that each user will need a .nwchemrc file to point to these default data files.
-#### HAVE FUN
