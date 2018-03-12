@@ -33,5 +33,5 @@
   cd $NWCHEM_TOP/src/nwpw
   cp -r libraryps /usr/local/nwchem/data
 
-echo "# ----------------- Done ----------------- #"
-echo "# ------- Try to run a sample file ------- #"
+echo "# ------------------ Done ----------------- #"
+echo "# ------- Try to run NWChem program ------- #"
