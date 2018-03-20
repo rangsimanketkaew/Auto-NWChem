@@ -40,7 +40,7 @@ Then append the following command into .nwchemrc file.
   charmm_s /usr/local/nwchem/data/charmm_s/
   charmm_x /usr/local/nwchem/data/charmm_x/
 ```
-  * **(6)** Run a sample <br /> calculation to check whether NWChem program is installed perfectly. I includes a input file of simmple calculation of geometry optimization of azulene using DFT at M06-2X/6-31G(d) in gas phase. You can try this calculation.
+  * **(6)** Run a sample calculation to check whether NWChem program is installed perfectly. I includes a input file of simmple calculation of geometry optimization of azulene using DFT at M06-2X/6-31G(d) in gas phase. You can try this calculation.
 
 Caveat! Note that the day I posted this script I was using NWChem version 6.6. So this way that I proposed should work with another version though.
 
