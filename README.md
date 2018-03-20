@@ -22,7 +22,11 @@ mkdir /usr/local/src/NWCHEM
 tar -xf nwchem-x.x.tar.gz
 ```
   * **(4)**  Download a scripts to */usr/local/src/NWCHEM/nwchem-x.x*. Then run script [1_compile.sh](https://github.com/rangsimanketkaew/NWChem/blob/master/1_compile.sh). The compile process will take you about 30 minutes, please wait until it has finished. If no any error message occurs, run script [2_path.sh](https://github.com/rangsimanketkaew/NWChem/blob/master/2_path.sh). ! <br />
-  * **(5)**  Move to your home directory. Then create a **.nwchemrc** file which includes following commands. /home/$USER/.nwchemrc and running an example calculation optimization of azulene using DFT at M06-2X/6-31G(d) to check if NWChem is installed perfectly. <br /> 
+  * **(5)**  Go to to your home directory. Create a **.nwchemrc** file using command. 
+```
+touch /home/$USER/.nwchemrc 
+```
+Then run a sample test of NWChem with a calculation of geometry optimization of azulene using DFT at M06-2X/6-31G(d) to check if NWChem is installed perfectly. <br /> 
   
 ```
   nwchem_basis_library /usr/local/nwchem/data/libraries/
@@ -36,7 +40,7 @@ tar -xf nwchem-x.x.tar.gz
   charmm_s /usr/local/nwchem/data/charmm_s/
   charmm_x /usr/local/nwchem/data/charmm_x/
 ```
-  * **(6)** Running a calculation of optimization of azulene using DFT at M06-2X/6-31G(d) to check if NWChem is installed perfectly.
+  * **(6)** Run a sample calculation to check whether NWChem program is installed perfectly. I includes a input file of simmple calculation of geometry optimization of azulene using DFT at M06-2X/6-31G(d) in gas phase. You can try this calculation.
 
 Caveat! Note that the day I posted this script I was using NWChem version 6.6. So this way that I proposed should work with another version though.
 
