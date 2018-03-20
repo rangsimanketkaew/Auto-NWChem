@@ -21,7 +21,7 @@ mkdir /usr/local/src/NWCHEM
 ```
 *tar -xf nwchem-x.x.tar.gz*
 ```
-So far, you should have a nwchem-x.x directory in the present location.
+   So far, you should have a nwchem-x.x directory in the present location.
   * **(4)**  Download a scripts to */usr/local/src/NWCHEM/nwchem-x.x*. Then run script [1_compile.sh](https://github.com/rangsimanketkaew/NWChem/blob/master/1_compile.sh). After finishing and there's no any error, then run [2_path.sh](https://github.com/rangsimanketkaew/NWChem/blob/master/2_path.sh), respectively. More instruction can be found in script [1_compile.sh](https://github.com/rangsimanketkaew/NWChem/blob/master/1_compile.sh). ! <br />
   * **(5)**  Move to your home directory. Then create a **.nwchemrc** file which includes following commands. /home/$USER/.nwchemrc and running an example calculation optimization of azulene using DFT at M06-2X/6-31G(d) to check if NWChem is installed perfectly. <br /> 
   
@@ -39,7 +39,7 @@ So far, you should have a nwchem-x.x directory in the present location.
 ```
   * **(6)** Running a calculation of optimization of azulene using DFT at M06-2X/6-31G(d) to check if NWChem is installed perfectly.
 
-Note that the day I posted this script I was using NWChem version 6.6. So this way that I proposed should work with another version though.
+Caveat! Note that the day I posted this script I was using NWChem version 6.6. So this way that I proposed should work with another version though.
 
 ---
 **Optional: PATH SETTING.** Instead of running nwchem via direct path, you can make a alias path to call nwchem by using following command
