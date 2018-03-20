@@ -36,13 +36,12 @@ Run 1_compile.sh using command
 ```
 ./1_compile.sh
 ```
-The process will take you about 30 minutes. If no any error message occurs, run script 2_path.sh.
-  * **(5)**  Go to to your home directory. Create a **.nwchemrc** file using command. 
+The process will take you about 30 minutes. If no any error message occurs, run script 2_path.sh to generate the nwchem library.
+  * **(5)**  Change directory to your *$HOME* and create a **.nwchemrc** file using command.
 ```
-touch /home/$USER/.nwchemrc 
+cd $HOME && touch $HOME/.nwchemrc
 ```
-Then append the following command into .nwchemrc file.
-  
+Then append the following command into .nwchemrc file.  
 ```
   nwchem_basis_library /usr/local/nwchem/data/libraries/
   nwchem_nwpw_library /usr/local/nwchem/data/libraryps/
@@ -56,7 +55,9 @@ Then append the following command into .nwchemrc file.
   charmm_x /usr/local/nwchem/data/charmm_x/
 ```
   * **(6)** Run a sample calculation to check whether NWChem program is installed perfectly. I include [a input file](https://github.com/rangsimanketkaew/NWChem/blob/master/test-azulene-dft/test-azulene.nw) of geometry optimization of azulene using DFT/M06-2X/6-31G(d) in gas phase.
-
+```
+nwchem test-azulene.nw >& test-azulene.out &
+```
 Caveat! Note that the day I posted this script I was using NWChem version 6.6. Also it works for compiling of nwchem 6.8 too.
 
 ---
