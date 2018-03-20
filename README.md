@@ -13,11 +13,15 @@ My personal shell script for auto compile NWChem program on CentOS 6.x &amp; 7.x
 ```
 yum install python-devel gcc-gfortran openblas-devel openblas-serial64 openmpi-devel scalapack-openmpi-devel blacs-openmpi-devel elpa-openmpi-devel tcsh --enablerepo=epel
 ```
-  * **(2)**  Make directory NWCHEM at */usr/local/src/* via sudo command or log-in as **root**. Check the required package *Before Compile*.
+  * **(2)**  Create directory NWCHEM at */usr/local/src/*. Check all required package *Before Compile*.
 ```
 mkdir /usr/local/src/NWCHEM
 ```
-  * **(3)**  Download a program source of *nwchem-x.x.tar.gz* from NWChem website using **wget** command first. (I am using nwchem version 6.6 on the day I wrote this script). Save it at */usr/local/src/NWCHEM/* , then extract the program from tar file using *tar -xf nwchem-x.x.tar.gz*. So far you should have a nwchem-x.x directory in the present location.
+  * **(3)**  Download program source code of *nwchem-x.x.tar.gz* from NWChem website using **wget** command first. (I am using nwchem version 6.6 on the day I wrote this script). Save it at */usr/local/src/NWCHEM/* , then extract the program from tar file using command
+```
+*tar -xf nwchem-x.x.tar.gz*
+```
+So far, you should have a nwchem-x.x directory in the present location.
   * **(4)**  Download a scripts to */usr/local/src/NWCHEM/nwchem-x.x*. Then run script [1_compile.sh](https://github.com/rangsimanketkaew/NWChem/blob/master/1_compile.sh). After finishing and there's no any error, then run [2_path.sh](https://github.com/rangsimanketkaew/NWChem/blob/master/2_path.sh), respectively. More instruction can be found in script [1_compile.sh](https://github.com/rangsimanketkaew/NWChem/blob/master/1_compile.sh). ! <br />
   * **(5)**  Move to your home directory. Then create a **.nwchemrc** file which includes following commands. /home/$USER/.nwchemrc and running an example calculation optimization of azulene using DFT at M06-2X/6-31G(d) to check if NWChem is installed perfectly. <br /> 
   
