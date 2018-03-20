@@ -1,10 +1,10 @@
 # NWChem Compilation
 
-My personal shell script for auto compile NWChem program on CentOS 6.x &amp; 7.x Linux-based. Don't trust the script but it works for me. However, this script could be adjusted and adapted to perform an installation on other Linux distribution as well. Moreover, if you have any problems you can visit the [Q&A forum of NWChem](http://www.nwchem-sw.org/index.php/Special:AWCforum).
+A shell script for auto compile NWChem program on CentOS 6.x &amp; 7.x Linux-based. Don't trust the script but it works for me. However, this script could be adjusted and adapted to perform an installation on other Linux distribution as well. Moreover, if you have any problems you can visit the [Q&A forum of NWChem](http://www.nwchem-sw.org/index.php/Special:AWCforum).
 
 ### Requirement
 * CentOS version 6.x or 7.x (or other Linux distro)
-* NWChem version 6.6 or higher
+* NWChem version 6.6 or 6.8 (or others)
 * Python version 2.x
 * OpenMPI or MPI package
 * Compiler: Intel, GNU, PGI, etc. More details please consult [NWChem manual](http://www.nwchem-sw.org/index.php/Compiling_NWChem#Setting_up_the_proper_environment_variables).
