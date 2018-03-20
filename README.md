@@ -1,10 +1,10 @@
 # NWChem Compilation
 
-A shell script for auto compile NWChem program on CentOS 6.x &amp; 7.x Linux-based. Don't trust the script but it works for me. However, this script could be adjusted and adapted to perform an installation on other Linux distribution as well. Moreover, if you have any problems you can visit the [Q&A forum of NWChem](http://www.nwchem-sw.org/index.php/Special:AWCforum).
+A shell script for auto compile NWChem program on CentOS 6.x &amp; 7.x Linux-based. Don't trust the script but it works for me. However, this script can be adjusted and adaptive for other Linux distribution. If you have any problems you can visit the [Q&A forum of NWChem](http://www.nwchem-sw.org/index.php/Special:AWCforum) or consult [NWChem manual](http://www.nwchem-sw.org/index.php/Compiling_NWChem#Setting_up_the_proper_environment_variables).
 
 ### Requirement
 * CentOS version 6.x or 7.x (or other Linux distro)
-* NWChem version 6.6 or 6.8 (or others)
+* NWChem version 6.6 or 6.8 (or previous versions)
 * Python version 2.x
 * OpenMPI or MPI package
 * Compiler: Intel, GNU, PGI, etc. More details please consult [NWChem manual](http://www.nwchem-sw.org/index.php/Compiling_NWChem#Setting_up_the_proper_environment_variables).
@@ -14,15 +14,29 @@ A shell script for auto compile NWChem program on CentOS 6.x &amp; 7.x Linux-bas
 ```
 yum install python-devel gcc-gfortran openblas-devel openblas-serial64 openmpi-devel scalapack-openmpi-devel blacs-openmpi-devel elpa-openmpi-devel tcsh --enablerepo=epel
 ```
-  * **(2)**  Create directory NWCHEM at */usr/local/src/*. Check all required package *Before Compile*.
+  * **(2)**  Create directory NWCHEM at */usr/local/src/*. Then move to NWCHEM direcotry
 ```
-mkdir /usr/local/src/NWCHEM
+mkdir /usr/local/src/NWCHEM && cd /usr/local/src/NWCHEM
 ```
-  * **(3)**  Download program source code of *nwchem-x.x.tar.gz* from NWChem website using **wget** command first. (I am using nwchem version 6.6 on the day I wrote this script). Save it at */usr/local/src/NWCHEM/* , then extract the program from tar file using command
+  * **(3)**  Download program source code of *nwchem-x.x.tar.gz* from NWChem website using **wget** command. This is an example of downloading nwchem 6.8 from [NWChem githup](https://github.com/nwchemgit/nwchem/releases/tag/v6.8-release).
 ```
-tar -xf nwchem-x.x.tar.gz
+wget https://github.com/nwchemgit/nwchem/releases/download/v6.8-release/nwchem-6.8-release.revision-v6.8-47-gdf6c956-src.2017-12-14.tar.bz2
 ```
-  * **(4)**  Download a scripts to */usr/local/src/NWCHEM/nwchem-x.x*. Then run script [1_compile.sh](https://github.com/rangsimanketkaew/NWChem/blob/master/1_compile.sh). The compile process will take you about 30 minutes, please wait until it has finished. If no any error message occurs, run script [2_path.sh](https://github.com/rangsimanketkaew/NWChem/blob/master/2_path.sh). ! <br />
+Extract full source code from *.tar.bz2* file using command. Then you should see *nwchem-6.8 directory*.
+```
+tar -xvjf nwchem-6.8-release.revision-v6.8-47-gdf6c956-src.2017-12-14.tar.bz2
+```
+  * **(4)**  Download both of [1_compile.sh](https://github.com/rangsimanketkaew/NWChem/blob/master/1_compile.sh) and [2_path.sh](https://github.com/rangsimanketkaew/NWChem/blob/master/2_path.sh) scripts to */usr/local/src/NWCHEM/nwchem-6.8/*.
+```
+cd /usr/local/src/NWCHEM/nwchem-6.8/
+wget https://raw.githubusercontent.com/rangsimanketkaew/NWChem/master/1_compile.sh
+wget https://raw.githubusercontent.com/rangsimanketkaew/NWChem/master/2_path.sh
+```
+Run 1_compile.sh using command
+```
+./1_compile.sh
+```
+The process will take you about 30 minutes. If no any error message occurs, run script 2_path.sh.
   * **(5)**  Go to to your home directory. Create a **.nwchemrc** file using command. 
 ```
 touch /home/$USER/.nwchemrc 
@@ -43,7 +57,7 @@ Then append the following command into .nwchemrc file.
 ```
   * **(6)** Run a sample calculation to check whether NWChem program is installed perfectly. I include [a input file](https://github.com/rangsimanketkaew/NWChem/blob/master/test-azulene-dft/test-azulene.nw) of geometry optimization of azulene using DFT/M06-2X/6-31G(d) in gas phase.
 
-Caveat! Note that the day I posted this script I was using NWChem version 6.6. So this way that I proposed should work with another version though.
+Caveat! Note that the day I posted this script I was using NWChem version 6.6. Also it works for compiling of nwchem 6.8 too.
 
 ---
 **Optional: PATH SETTING.** Instead of running nwchem via direct path, you can make a alias path to call nwchem by using following command
