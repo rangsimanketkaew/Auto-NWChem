@@ -41,7 +41,7 @@ Then append the following command into .nwchemrc file.
   charmm_s /usr/local/nwchem/data/charmm_s/
   charmm_x /usr/local/nwchem/data/charmm_x/
 ```
-  * **(6)** Run a sample calculation to check whether NWChem program is installed perfectly. I includes a input file of simmple calculation of geometry optimization of azulene using DFT at M06-2X/6-31G(d) in gas phase. You can try this calculation.
+  * **(6)** Run a sample calculation to check whether NWChem program is installed perfectly. I include [a input file](https://github.com/rangsimanketkaew/NWChem/blob/master/test-azulene-dft/test-azulene.nw) of geometry optimization of azulene using DFT/M06-2X/6-31G(d) in gas phase.
 
 Caveat! Note that the day I posted this script I was using NWChem version 6.6. So this way that I proposed should work with another version though.
 
@@ -117,6 +117,9 @@ Running on MPI Cluster using MVAPICH2
 mpirun -genv OMP_NUM_THREADS M -genv MV2_ENABLE_AFFINITY 0 -np N nwchem INPUT-FILE.nw >& OUTPUT-FILE.log 
 ```
 The total number of cpu cores used for this calculation will be M x N.
+
+# Compiling via RPM or yum
+If manually compiling NWChem is more difficult for beginner, one can install (compile) NWChem by another way alternative to writing script. I explained how to install NWChem executable in [this website](https://sites.google.com/site/compchem403/personal-area/linux-knowledge/install-nwchem). Unfortunately, it was written in Thai. 
 
 ## OpenMPI 1.6.5 Installation
 [Please visit this website](http://lsi.ugr.es/~jmantas/pdp/ayuda/datos/instalaciones/Install_OpenMPI_en.pdf). Not only version 1.6.5, but also other version says 2.x are also used in conjunction with NWChem compilation as long as you set the linkink and compatible libraries correctly.
