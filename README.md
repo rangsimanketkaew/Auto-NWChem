@@ -21,7 +21,7 @@ mkdir /usr/local/src/NWCHEM
 ```
 tar -xf nwchem-x.x.tar.gz
 ```
-  * **(4)**  Download a scripts to */usr/local/src/NWCHEM/nwchem-x.x*. Then run script [1_compile.sh](https://github.com/rangsimanketkaew/NWChem/blob/master/1_compile.sh). The compile process will take you about 30 minutes. After finishing and there's no any error, then run [2_path.sh](https://github.com/rangsimanketkaew/NWChem/blob/master/2_path.sh), respectively. More instruction can be found in script [1_compile.sh](https://github.com/rangsimanketkaew/NWChem/blob/master/1_compile.sh). ! <br />
+  * **(4)**  Download a scripts to */usr/local/src/NWCHEM/nwchem-x.x*. Then run script [1_compile.sh](https://github.com/rangsimanketkaew/NWChem/blob/master/1_compile.sh). The compile process will take you about 30 minutes, please wait until it has finished. If no any error message occurs, run script [2_path.sh](https://github.com/rangsimanketkaew/NWChem/blob/master/2_path.sh). ! <br />
   * **(5)**  Move to your home directory. Then create a **.nwchemrc** file which includes following commands. /home/$USER/.nwchemrc and running an example calculation optimization of azulene using DFT at M06-2X/6-31G(d) to check if NWChem is installed perfectly. <br /> 
   
 ```
