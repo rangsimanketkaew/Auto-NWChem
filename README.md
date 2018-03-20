@@ -61,23 +61,23 @@ nwchem test-azulene.nw >& test-azulene.out &
 Caveat! Note that the day I posted this script I was using NWChem version 6.6. Also it works for compiling of nwchem 6.8 too.
 
 ---
-**Optional: PATH SETTING.** Instead of running nwchem via direct path, you can make a alias path to call nwchem by using following command
+**Optional: PATH SETTING.** Instead of running nwchem via direct path, you can make call *nwchem* program by adding the absolute path of nwchem to $PATH using command
 ```
 export PATH=/usr/local/nwchem-6.6/bin/LINUX/nwchem:$PATH
 ```
-If you want to call NWChem automatically for next time of login, each user have to make an environment path of nwchem by appending the following command to their personal $HOME/.bashrc file.
+If you want to call nwchem automatically for next time of login, each user must make an environment path of nwchem by appending the following command to their personal *$HOME/.bashrc* file.
 ```
 echo export PATH=/usr/local/nwchem-6.6/bin/LINUX/nwchem:$PATH >> /home/$USER/.bashrc
 ```
-Then activate the .bashrc file
+Then activate the *.bashrc* file
 ```
 source /home/$USER/.bashrc
 ```
-May try to logout and login again, so you should be ablt to call nwchem. If you have any problem, please ask google, he is your friend.
+Try to logout and login again, now you should to call nwchem automatically.
 
 # Error & Fixing
-While the system installs NWChem by using **make** or **configuration setting up** commands, you may be met an error which caused by calling library mistake. <br />
-E.g. *libmpi_f90.so.1: cannot open*, you have to use the following command to fix the issue.
+While the system is installing NWChem using **make** or **configuration setting up** command, you might meet an error, which caused by calling library mistake. <br />
+E.g. *libmpi_f90.so.1: cannot open*. You can fix this error using command
 ```
 export LD_LIBRARY_PATH=/usr/local/openmpi/lib/:$LD_LIBRARY_PATH
 source $HOME/.bashrc
@@ -91,20 +91,20 @@ or
 ```
 utilfname: cannot allocate:Received an Error in Communication
 ```
-This error message is telling you that NWChem cannot allocate the memory with number of processors. The user must specify the amount of memory **PER** processor core that NWChem can possibly employs for a calculation. <br />
-This issue can be easily fixed by adding a memory keyword into INPUT-FILE.nw, e.g.
+This error message is telling you that NWChem cannot allocate the memory with number of processors. User must specify the amount of memory **PER** processor core that NWChem can possibly employs for a calculation. <br />
+This issue can be easily fixed by adding a memory keyword into nwchem input file *.nw* for example 1 Gigabytes/process.
 ```
-memory 1 gb
+memory total 1 GB
 ```
-If you run NWChem using command like this *"mpirun -np N nwchem INPUT-FILE.nw"*, this mean that the total of used memory for this calculation = (1 GB)*(N processors). <br />
+If you run NWChem using command like this *"mpirun -np N nwchem INPUT-FILE.nw"*, this means that the total of used memory for this calculation = (1 GB)*(N processors). <br />
 However, safety first, you can limit the total of memory usage for calculation by specifying optional keyword of memory keyword, says
 ```
 memory total 1 gb
 ```
-More details about memory arrangement can be found this [website](http://www.nwchem-sw.org/index.php/Release66:Top-level#MEMORY)
+More details of memory arrangement can be found on [this website](http://www.nwchem-sw.org/index.php/Release66:Top-level#MEMORY)
 
 # Running NWChem
-let's try to run nwchem with some test files from **/usr/local/src/NWCHEM/nwchem-6.6/examples/** or **/usr/local/src/NWCHEM/nwchem-6.6/QA/tests** 
+User can try to run nwchem with the example file offered by NWChem. They are at **/usr/local/src/NWCHEM/nwchem-6.6/examples/** or **/usr/local/src/NWCHEM/nwchem-6.6/QA/tests**.
 Running on standalone or cluster using OpenMPI (straightforward command)
 ```
 mpirun -np N nwchem INPUT-FILE.nw >& OUTPUT-FILE.log
