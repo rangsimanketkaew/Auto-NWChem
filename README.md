@@ -7,6 +7,7 @@ My personal shell script for auto compile NWChem program on CentOS 6.x &amp; 7.x
 * NWChem version 6.6 or higher
 * Python version 2.x
 * OpenMPI or MPI package
+* Compiler: Intel, GNU, PGI, etc. More details please consult [NWChem manual](http://www.nwchem-sw.org/index.php/Compiling_NWChem#Setting_up_the_proper_environment_variables).
 
 ### Installation
   * **(1)**  Install required package using command (root or sudo)
