@@ -1,6 +1,6 @@
 #!/bin/bash
-#### Bash script for compilation of NWChem program with MPI on Centos 6.x & 7.x Linux distributions.
-#### Written by Rangsiman Ketkaew, Master degree student in Chemistry, CCRU, Thammasat U., Thailand.
+#### Bash script for compiling of NWChem program package with MPI on Centos 6.x & 7.x Linux distributions.
+#### Written by Rangsiman Ketkaew, MSc student in Chemistry, CCRU, Thammasat University, Thailand.
 #### (1) Environmental configuration & Compilation using Make
 
 ## export NWCHEM_TOP=/nwchem/install/folder/
