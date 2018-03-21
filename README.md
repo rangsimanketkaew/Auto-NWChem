@@ -18,7 +18,7 @@ yum install python-devel gcc-gfortran openblas-devel openblas-serial64 openmpi-d
 ```
 mkdir /usr/local/src/NWCHEM && cd /usr/local/src/NWCHEM
 ```
-  * **(3)**  Download program source code of *nwchem-x.x.tar.gz* from NWChem website using **wget** command. This is an example of downloading nwchem 6.8 from [NWChem githup](https://github.com/nwchemgit/nwchem/releases/tag/v6.8-release).
+  * **(3)**  Download program source code from [NWChem github](https://github.com/nwchemgit/nwchem) to your Linux machine using **wget** command. The release of NWChem can be found [here](https://github.com/nwchemgit/nwchem/releases/tag/v6.8-release). I downloaded the NWChem 6.8 using command
 ```
 wget https://github.com/nwchemgit/nwchem/releases/download/v6.8-release/nwchem-6.8-release.revision-v6.8-47-gdf6c956-src.2017-12-14.tar.bz2
 ```
@@ -41,7 +41,7 @@ The process will take you about 30 minutes. If no any error message occurs, run 
 ```
 cd $HOME && touch $HOME/.nwchemrc
 ```
-Then append the following command into .nwchemrc file.  
+Then append the following commands into .nwchemrc file.  
 ```
   nwchem_basis_library /usr/local/nwchem/data/libraries/
   nwchem_nwpw_library /usr/local/nwchem/data/libraryps/
