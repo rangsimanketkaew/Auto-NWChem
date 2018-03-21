@@ -3,9 +3,9 @@
 A shell script for auto compile NWChem program on CentOS 6.x &amp; 7.x Linux-based. Don't trust the script but it works for me. However, this script can be adjusted and adaptive for other Linux distribution. If you have any problems you can visit the [Q&A forum of NWChem](http://www.nwchem-sw.org/index.php/Special:AWCforum) or consult [NWChem manual](http://www.nwchem-sw.org/index.php/Compiling_NWChem#Setting_up_the_proper_environment_variables).
 
 ### Requirement
+* NWChem version 6.6 or 6.8 (or previous version)
 * CentOS version 6.x or 7.x (or other Linux distro)
-* NWChem version 6.6 or 6.8 (or previous versions)
-* Python version 2.x
+* Python version 2.6 or 2.7
 * OpenMPI or MPI package
 * Compiler: Intel, GNU, PGI, etc. More details please consult [NWChem manual](http://www.nwchem-sw.org/index.php/Compiling_NWChem#Setting_up_the_proper_environment_variables).
 
@@ -92,15 +92,11 @@ or
 utilfname: cannot allocate:Received an Error in Communication
 ```
 This error message is telling you that NWChem cannot allocate the memory with number of processors. User must specify the amount of memory **PER** processor core that NWChem can possibly employs for a calculation. <br />
-This issue can be easily fixed by adding a memory keyword into nwchem input file *.nw* for example 1 Gigabytes/process.
+This issue can be easily fixed by *memory* keyword to control the certain memory, for example a following command is used to limit the memory to 1 Gigabyte/process.
 ```
 memory total 1 GB
 ```
-If you run NWChem using command like this *"mpirun -np N nwchem INPUT-FILE.nw"*, this means that the total of used memory for this calculation = (1 GB)*(N processors). <br />
-However, safety first, you can limit the total of memory usage for calculation by specifying optional keyword of memory keyword, says
-```
-memory total 1 gb
-```
+Again, if you run NWChem using command like *"mpirun -np N nwchem INPUT-FILE.nw"*, this means the memory required for this calculation = (1 GB)*(N processors). <br />
 More details of memory arrangement can be found on [this website](http://www.nwchem-sw.org/index.php/Release66:Top-level#MEMORY)
 
 # Running NWChem
