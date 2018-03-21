@@ -96,7 +96,9 @@ This issue can be easily fixed by *memory* keyword to control the certain memory
 ```
 memory total 1 GB
 ```
-Again, if you run NWChem using command like *"mpirun -np N nwchem INPUT-FILE.nw"*, this means the memory required for this calculation = (1 GB)*(N processors). <br />
+Again, if you run NWChem using command like *"mpirun -np N nwchem INPUT-FILE.nw"*, this means the memory required for this calculation = (1 GB)*(N processors). 
+<br />
+<br />
 More details of memory arrangement can be found on [this website](http://www.nwchem-sw.org/index.php/Release66:Top-level#MEMORY)
 
 # Running NWChem
