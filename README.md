@@ -61,11 +61,11 @@ nwchem test-azulene.nw >& test-azulene.out &
 Caveat! Note that the day I posted this script I was using NWChem version 6.6. Also it works for compiling of nwchem 6.8 too.
 
 ---
-**Optional: PATH SETTING.** Instead of running nwchem via direct path, you can make call *nwchem* program by adding the absolute path of nwchem to $PATH using command
+**Optional: PATH SETTING.** Instead of running nwchem using its absolute path, you can make an aliase of NWChem program by adding the *nwchem* absolute path to $PATH using command
 ```
 export PATH=/usr/local/nwchem-6.6/bin/LINUX/nwchem:$PATH
 ```
-If you want to call nwchem automatically for next time of login, each user must make an environment path of nwchem by appending the following command to their personal *$HOME/.bashrc* file.
+To do this every time you login, each user must permanently append the above command to $PATH in *$HOME/.bashrc* file.
 ```
 echo export PATH=/usr/local/nwchem-6.6/bin/LINUX/nwchem:$PATH >> /home/$USER/.bashrc
 ```
@@ -73,7 +73,7 @@ Then activate the *.bashrc* file
 ```
 source /home/$USER/.bashrc
 ```
-Try to logout and login again, now you should to call nwchem automatically.
+Try to logout and login again, now you can run NWChem via *nwchem*.
 
 # Error & Fixing
 While the system is installing NWChem using **make** or **configuration setting up** command, you might meet an error, which caused by calling library mistake. <br />
@@ -91,7 +91,7 @@ or
 ```
 utilfname: cannot allocate:Received an Error in Communication
 ```
-This error message is telling you that NWChem cannot allocate the memory with number of processors. User must specify the amount of memory **PER** processor core that NWChem can possibly employs for a calculation. <br />
+This error message is telling you that NWChem cannot allocate the memory with number of processors. You must specify the amount of memory **PER** processor core that NWChem can possibly employs for a calculation. <br />
 This issue can be easily fixed by *memory* keyword to control the certain memory, for example a following command is used to limit the memory to 1 Gigabyte/process.
 ```
 memory total 1 GB
@@ -102,7 +102,7 @@ Again, if you run NWChem using command like *"mpirun -np N nwchem INPUT-FILE.nw"
 More details of memory arrangement can be found on [this website](http://www.nwchem-sw.org/index.php/Release66:Top-level#MEMORY)
 
 # Running NWChem
-User can try to run nwchem with the example file offered by NWChem. They are at **/usr/local/src/NWCHEM/nwchem-6.6/examples/** or **/usr/local/src/NWCHEM/nwchem-6.6/QA/tests**. Running calculation on standalone machine or HPC cluster with OpenMPI parallel using command
+You can try to run nwchem with example file offered by the developer. A ton of input & output files are at **/usr/local/src/NWCHEM/nwchem-6.6/examples/** and **/usr/local/src/NWCHEM/nwchem-6.6/QA/tests**. Running calculation on standalone machine or HPC cluster with OpenMPI parallel using command
 ```
 mpirun -np N nwchem INPUT-FILE.nw >& OUTPUT-FILE.log
 ```
