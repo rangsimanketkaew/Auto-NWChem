@@ -58,7 +58,7 @@ Then append the following commands into .nwchemrc file.
 ```
 nwchem test-azulene.nw >& test-azulene.out &
 ```
-Caveat! Note that the day I posted this script I was using NWChem version 6.6. Also it works for compiling of nwchem 6.8 too.
+Caveat! Note that the day I posted this script I was using NWChem version 6.6 and 6.8.
 
 ---
 **Optional: PATH SETTING.** Instead of running nwchem using its absolute path, you can make an aliase of NWChem program by adding the *nwchem* absolute path to $PATH using command
