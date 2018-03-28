@@ -3,9 +3,9 @@
 A shell script for auto compile NWChem program on CentOS 6.x &amp; 7.x Linux-based. Don't trust the script but it works for me. However, this script can be adjusted and adaptive for other Linux distribution. 
 
 ### Requirement
-* NWChem version 6.6 or 6.8 (or previous version)
-* CentOS version 6.x or 7.x (or other Linux distro)
-* Python version 2.6 or 2.7
+* NWChem version 6.6 / 6.8 (or previous version)
+* CentOS version 6.x / 7.x or Ubuntu 16.x / 17.x (or other Linux distro)
+* Python version 2.6 / 2.7
 * Suitable MPI libraries (e.g. OpenMPI)
 * Compiler: Intel, GNU, PGI, etc. More details please consult [NWChem manual](http://www.nwchem-sw.org/index.php/Compiling_NWChem#Setting_up_the_proper_environment_variables).
 ### Installation
@@ -85,6 +85,7 @@ Fix: You can fix this error using command
 export LD_LIBRARY_PATH=/usr/local/openmpi/lib/:$LD_LIBRARY_PATH
 source $HOME/.bashrc
 ```
+---
  2. Error: 
 ```
 utilfname: cannot allocate
@@ -102,7 +103,7 @@ memory total 1 GB
 Again, if you run NWChem using command like *"mpirun -np N nwchem INPUT-FILE.nw"*, this means the memory required for this calculation = (1 GB)*(N processors). 
 <br />
 More details of memory arrangement can be found on [this website](http://www.nwchem-sw.org/index.php/Release66:Top-level#MEMORY)
-
+---
 3. Error: about MPI libraries.
 when: Compiling NWChem with make command
 ```
