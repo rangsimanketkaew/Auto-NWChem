@@ -85,6 +85,7 @@ Fix: You can fix this error using command
 export LD_LIBRARY_PATH=/usr/local/openmpi/lib/:$LD_LIBRARY_PATH
 source $HOME/.bashrc
 ```
+
 ---
  2. Error: 
 ```
@@ -103,6 +104,7 @@ memory total 1 GB
 Again, if you run NWChem using command like *"mpirun -np N nwchem INPUT-FILE.nw"*, this means the memory required for this calculation = (1 GB)*(N processors). 
 <br />
 More details of memory arrangement can be found on [this website](http://www.nwchem-sw.org/index.php/Release66:Top-level#MEMORY)
+
 ---
 3. Error: about MPI libraries.
 when: Compiling NWChem with make command
