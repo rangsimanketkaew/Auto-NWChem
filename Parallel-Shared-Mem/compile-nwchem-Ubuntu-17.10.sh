@@ -1,6 +1,7 @@
 #!/bin/bash
-
 # Ubuntu 17.10
+# Use NWCHEM's BLAS & OpenMPI 1.8.1
+# mpif90 -show = -lmpi_usempi -lmpi_mpifh -lmpi
 
 export NWCHEM_TOP=/home/nutt/nwchem-6.8
 export NWCHEM_TARGET=LINUX64
