@@ -6,9 +6,8 @@ A shell script for auto compile NWChem program on CentOS 6.x &amp; 7.x Linux-bas
 * NWChem version 6.6 or 6.8 (or previous version)
 * CentOS version 6.x or 7.x (or other Linux distro)
 * Python version 2.6 or 2.7
-* OpenMPI or MPI package
+* Suitable MPI libraries (e.g. OpenMPI)
 * Compiler: Intel, GNU, PGI, etc. More details please consult [NWChem manual](http://www.nwchem-sw.org/index.php/Compiling_NWChem#Setting_up_the_proper_environment_variables).
-
 ### Installation
   * **(1)**  Install required package using command (root or sudo)
 ```
@@ -76,14 +75,13 @@ source /home/$USER/.bashrc
 Try to logout and login again, now you can run NWChem via *nwchem*.
 
 # Error & Fixing
-While the system is installing NWChem using **make** or **configuration setting up** command, you might meet an error, which caused by calling library mistake. <br />
+  * **(1)** While the system is installing NWChem using **make** or **configuration setting up** command, you might meet an error, which caused by calling library mistake. <br />
 E.g. *libmpi_f90.so.1: cannot open*. You can fix this error using command
 ```
 export LD_LIBRARY_PATH=/usr/local/openmpi/lib/:$LD_LIBRARY_PATH
 source $HOME/.bashrc
 ```
----
-Since you have run NWChem with MPI and suddenly see the following error
+  * **(2)** Since you have run NWChem with MPI and suddenly see the following error
 ```
 utilfname: cannot allocate
 ```
@@ -98,8 +96,12 @@ memory total 1 GB
 ```
 Again, if you run NWChem using command like *"mpirun -np N nwchem INPUT-FILE.nw"*, this means the memory required for this calculation = (1 GB)*(N processors). 
 <br />
-<br />
 More details of memory arrangement can be found on [this website](http://www.nwchem-sw.org/index.php/Release66:Top-level#MEMORY)
+
+  * **(3)** Error about MPI libraries. Check the suitable libraries that you can use by command
+```
+mpif90 -show
+```
 
 # Running NWChem
 You can try to run nwchem with example file offered by the developer. A ton of input & output files are at **/usr/local/src/NWCHEM/nwchem-6.6/examples/** and **/usr/local/src/NWCHEM/nwchem-6.6/QA/tests**. Running calculation on standalone machine or HPC cluster with OpenMPI parallel using command
