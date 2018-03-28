@@ -75,8 +75,9 @@ source /home/$USER/.bashrc
 Try to logout and login again, now you can run NWChem via *nwchem*.
 
 # Error & Fixing
-  * **(1)** While the system is installing NWChem using **make** or **configuration setting up** command, you might meet an error, which caused by calling library mistake. <br />
-E.g. *libmpi_f90.so.1: cannot open*. You can fix this error using command
+1. Error: Cannot open library E.g. *libmpi_f90.so.1: cannot open*.<br />
+When: Installing NWChem using **make** or **configuration setting up** command.<br />
+Fix: You can fix this error using command
 ```
 export LD_LIBRARY_PATH=/usr/local/openmpi/lib/:$LD_LIBRARY_PATH
 source $HOME/.bashrc
