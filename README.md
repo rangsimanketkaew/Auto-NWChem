@@ -75,14 +75,17 @@ source /home/$USER/.bashrc
 Try to logout and login again, now you can run NWChem via *nwchem*.
 
 # Error & Fixing
-1. Error: Cannot open library E.g. *libmpi_f90.so.1: cannot open*.<br />
+1. Error: Cannot open library, e.g.,
+```
+*libmpi_f90.so.1: cannot open*.
+```
 When: Installing NWChem using **make** or **configuration setting up** command.<br />
 Fix: You can fix this error using command
 ```
 export LD_LIBRARY_PATH=/usr/local/openmpi/lib/:$LD_LIBRARY_PATH
 source $HOME/.bashrc
 ```
-  * **(2)** Since you have run NWChem with MPI and suddenly see the following error
+ 2. Error: 
 ```
 utilfname: cannot allocate
 ```
@@ -90,7 +93,8 @@ or
 ```
 utilfname: cannot allocate:Received an Error in Communication
 ```
-This error message is telling you that NWChem cannot allocate the memory with number of processors. You must specify the amount of memory **PER** processor core that NWChem can possibly employs for a calculation. <br />
+when: Running NWChem with MPI
+Fix: This error message is telling you that NWChem cannot allocate the memory with number of processors. You must specify the amount of memory **PER** processor core that NWChem can possibly employs for a calculation. <br />
 This issue can be easily fixed by *memory* keyword to control the certain memory, for example a following command is used to limit the memory to 1 Gigabyte/process.
 ```
 memory total 1 GB
@@ -99,7 +103,13 @@ Again, if you run NWChem using command like *"mpirun -np N nwchem INPUT-FILE.nw"
 <br />
 More details of memory arrangement can be found on [this website](http://www.nwchem-sw.org/index.php/Release66:Top-level#MEMORY)
 
-  * **(3)** Error about MPI libraries. Check the suitable libraries that you can use by command
+3. Error: about MPI libraries.
+when: Compiling NWChem with make command
+```
+GNUmakefile:103: recipe for target 'libraries' failed
+make: *** [libraries] Error 1
+```
+Fix: Check the suitable libraries that you can use by command
 ```
 mpif90 -show
 ```
