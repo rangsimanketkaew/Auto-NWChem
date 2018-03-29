@@ -1,21 +1,21 @@
 #!/bin/bash
 
-## Compilation of NWChem.
-## ----------------------------------------------------------------------------------
-## Required package
+# Compilation of NWChem.
+# ----------------------------------------------------------------------------------
+# Required package
 # MPI, Python 2.6.x or 2.7.x, GCC, GFortran compiler, BLAS & Lapack optimized math libraries
 # yum install python-devel gcc-gfortran openblas-devel openblas-serial64 openmpi-devel scalapack-openmpi-devel blacs-openmpi-devel elpa-openmpi-devel tcsh --enablerepo=epel
-## ----------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------
 # Download NWChem to /usr/local/
 # Extract tar file and rename the folder of NWChem source file to nwchem-6.6
 # You should have /usr/local/nwchem-6.6 so far.
-## ----------------------------------------------------------------------------------
+# ----------------------------------------------------------------------------------
 
-## Define your home directory and your nwchem-6.x folder, says /home/rangsiman and /home/rangsiman/nwchem-6.8
+# Define your home directory and your nwchem-6.x folder, says /home/rangsiman and /home/rangsiman/nwchem-6.8
 MYHOME=/home/rangsiman
 MYNWCHEM=/home/rangsiman/nwchem-6.8
 
-## ----------- Press ... E n t e r ... and ... W a i t -----------
+# ----------- Press ... E n t e r ... and ... W a i t -----------
 
 cd $MYNWCHEM/src
 export NWCHEM_TOP=$MYNWCHEM
@@ -36,8 +36,8 @@ make nwchem_config
 make 64_to_32
 make
 
-## ----------------------------------------------------------------------------------
-## So far it should have nwchem executable file at /usr/local/nwchem-6.6/bin/LINUX64/
+# ----------------------------------------------------------------------------------
+# So far it should have nwchem executable file at /usr/local/nwchem-6.6/bin/LINUX64/
 
 mkdir -p $MYHOME/NWChem/bin
 mkdir -p $MYHOME/NWChem/data
@@ -61,4 +61,5 @@ echo "charmm_s $MYHOME/NWChem/data/charmm_s/"    >> default.nwchemrc
 echo "charmm_x $MYHOME/NWChem/data/charmm_x/"    >> default.nwchemrc
 cp $MYHOME/NWChem/data/default.nwchemrc ~/.nwchemrc
 cp $MYHOME/NWChem/data/default.nwchemrc /etc/skel/.nwchemrc
+
 echo "======================================== D O N E ========================================"
