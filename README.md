@@ -1,17 +1,10 @@
-# NWChem Compilation
+# NWChem Auto Compilation
 
 A shell script for auto compile NWChem program on CentOS 6.x &amp; 7.x Linux-based. Don't trust the script but it works for me. However, this script can be adjusted and adaptive for other Linux distribution. 
 
 ### Requirement
 * NWChem version 6.x (recommended is 6.8)
-* CentOS version 6.x / 7.x or 
-
-
-
-
-
-
-16.x / 17.x (or other Linux distro)
+* CentOS version 6.x / 7.x or 16.x / 17.x (or other Linux distro)
 * Python version 2.6 / 2.7
 * Suitable MPI libraries (e.g. OpenMPI)
 * Compiler: Intel, GNU, PGI, etc. More details please consult [NWChem manual](http://www.nwchem-sw.org/index.php/Compiling_NWChem#Setting_up_the_proper_environment_variables).
@@ -91,48 +84,7 @@ source /home/$USER/.bashrc
 ```
 Try to logout and login again, now you can run NWChem via *nwchem*.
 
-# Error & Fixing
-1. Error: Cannot open library, e.g.,
-```
-*libmpi_f90.so.1: cannot open*.
-```
-When: Installing NWChem using **make** or **configuration setting up** command.<br />
-Fix: You can fix this error using command
-```
-export LD_LIBRARY_PATH=/usr/local/openmpi/lib/:$LD_LIBRARY_PATH
-source $HOME/.bashrc
-```
 
----
- 2. Error: 
-```
-utilfname: cannot allocate
-```
-or
-```
-utilfname: cannot allocate:Received an Error in Communication
-```
-when: Running NWChem with MPI
-Fix: This error message is telling you that NWChem cannot allocate the memory with number of processors. You must specify the amount of memory **PER** processor core that NWChem can possibly employs for a calculation. <br />
-This issue can be easily fixed by *memory* keyword to control the certain memory, for example a following command is used to limit the memory to 1 Gigabyte/process.
-```
-memory total 1 GB
-```
-Again, if you run NWChem using command like *"mpirun -np N nwchem INPUT-FILE.nw"*, this means the memory required for this calculation = (1 GB)*(N processors). 
-<br />
-More details of memory arrangement can be found on [this website](http://www.nwchem-sw.org/index.php/Release66:Top-level#MEMORY)
-
----
-3. Error: about MPI libraries.
-when: Compiling NWChem with make command
-```
-GNUmakefile:103: recipe for target 'libraries' failed
-make: *** [libraries] Error 1
-```
-Fix: Check the suitable libraries that you can use by command
-```
-mpif90 -show
-```
 
 # Running NWChem
 You can try to run nwchem with example file offered by the developer. A ton of input & output files are at **/usr/local/src/NWCHEM/nwchem-6.6/examples/** and **/usr/local/src/NWCHEM/nwchem-6.6/QA/tests**. Running calculation on standalone machine or HPC cluster with OpenMPI parallel using command
@@ -162,6 +114,37 @@ mpirun -genv OMP_NUM_THREADS M -genv MV2_ENABLE_AFFINITY 0 -np N nwchem INPUT-FI
 ```
 The total number of cpu cores used for this calculation will be M x N.
 
+# Error & Fixing
+* Error: *libmpi_f90.so.1: cannot open*
+When: Installing NWChem using **make** or **configuration setting up** command.<br />
+Fix: You can fix this error using command
+```
+export LD_LIBRARY_PATH=/usr/local/openmpi/lib/:$LD_LIBRARY_PATH
+source $HOME/.bashrc
+```
+<br />
+* Error: *utilfname: cannot allocate*  or  *utilfname: cannot allocate:Received an Error in Communication*
+when: Running NWChem with MPI and cannot allocate the memory with number of processors.
+Fix: You must specify the amount of memory **PER** processor core that NWChem can possibly employs for a calculation. <br />
+This issue can be easily fixed by *memory* keyword to control the certain memory, for example a following command is used to limit the memory to 1 Gigabyte/process.
+```
+memory total 1 GB
+```
+Again, if you run NWChem using command like *"mpirun -np N nwchem INPUT-FILE.nw"*, this means the memory required for this calculation = (1 GB)x(N processors). 
+<br />
+More details of memory arrangement can be found on [this website](http://www.nwchem-sw.org/index.php/Release66:Top-level#MEMORY)
+<br />
+* Error: about MPI libraries.
+when: Compiling NWChem with make command
+```
+GNUmakefile:103: recipe for target 'libraries' failed
+make: *** [libraries] Error 1
+```
+Fix: Check the suitable libraries that you can use by command
+```
+mpif90 -show
+```
+
 ## OpenMPI 1.6.5 Installation
 [Please visit this website](http://lsi.ugr.es/~jmantas/pdp/ayuda/datos/instalaciones/Install_OpenMPI_en.pdf). Not only version 1.6.5, but also other version says 2.x are also used in conjunction with NWChem compilation as long as you set the linkink and compatible libraries correctly.
 
@@ -170,7 +153,4 @@ You may need to install OpenBLAS yourself. Download source file at [Download her
 Explanation of installation is here [Installation guide](https://github.com/xianyi/OpenBLAS/wiki/Installation-Guide).
 
 ## More details
-I also provide the scripts for compiling of NWChem program (in this repository) on other platform or parallel achitecture. Additionally, If manually compiling of NWChem is too difficult for beginner, one can install (compile) NWChem by another way. I explained how to install NWChem using rpm and yum commands in [this website](https://sites.google.com/site/compchem403/personal-area/linux-knowledge/install-nwchem). The binary rpm file of various flavor of NWChem version 6.6, i.e. nwchem-common, nwchem-openmpi, nwchem-mpich, can be found at [PKGS.org](https://pkgs.org/download/nwchem) and [RPM Find](https://www.rpmfind.net/linux/rpm2html/search.php?query=nwchem&submit=Search+...). However, it was written in Thai. If you have any problems you can consult the [Q&A forum of NWChem](http://www.nwchem-sw.org/index.php/Special:AWCforum) or visit [NWChem compilation](http://www.nwchem-sw.org/index.php/Compiling_NWChem#Setting_up_the_proper_environment_variables).
-
-## Contact info
-E-mail: rangsiman1993(at)gmail.com and rangsiman_k(at)sci.tu.ac.th
+I also provide the scripts (in this repository) of NWChem compilation for other platform or parallel achitecture. Additionally, if compiling of NWChem manually is too difficult, you can install NWChem executable using *rpm* and *yum*, visit [this website](https://sites.google.com/site/compchem403/personal-area/linux-knowledge/install-nwchem). The binary rpm file of various flavor of NWChem version 6.6, i.e., nwchem-common, nwchem-openmpi, and nwchem-mpich can be found at [PKGS.org](https://pkgs.org/download/nwchem) and [RPM Find](https://www.rpmfind.net/linux/rpm2html/search.php?query=nwchem&submit=Search+...). However, [this website](https://sites.google.com/site/compchem403/personal-area/linux-knowledge/install-nwchem). was written in Thai. If you have any problems you can consult the [Q&A forum of NWChem](http://www.nwchem-sw.org/index.php/Special:AWCforum) or visit [NWChem compilation](http://www.nwchem-sw.org/index.php/Compiling_NWChem#Setting_up_the_proper_environment_variables). You can contact me at e-mail: [rangsiman1993(at)gmail.com](rangsiman1993@gmail.com) and [rangsiman_k(at)sci.tu.ac.th](rangsiman_k@sci.tu.ac.th).
