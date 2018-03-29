@@ -45,7 +45,6 @@ chmod 755 cp-nw-CentOS-OpenMPI-auto.sh
 ```
 Enter 1 for compiling NWChem. <br />
 Enter the directory of nwchem-6.x to be used as $NWCHEM_TOP. <br />
-Enter "YES" to start. <br />
 The process will take you about 30 minutes.<br />
   * **(4)**  Setting environmental variable path of NWChem
 Run the script using command
@@ -53,7 +52,7 @@ Run the script using command
 ./cp-nw-CentOS-OpenMPI-auto.sh
 ```
 Enter "2" <br />
-Enter "YES"
+
   * **(5)**  Setting resource file *.nwchemrc* <br />
 Run the script using command
 ```
