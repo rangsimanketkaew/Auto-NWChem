@@ -1,17 +1,18 @@
-** The way to install NWChem program **
-
 =========== Setup and install th neccessary package =========== 
 
 $ su
 enter passwd for root
 
 $ yum install python-devel gcc-gfortran openblas-devel openblas-serial64 openmpi-devel scalapack-openmpi-devel blacs-openmpi-devel elpa-openmpi-devel tcsh --enablerepo=epel
+
 $ python -V
-The version of python have to be 2.7.x, if not, please have a look how to install python 2.7.13 at https://tecadmin.net/install-python-2-7-on-centos-rhel
+Check version of python (NWChem supports only Python 2.6.x or 2.7.x)
+Recommended: If you want to install python 2.7.x --> visit https://tecadmin.net/install-python-2-7-on-centos-rhel
 
 $ vi /etc/bashrc
 export PATH=/usr/lib64/openmpi/bin/:$PATH
 export LD_LIBRARY_PATH=/usr/lib64/openmpi/lib/:$LD_LIBRARY_PATH
+
 $ source /etc/bashrc
 
 =========== Download nwchem from its website and extract file to /opt/ =========== 
@@ -37,7 +38,8 @@ $ make nwchem_config
 $ make 64_to_32
 $ make
 
-If successfully finished, it should have nwchem executeable file at /opt/nwchem-6.6/bin/LINUX64/
+$ ls /$NWCHEM_TOP/bin/LINUX64/nwchem
+So far, nwchem executeable should be at /$NWCHEM_TOP/bin/LINUX64/
 
 =========== path and environment setting =========== 
 
