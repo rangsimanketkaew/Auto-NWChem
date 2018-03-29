@@ -1,14 +1,14 @@
 #!/bin/bash
-#### Bash script for compiling of NWChem program package with MPI on Centos 6.x & 7.x Linux distributions.
+#### Bash script for compiling of NWChem on Centos 6.x & 7.x using OpenMPI.
 #### Written by Rangsiman Ketkaew, MSc student in Chemistry, CCRU, Thammasat University, Thailand.
-#### (1) Environmental configuration & Compilation using Make
 
+#### (1) Environmental configuration & Compilation using Make
 ## export NWCHEM_TOP=/nwchem/install/folder/
 ## I use an openmpi-1.6.5 as mpirun which is installed at /usr/local/openmpi/
 ## I use python version 2.7.x (checking by $ python --version)
 ## Show a library for MPI using command $ mpif90 -show
 
-echo "Let's build NWCHEM"
+echo "Let's build NWCHEM" > script-compile.log
 
 export NWCHEM_TOP=/usr/local/src/NWCHEM/nwchem-6.6
 cd $NWCHEM_TOP/src
@@ -45,9 +45,43 @@ echo " Finished changing 64 to 32 "
 echo " Making install, please wait for a while ! "
 make >& make.log
 wait
-echo " Don't forget to check make.log at $NWCHEM_TOP/src/make.log if any error occur. "
-echo " Also check if nwchem.exe is installed at $NWCHEM_TOP/bin/LINUX64/ "
-echo " ------------------------ Make done --------------------------"
-echo " Please follow the 2nd script --> run_NWchem_Nutt_setpath.sh"
+echo " Don't forget to check make.log at $NWCHEM_TOP/src/make.log if any error occur. " >> script-compile.log
+echo " Also check if nwchem.exe is installed at $NWCHEM_TOP/bin/LINUX64/ " >> script-compile.log
+echo " ------------------------ Make done --------------------------" >> script-compile.log
+
+#### (2) set environmental variable path of NWChem
+# ----------------------------- #
+# Determine the local storage path for the install files. (e.g., /usr/local/nwchem).
+# Make directories
+
+export NWCHEM_TOP=/usr/local/src/NWCHEM/nwchem-6.6
+export NWCHEM_TARGET=LINUX64
+
+mkdir /usr/local/nwchem/
+mkdir /usr/local/nwchem/bin
+mkdir /usr/local/nwchem/data
+
+# ----------------------------- #
+# Copy binary
+
+cp $NWCHEM_TOP/bin/${NWCHEM_TARGET}/nwchem /usr/local/nwchem/bin
+cd /usr/local/nwchem/bin 
+chmod 755 nwchem
+
+# ----------------------------- #
+# Set links to data files (binaries, basis sets, force fields, etc.)
+
+cd $NWCHEM_TOP/src/basis
+cp -r libraries /usr/local/nwchem/data
+
+cd $NWCHEM_TOP/src/
+cp -r data /usr/local/nwchem
+
+cd $NWCHEM_TOP/src/nwpw
+cp -r libraryps /usr/local/nwchem/data
+
+echo "# ------------------ Done ----------------- #"  >> script-compile.log
+echo "# ------- Try to run NWChem program ------- #"  >> script-compile.log
 
 #### Note that each user will need a .nwchemrc file to point to these default data files.
+
