@@ -1,5 +1,6 @@
 #!/bin/bash
-# For running NWChem on multiple node / shared memory using MPICH
+# Bash script for compiling of NWChem on Cluster (multiple computing node) / shared memory using MPICH
+# Written by Rangsiman Ketkaew, MSc student in Chemistry, CCRU, Thammasat University, Thailand.
 
 export NWCHEM_TOP=/builddir/build/BUILD/nwchem-6.6
 export NWCHEM_TARGET=LINUX64
@@ -35,3 +36,4 @@ $MAKE nwchem_config NWCHEM_MODULES="all python" 2>&1 | tee ../make_nwchem_config
 $MAKE 64_to_32 2>&1 | tee ../make_64_to_32_mpich.log
 export MAKEOPTS="USE_64TO32=y"
 $MAKE ${MAKEOPTS} 2>&1
+
