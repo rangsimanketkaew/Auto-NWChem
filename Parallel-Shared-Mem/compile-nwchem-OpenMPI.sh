@@ -1,5 +1,6 @@
 #!/bin/bash
-# For running NWChem on single node using OpenMPI
+# Bash script for compiling of NWChem on CentOS/single node using OpenMPI
+# Written by Rangsiman Ketkaew, MSc student in Chemistry, CCRU, Thammasat University, Thailand.
 
 export NWCHEM_TOP=/builddir/build/BUILD/nwchem-6.6
 export NWCHEM_TARGET=LINUX64
@@ -31,6 +32,7 @@ export MPIEXEC=/usr/lib64/openmpi/bin/mpiexec
 export MPI_LIB=/usr/lib64/openmpi/lib
 export MPI_INCLUDE=/usr/include/openmpi-x86_64
 export LIBMPI='-lmpi -lmpi_f90 -lmpi_f77'
+
 $MAKE nwchem_config NWCHEM_MODULES="all python" 2>&1 | tee ../make_nwchem_config_openmpi.log
 $MAKE 64_to_32 2>&1 | tee ../make_64_to_32_openmpi.log
 export MAKEOPTS="USE_64TO32=y"
