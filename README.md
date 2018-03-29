@@ -1,7 +1,5 @@
 # NWChem Auto Compilation
-
-A shell script for auto compile NWChem program on CentOS 6.x &amp; 7.x Linux-based. Don't trust the script but it works for me. However, this script can be adjusted and adaptive for other Linux distribution. 
-
+A programing script for auto compile NWChem program on CentOS 6.x &amp; 7.x & Ubuntu 16.x & 17.x. Do not trust the script but it works for me. It can also be adjusted to be compatible with other Linux distribution.
 ### Requirement
 * NWChem version 6.x (recommended is 6.8)
 * CentOS version 6.x / 7.x or 16.x / 17.x (or other Linux distro)
@@ -62,14 +60,12 @@ Run the script using command
 ./cp-nw-CentOS-OpenMPI-auto.sh
 ```
 Enter "3" <br />
-
 # Post-Compilation
 Run a sample calculation to check whether NWChem program is installed perfectly. I include [a input file](https://github.com/rangsimanketkaew/NWChem/blob/master/test-azulene-dft/test-azulene.nw) of geometry optimization of azulene using DFT/M06-2X/6-31G(d) in gas phase.
 ```
 nwchem test-azulene.nw >& test-azulene.out &
 ```
 Caveat! Note that the day I posted this script I was using NWChem version 6.6 and 6.8 on CentOS 6.9.
-
 **Optional: PATH SETTING.** Instead of running nwchem using its absolute path, you can make an aliase of NWChem program by adding the *nwchem* absolute path to $PATH using command
 ```
 export PATH=/usr/local/nwchem-6.6/bin/LINUX/nwchem:$PATH
@@ -83,9 +79,6 @@ Then activate the *.bashrc* file
 source /home/$USER/.bashrc
 ```
 Try to logout and login again, now you can run NWChem via *nwchem*.
-
-
-
 # Running NWChem
 You can try to run nwchem with example file offered by the developer. A ton of input & output files are at **/usr/local/src/NWCHEM/nwchem-6.6/examples/** and **/usr/local/src/NWCHEM/nwchem-6.6/QA/tests**. Running calculation on standalone machine or HPC cluster with OpenMPI parallel using command
 ```
@@ -112,8 +105,8 @@ Running on MPI Cluster using MVAPICH2
 ```
 mpirun -genv OMP_NUM_THREADS M -genv MV2_ENABLE_AFFINITY 0 -np N nwchem INPUT-FILE.nw >& OUTPUT-FILE.log 
 ```
-The total number of cpu cores used for this calculation will be M x N.
-
+The total number of cpu cores used for this calculation will be M x N. <br />
+If you run NWChem using command like *"mpirun -np N nwchem INPUT-FILE.nw"*, this means the memory required for this calculation = (1 GB)x(N processors). More details of memory arrangement can be found on [this website](http://www.nwchem-sw.org/index.php/Release66:Top-level#MEMORY)
 # Error & Fixing
 * Error: *libmpi_f90.so.1: cannot open*
 When: Installing NWChem using **make** or **configuration setting up** command.<br />
@@ -130,9 +123,6 @@ This issue can be easily fixed by *memory* keyword to control the certain memory
 ```
 memory total 1 GB
 ```
-Again, if you run NWChem using command like *"mpirun -np N nwchem INPUT-FILE.nw"*, this means the memory required for this calculation = (1 GB)x(N processors). 
-<br />
-More details of memory arrangement can be found on [this website](http://www.nwchem-sw.org/index.php/Release66:Top-level#MEMORY)
 <br />
 * Error: about MPI libraries.
 when: Compiling NWChem with make command
@@ -144,7 +134,6 @@ Fix: Check the suitable libraries that you can use by command
 ```
 mpif90 -show
 ```
-
 ## OpenMPI 1.6.5 Installation
 [Please visit this website](http://lsi.ugr.es/~jmantas/pdp/ayuda/datos/instalaciones/Install_OpenMPI_en.pdf). Not only version 1.6.5, but also other version says 2.x are also used in conjunction with NWChem compilation as long as you set the linkink and compatible libraries correctly.
 
