@@ -4,7 +4,14 @@ A shell script for auto compile NWChem program on CentOS 6.x &amp; 7.x Linux-bas
 
 ### Requirement
 * NWChem version 6.x (recommended is 6.8)
-* CentOS version 6.x / 7.x or Ubuntu 16.x / 17.x (or other Linux distro)
+* CentOS version 6.x / 7.x or 
+
+
+
+
+
+
+16.x / 17.x (or other Linux distro)
 * Python version 2.6 / 2.7
 * Suitable MPI libraries (e.g. OpenMPI)
 * Compiler: Intel, GNU, PGI, etc. More details please consult [NWChem manual](http://www.nwchem-sw.org/index.php/Compiling_NWChem#Setting_up_the_proper_environment_variables).
@@ -35,15 +42,15 @@ tar -xvjf nwchem-6.8-release.revision-v6.8-47-gdf6c956-src.2017-12-14.tar.bz2
 ```
 Then you should see *nwchem-6.8 directory*. <br />
 * **(3)** Compiling program <br />
-Download [compile-nwchem-CentOS-OpenMPI-full.sh](https://github.com/rangsimanketkaew/NWChem/blob/master/compile-nwchem-CentOS-OpenMPI-full.sh) script to */usr/local/src/NWCHEM/nwchem-6.8/*.
+Download [cp-nw-CentOS-OpenMPI-auto.sh](https://raw.githubusercontent.com/rangsimanketkaew/NWChem/master/cp-nw-CentOS-OpenMPI-auto.sh) script to */usr/local/src/NWCHEM/nwchem-6.8/*.
 ```
 cd /usr/local/src/NWCHEM/nwchem-6.8/
 wget https://raw.githubusercontent.com/rangsimanketkaew/NWChem/master/compile-nwchem-CentOS-OpenMPI-full.sh
 ```
 Run the script using command
 ```
-chmod 755 compile-nwchem-CentOS-OpenMPI-full.sh
-./compile-nwchem-CentOS-OpenMPI-full.sh
+chmod 755 cp-nw-CentOS-OpenMPI-auto.sh
+./cp-nw-CentOS-OpenMPI-auto.sh
 ```
 Enter 1 for compiling NWChem. <br />
 Enter the directory of nwchem-6.x to be used as $NWCHEM_TOP. <br />
@@ -52,35 +59,17 @@ The process will take you about 30 minutes.<br />
   * **(4)**  Setting environmental variable path of NWChem
 Run the script using command
 ```
-./compile-nwchem-CentOS-OpenMPI-full.sh
+./cp-nw-CentOS-OpenMPI-auto.sh
 ```
 Enter "2" <br />
 Enter "YES"
   * **(5)**  Setting resource file *.nwchemrc* <br />
 Run the script using command
 ```
-./compile-nwchem-CentOS-OpenMPI-full.sh
+./cp-nw-CentOS-OpenMPI-auto.sh
 ```
 Enter "3" <br />
-Enter "YES"
 
-Change directory to your *$HOME* and create a **.nwchemrc** file using command.
-```
-cd $HOME && touch $HOME/.nwchemrc
-```
-Then append the following commands into .nwchemrc file.  
-```
-nwchem_basis_library /usr/local/nwchem/data/libraries/
-nwchem_nwpw_library /usr/local/nwchem/data/libraryps/
-ffield amber
-amber_1 /usr/local/nwchem/data/amber_s/
-amber_2 /usr/local/nwchem/data/amber_q/
-amber_3 /usr/local/nwchem/data/amber_x/
-amber_4 /usr/local/nwchem/data/amber_u/
-spce    /usr/local/nwchem/data/solvents/spce.rst
-charmm_s /usr/local/nwchem/data/charmm_s/
-charmm_x /usr/local/nwchem/data/charmm_x/
-```
 # Post-Compilation
 Run a sample calculation to check whether NWChem program is installed perfectly. I include [a input file](https://github.com/rangsimanketkaew/NWChem/blob/master/test-azulene-dft/test-azulene.nw) of geometry optimization of azulene using DFT/M06-2X/6-31G(d) in gas phase.
 ```
