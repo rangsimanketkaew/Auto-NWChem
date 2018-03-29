@@ -1,12 +1,12 @@
 #!/bin/bash
-#### Bash script for compiling of NWChem on Centos 6.x & 7.x using OpenMPI.
-#### Written by Rangsiman Ketkaew, MSc student in Chemistry, CCRU, Thammasat University, Thailand.
+# Bash script for compiling of NWChem on Centos 6.x & 7.x using OpenMPI.
+# Written by Rangsiman Ketkaew, MSc student in Chemistry, CCRU, Thammasat University, Thailand.
 
-#### (1) Environmental configuration & Compilation using Make
-## export NWCHEM_TOP=/nwchem/install/folder/
-## I use an openmpi-1.6.5 as mpirun which is installed at /usr/local/openmpi/
-## I use python version 2.7.x (checking by $ python --version)
-## Show a library for MPI using command $ mpif90 -show
+# (1) Environmental configuration & Compilation using Make
+# export NWCHEM_TOP=/nwchem/install/folder/
+# I use an openmpi-1.6.5 as mpirun which is installed at /usr/local/openmpi/
+# I use python version 2.7.x (checking by $ python --version)
+# Show a library for MPI using command $ mpif90 -show
 
 echo "Let's build NWCHEM" > script-compile.log
 
@@ -49,7 +49,7 @@ echo " Don't forget to check make.log at $NWCHEM_TOP/src/make.log if any error o
 echo " Also check if nwchem.exe is installed at $NWCHEM_TOP/bin/LINUX64/ " >> script-compile.log
 echo " ------------------------ Make done --------------------------" >> script-compile.log
 
-#### (2) set environmental variable path of NWChem
+# (2) set environmental variable path of NWChem
 # ----------------------------- #
 # Determine the local storage path for the install files. (e.g., /usr/local/nwchem).
 # Make directories
@@ -83,5 +83,4 @@ cp -r libraryps /usr/local/nwchem/data
 echo "# ------------------ Done ----------------- #"  >> script-compile.log
 echo "# ------- Try to run NWChem program ------- #"  >> script-compile.log
 
-#### Note that each user will need a .nwchemrc file to point to these default data files.
-
+# Note that each user will need a .nwchemrc file to point to these default data files.
