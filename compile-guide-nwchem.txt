@@ -1,5 +1,7 @@
 =========== Setup and install th neccessary package =========== 
 
+# Written by Rangsiman Ketkaew, MSc student in Chemistry, CCRU, Thammasat University, Thailand.
+
 $ su
 enter passwd for root
 
