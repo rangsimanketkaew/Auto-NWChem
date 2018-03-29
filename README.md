@@ -80,7 +80,7 @@ amber_4 /usr/local/nwchem/data/amber_u/
 spce    /usr/local/nwchem/data/solvents/spce.rst
 charmm_s /usr/local/nwchem/data/charmm_s/
 charmm_x /usr/local/nwchem/data/charmm_x/
-
+```
 # Post-Compilation
 Run a sample calculation to check whether NWChem program is installed perfectly. I include [a input file](https://github.com/rangsimanketkaew/NWChem/blob/master/test-azulene-dft/test-azulene.nw) of geometry optimization of azulene using DFT/M06-2X/6-31G(d) in gas phase.
 ```
