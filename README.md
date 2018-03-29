@@ -28,13 +28,14 @@ tar -xvjf nwchem-6.8-release.revision-v6.8-47-gdf6c956-src.2017-12-14.tar.bz2
   * **(4)**  Download [compile-nwchem-CentOS-OpenMPI-full.sh](https://github.com/rangsimanketkaew/NWChem/blob/master/compile-nwchem-CentOS-OpenMPI-full.sh) script to */usr/local/src/NWCHEM/nwchem-6.8/*.
 ```
 cd /usr/local/src/NWCHEM/nwchem-6.8/
-wget https://raw.githubusercontent.com/rangsimanketkaew/NWChem/master/1_compile.sh
-wget https://raw.githubusercontent.com/rangsimanketkaew/NWChem/master/2_path.sh
+wget https://raw.githubusercontent.com/rangsimanketkaew/NWChem/master/compile-nwchem-CentOS-OpenMPI-full.sh
 ```
-Run 1_compile.sh using command
+Run the script using command
 ```
-./1_compile.sh
+chmod 755 compile-nwchem-CentOS-OpenMPI-full.sh
+./compile-nwchem-CentOS-OpenMPI-full.sh
 ```
+Choose 1 for compiling NWChem
 The process will take you about 30 minutes.
   * **(5)**  Change directory to your *$HOME* and create a **.nwchemrc** file using command.
 ```
