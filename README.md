@@ -99,11 +99,11 @@ mpirun -genv OMP_NUM_THREADS M -np N nwchem INPUT-FILE.nw >& OUTPUT-FILE.log
 ---
 Running on MPI Cluster using MPICH
 ```
-mpirun -np $NSLOTS nwchem INPUT-FILE.nw >& OUTPUT-FILE.log 
+mpirun -np $NSLOTS nwchem INPUT-FILE.nw >& OUTPUT-FILE.log
 ```
 Running on MPI Cluster using MVAPICH2
 ```
-mpirun -genv OMP_NUM_THREADS M -genv MV2_ENABLE_AFFINITY 0 -np N nwchem INPUT-FILE.nw >& OUTPUT-FILE.log 
+mpirun -genv OMP_NUM_THREADS M -genv MV2_ENABLE_AFFINITY 0 -np N nwchem INPUT-FILE.nw >& OUTPUT-FILE.log
 ```
 The total number of cpu cores used for this calculation will be M x N. <br />
 If you run NWChem using command like *"mpirun -np N nwchem INPUT-FILE.nw"*, this means the memory required for this calculation = (1 GB)x(N processors). More details of memory arrangement can be found on [this website](http://www.nwchem-sw.org/index.php/Release66:Top-level#MEMORY)
@@ -136,10 +136,8 @@ mpif90 -show
 ```
 ## OpenMPI 1.6.5 Installation
 [Please visit this website](http://lsi.ugr.es/~jmantas/pdp/ayuda/datos/instalaciones/Install_OpenMPI_en.pdf). Not only version 1.6.5, but also other version says 2.x are also used in conjunction with NWChem compilation as long as you set the linkink and compatible libraries correctly.
-
 ## OpenBLAS Installation
 You may need to install OpenBLAS yourself. Download source file at [Download here](https://www.open-mpi.org/software/ompi/v1.6/) <br />
 Explanation of installation is here [Installation guide](https://github.com/xianyi/OpenBLAS/wiki/Installation-Guide).
-
 ## More details
 I also provide the scripts (in this repository) of NWChem compilation for other platform or parallel achitecture. Additionally, if compiling of NWChem manually is too difficult, you can install NWChem executable using *rpm* and *yum*, visit [this website](https://sites.google.com/site/compchem403/personal-area/linux-knowledge/install-nwchem). The binary rpm file of various flavor of NWChem version 6.6, i.e., nwchem-common, nwchem-openmpi, and nwchem-mpich can be found at [PKGS.org](https://pkgs.org/download/nwchem) and [RPM Find](https://www.rpmfind.net/linux/rpm2html/search.php?query=nwchem&submit=Search+...). However, [this website](https://sites.google.com/site/compchem403/personal-area/linux-knowledge/install-nwchem). was written in Thai. If you have any problems you can consult the [Q&A forum of NWChem](http://www.nwchem-sw.org/index.php/Special:AWCforum) or visit [NWChem compilation](http://www.nwchem-sw.org/index.php/Compiling_NWChem#Setting_up_the_proper_environment_variables). You can contact me at e-mail: [rangsiman1993(at)gmail.com](rangsiman1993@gmail.com) and [rangsiman_k(at)sci.tu.ac.th](rangsiman_k@sci.tu.ac.th).
