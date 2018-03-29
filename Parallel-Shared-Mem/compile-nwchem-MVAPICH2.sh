@@ -1,8 +1,11 @@
 #!/bin/bash
-## Rangsiman Ketkaew
-## NWChem 6.6 compiled by this script works well with SGE on Chalawan cluster (http://chalawan.narit.or.th).
-## This script utilized the python 2.6 and mvapich2-2.2b_intel2013.
-## It should be able to make use of a larger number of CPUs across distributed nodes.
+# Bash script for compiling of NWChem on Cluster (multiple computing node) / shared memory using MVAPICH2
+# Written by Rangsiman Ketkaew, MSc student in Chemistry, CCRU, Thammasat University, Thailand.
+# It should be able to make use of a larger number of CPUs across distributed nodes.
+# This script utilized the python 2.6 and mvapich2-2.2b_intel2013.
+
+# The environment variable setting used in this bash script is for compiling NWChem 6.6
+# on SGE on Chalawan cluster (http://chalawan.narit.or.th).
 
 module purge
 module load /share/apps/modulefiles/gcc48 mvapich2-2.2b_intel2013 python2.7
@@ -48,4 +51,3 @@ $MAKE nwchem_config NWCHEM_MODULES="all python" 2>&1 | tee ../make_nwchem_config
 $MAKE 64_to_32 2>&1 | tee ../make_64_to_32_mpich.log
 export MAKEOPTS="USE_64TO32=y"
 $MAKE ${MAKEOPTS} 2>&1 | tee ../makefile.log
-
