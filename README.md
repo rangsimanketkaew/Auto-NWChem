@@ -3,7 +3,7 @@
 A shell script for auto compile NWChem program on CentOS 6.x &amp; 7.x Linux-based. Don't trust the script but it works for me. However, this script can be adjusted and adaptive for other Linux distribution. 
 
 ### Requirement
-* NWChem version 6.6 / 6.8 (or previous version)
+* NWChem version 6.x (recommended is 6.8)
 * CentOS version 6.x / 7.x or Ubuntu 16.x / 17.x (or other Linux distro)
 * Python version 2.6 / 2.7
 * Suitable MPI libraries (e.g. OpenMPI)
@@ -25,7 +25,7 @@ Extract full source code from *.tar.bz2* file using command. Then you should see
 ```
 tar -xvjf nwchem-6.8-release.revision-v6.8-47-gdf6c956-src.2017-12-14.tar.bz2
 ```
-  * **(4)**  Download both of [1_compile.sh](https://github.com/rangsimanketkaew/NWChem/blob/master/1_compile.sh) and [2_path.sh](https://github.com/rangsimanketkaew/NWChem/blob/master/2_path.sh) scripts to */usr/local/src/NWCHEM/nwchem-6.8/*.
+  * **(4)**  Download both of [compile-nwchem-CentOS-OpenMPI-full.sh](https://github.com/rangsimanketkaew/NWChem/blob/master/compile-nwchem-CentOS-OpenMPI-full.sh) script to */usr/local/src/NWCHEM/nwchem-6.8/*.
 ```
 cd /usr/local/src/NWCHEM/nwchem-6.8/
 wget https://raw.githubusercontent.com/rangsimanketkaew/NWChem/master/1_compile.sh
@@ -35,7 +35,7 @@ Run 1_compile.sh using command
 ```
 ./1_compile.sh
 ```
-The process will take you about 30 minutes. If no any error message occurs, run script 2_path.sh to generate the nwchem library.
+The process will take you about 30 minutes.
   * **(5)**  Change directory to your *$HOME* and create a **.nwchemrc** file using command.
 ```
 cd $HOME && touch $HOME/.nwchemrc
