@@ -25,7 +25,7 @@ Extract full source code from *.tar.bz2* file using command. Then you should see
 ```
 tar -xvjf nwchem-6.8-release.revision-v6.8-47-gdf6c956-src.2017-12-14.tar.bz2
 ```
-  * **(4)**  Download both of [compile-nwchem-CentOS-OpenMPI-full.sh](https://github.com/rangsimanketkaew/NWChem/blob/master/compile-nwchem-CentOS-OpenMPI-full.sh) script to */usr/local/src/NWCHEM/nwchem-6.8/*.
+  * **(4)**  Download [compile-nwchem-CentOS-OpenMPI-full.sh](https://github.com/rangsimanketkaew/NWChem/blob/master/compile-nwchem-CentOS-OpenMPI-full.sh) script to */usr/local/src/NWCHEM/nwchem-6.8/*.
 ```
 cd /usr/local/src/NWCHEM/nwchem-6.8/
 wget https://raw.githubusercontent.com/rangsimanketkaew/NWChem/master/1_compile.sh
@@ -57,7 +57,7 @@ Then append the following commands into .nwchemrc file.
 ```
 nwchem test-azulene.nw >& test-azulene.out &
 ```
-Caveat! Note that the day I posted this script I was using NWChem version 6.6 and 6.8.
+Caveat! Note that the day I posted this script I was using NWChem version 6.6 and 6.8 on CentOS 6.9.
 
 ---
 **Optional: PATH SETTING.** Instead of running nwchem using its absolute path, you can make an aliase of NWChem program by adding the *nwchem* absolute path to $PATH using command
