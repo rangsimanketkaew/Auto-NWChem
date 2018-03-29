@@ -45,7 +45,7 @@ chmod 755 cp-nw-CentOS-OpenMPI-auto.sh
 ```
 Enter 1 for compiling NWChem. <br />
 Enter the directory of nwchem-6.x to be used as $NWCHEM_TOP. <br />
-The process will take you about 30 minutes.<br />
+The process will take you about 30 minutes. <br />
   * **(4)**  Setting environmental variable path of NWChem
 Run the script using command
 ```
@@ -114,15 +114,15 @@ Fix: You can fix this error using command
 export LD_LIBRARY_PATH=/usr/local/openmpi/lib/:$LD_LIBRARY_PATH
 source $HOME/.bashrc
 ```
-<br />
-* Error: *utilfname: cannot allocate*  or  *utilfname: cannot allocate:Received an Error in Communication*
+
+* Error: *utilfname: cannot allocate*  or  *utilfname: cannot allocate:Received an Error in Communication* <br />
 when: Running NWChem with MPI and cannot allocate the memory with number of processors.
 Fix: You must specify the amount of memory **PER** processor core that NWChem can possibly employs for a calculation. <br />
 This issue can be easily fixed by *memory* keyword to control the certain memory, for example a following command is used to limit the memory to 1 Gigabyte/process.
 ```
 memory total 1 GB
 ```
-<br />
+
 * Error: about MPI libraries.
 when: Compiling NWChem with make command
 ```
