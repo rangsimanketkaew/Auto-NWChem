@@ -7,16 +7,15 @@ A programing script for auto compile NWChem program on CentOS 6.x &amp; 7.x & Ub
 * Suitable MPI libraries (e.g. OpenMPI)
 * Compiler: Intel, GNU, PGI, etc. More details please consult [NWChem manual](http://www.nwchem-sw.org/index.php/Compiling_NWChem#Setting_up_the_proper_environment_variables).
 ### Installation
-  * **(1)**  Install required package <br />
-CentOS: Install the following package using yum command (root or sudo) <br />
+- **(1)**  Install required package <br />
+> **CentOS**: Install the following package using yum command (root or sudo) <br />
 ```
 yum install python-devel gcc-gfortran openblas-devel openblas-serial64 openmpi-devel scalapack-openmpi-devel blacs-openmpi-devel elpa-openmpi-devel tcsh --enablerepo=epel
 ```
-Ubuntu: Install the following package using apt-get command (root or sudo)
+> **Ubuntu**: Install the following package using apt-get command (root or sudo)
 ```
 sudo apt-get install python-dev gfortran libopenblas-dev libopenmpi-dev openmpi-bin tcsh make 
 ```
-You can update package to the lastest version later. <br />
   * **(2)**  Download program from github <br />
 Create directory NWCHEM at */usr/local/src/*. Then move to NWCHEM direcotry
 ```
