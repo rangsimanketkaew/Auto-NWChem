@@ -12,11 +12,11 @@ CentOS: Install the following package using yum command (root or sudo) <br />
 ```
 yum install python-devel gcc-gfortran openblas-devel openblas-serial64 openmpi-devel scalapack-openmpi-devel blacs-openmpi-devel elpa-openmpi-devel tcsh --enablerepo=epel
 ```
-<br /> Ubuntu: Install the following package using apt-get command (root or sudo)
+Ubuntu: Install the following package using apt-get command (root or sudo)
 ```
 sudo apt-get install python-dev gfortran libopenblas-dev libopenmpi-dev openmpi-bin tcsh make 
 ```
-You can update the package version late. <br />
+You can update package to the lastest version later. <br />
   * **(2)**  Download program from github <br />
 Create directory NWCHEM at */usr/local/src/*. Then move to NWCHEM direcotry
 ```
