@@ -11,8 +11,8 @@ A programing script for auto compile NWChem program on CentOS 6.x &amp; 7.x & Ub
 CentOS: Install the following package using yum command (root or sudo) <br />
 ```
 yum install python-devel gcc-gfortran openblas-devel openblas-serial64 openmpi-devel scalapack-openmpi-devel blacs-openmpi-devel elpa-openmpi-devel tcsh --enablerepo=epel
-``` <br />
-Ubuntu: Install the following package using apt-get command (root or sudo)
+```
+<br /> Ubuntu: Install the following package using apt-get command (root or sudo)
 ```
 sudo apt-get install python-dev gfortran libopenblas-dev libopenmpi-dev openmpi-bin tcsh make 
 ```
