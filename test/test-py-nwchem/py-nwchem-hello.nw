@@ -1,0 +1,7 @@
+## add python block into input deck
+## print HELLO from multiple node 'xx'
+
+python
+  print 'Hello world from process ', ga_nodeid()
+end
+task python
