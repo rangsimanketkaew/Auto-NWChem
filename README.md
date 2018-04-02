@@ -1,4 +1,4 @@
-# The NWChem Auto Compilation
+# NWChem Auto Compilation
 A programing script for auto compile NWChem program on CentOS 6.x &amp; 7.x & Ubuntu 16.x & 17.x. Do not trust the script but it works for me. It can also be adjusted to be compatible with other Linux distribution.
 ### Requirement
 * NWChem version 6.x (recommended is 6.8)
@@ -59,7 +59,7 @@ Run the script using command
 ```
 Enter "3" <br />
 # Post-Compilation
-Run a sample calculation to check whether NWChem program is installed perfectly. I include [a input file](https://github.com/rangsimanketkaew/NWChem/blob/master/test-azulene-dft/test-azulene.nw) of geometry optimization of azulene using DFT/M06-2X/6-31G(d) in gas phase.
+Run a sample calculation to check whether NWChem program is installed perfectly. I include [a input file](https://raw.githubusercontent.com/rangsimanketkaew/NWChem/master/test/test-azulene-dft/test-azulene.nw) of geometry optimization of azulene using DFT/M06-2X/6-31G(d) in gas phase.
 ```
 nwchem test-azulene.nw >& test-azulene.out &
 ```
