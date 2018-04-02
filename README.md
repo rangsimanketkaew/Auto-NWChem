@@ -4,7 +4,7 @@ A programing script for auto compile NWChem program with OpenMPI on CentOS and U
 * NWChem version 6.x (recommended is 6.8)
 * CentOS version 6.x / 7.x or 16.x / 17.x (or other Linux distro)
 * Python version 2.6 / 2.7
-* Suitable MPI libraries (e.g. OpenMPI)
+* Suitable OpenMPI libraries
 * Compiler: Intel, GNU, PGI, etc. More details please consult [NWChem manual](http://www.nwchem-sw.org/index.php/Compiling_NWChem#Setting_up_the_proper_environment_variables).
 ### Installation
 - **(1)**  Install required package <br />
