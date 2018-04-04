@@ -6,17 +6,26 @@ A programing script for auto compile NWChem program with OpenMPI on CentOS and U
 * Python version 2.6 / 2.7
 * Suitable OpenMPI libraries
 * Compiler: Intel, GNU, PGI, etc. More details please consult [NWChem manual](http://www.nwchem-sw.org/index.php/Compiling_NWChem#Setting_up_the_proper_environment_variables).
-## Compilers
-### Intel Compiler Collection (icc)
+### Compilers
+#### Intel Compiler Collection (icc)
 * [Download here](https://software.intel.com/en-us/intel-parallel-studio-xe)
 * Get the free student version (linux), or a real license ($$)
 * Includes MKL Math Library
-
-### GNU Compiler Collection (gcc)
+#### GNU Compiler Collection (gcc)
 * [Download here](http://sourceforge.net/projects/hpc/files/hpc/gcc/gcc-4.9-bin.tar.gz/download?use_mirror=softlayer-dal&download=) 
 * OSX Options:
     * `brew install gcc`
     * [Build instructions for OSX](https://wiki.helsinki.fi/display/HUGG/Installing+the+GNU+compilers+on+Mac+OS+X)
+## Math libraries
+### OpenMPI Installation
+* You can use any version of OpenMPI, e.g., OpenMPI 1.6.5.
+* OpenMPI 1.6.5 source code is at [Download here](https://www.open-mpi.org/software/ompi/v1.6/). 
+* Installation step-by-step [Please visit this website](http://lsi.ugr.es/~jmantas/pdp/ayuda/datos/instalaciones/Install_OpenMPI_en.pdf). 
+* Set the environment variables and libraries properly.
+### OpenBLAS Installation
+* You may need to install OpenBLAS yourself. [Download here](https://github.com/xianyi/OpenBLAS)
+* Installation is here [Installation guide](https://github.com/xianyi/OpenBLAS/wiki/Installation-Guide).
+* OSX: Brew installation will put OpenBlas in `/usr/local/opt/openblas`
 ## Installation
 - **(1)**  Install required package <br />
 > **CentOS**: Install the following package using yum command (root or sudo) <br />
@@ -143,14 +152,5 @@ Fix: Check the suitable libraries that you can use by command
 ```
 mpif90 -show
 ```
-## OpenMPI Installation
-* You can use any version of OpenMPI, e.g., OpenMPI 1.6.5.
-* OpenMPI 1.6.5 source code is at [Download here](https://www.open-mpi.org/software/ompi/v1.6/). 
-* Installation step-by-step [Please visit this website](http://lsi.ugr.es/~jmantas/pdp/ayuda/datos/instalaciones/Install_OpenMPI_en.pdf). 
-* Set the environment variables and libraries properly.
-## OpenBLAS Installation
-* You may need to install OpenBLAS yourself. [Download here](https://github.com/xianyi/OpenBLAS)
-* Installation is here [Installation guide](https://github.com/xianyi/OpenBLAS/wiki/Installation-Guide).
-* OSX: Brew installation will put OpenBlas in `/usr/local/opt/openblas`
 ## More details
 I also provide the scripts (in this repository) of NWChem compilation for other platform or parallel achitecture. Additionally, if compiling of NWChem manually is too difficult, you can install NWChem executable using *rpm* and *yum*, visit [this website](https://sites.google.com/site/compchem403/personal-area/linux-knowledge/install-nwchem). The binary rpm file of various flavor of NWChem version 6.6, i.e., nwchem-common, nwchem-openmpi, and nwchem-mpich can be found at [PKGS.org](https://pkgs.org/download/nwchem) and [RPM Find](https://www.rpmfind.net/linux/rpm2html/search.php?query=nwchem&submit=Search+...). However, [this website](https://sites.google.com/site/compchem403/personal-area/linux-knowledge/install-nwchem). was written in Thai. If you have any problems you can consult the [Q&A forum of NWChem](http://www.nwchem-sw.org/index.php/Special:AWCforum) or visit [NWChem compilation](http://www.nwchem-sw.org/index.php/Compiling_NWChem#Setting_up_the_proper_environment_variables). You can contact me at e-mail: [rangsiman1993(at)gmail.com](rangsiman1993@gmail.com) and [rangsiman_k(at)sci.tu.ac.th](rangsiman_k@sci.tu.ac.th).
