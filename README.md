@@ -1,12 +1,23 @@
 # NWChem Auto Compilation
 A programing script for auto compile NWChem program with OpenMPI on CentOS and Ubuntu. Do not trust the script but it works for me. It can also be adjusted to be compatible with other Linux distribution.
-### Requirement
+## Requirement
 * NWChem version 6.x (recommended is 6.8)
 * CentOS version 6.x / 7.x or 16.x / 17.x (or other Linux distro)
 * Python version 2.6 / 2.7
 * Suitable OpenMPI libraries
 * Compiler: Intel, GNU, PGI, etc. More details please consult [NWChem manual](http://www.nwchem-sw.org/index.php/Compiling_NWChem#Setting_up_the_proper_environment_variables).
-### Installation
+## Compilers
+### Intel Compiler Collection (icc)
+* [Download here](https://software.intel.com/en-us/intel-parallel-studio-xe)
+* Get the free student version (linux), or a real license ($$)
+* Includes MKL Math Library
+
+### GNU Compiler Collection (gcc)
+* [Download here](http://sourceforge.net/projects/hpc/files/hpc/gcc/gcc-4.9-bin.tar.gz/download?use_mirror=softlayer-dal&download=) 
+* OSX Options:
+    * `brew install gcc`
+    * [Build instructions for OSX](https://wiki.helsinki.fi/display/HUGG/Installing+the+GNU+compilers+on+Mac+OS+X)
+## Installation
 - **(1)**  Install required package <br />
 > **CentOS**: Install the following package using yum command (root or sudo) <br />
 ```
@@ -58,7 +69,7 @@ Run the script using command
 ./cp-nw-CentOS-OpenMPI-auto.sh
 ```
 Enter "3" <br />
-# Post-Compilation
+## Post-Compilation
 Run a sample calculation to check whether NWChem program is installed perfectly. I include [a input file](https://raw.githubusercontent.com/rangsimanketkaew/NWChem/master/test/test-azulene-dft/test-azulene.nw) of geometry optimization of azulene using DFT/M06-2X/6-31G(d) in gas phase.
 ```
 nwchem test-azulene.nw >& test-azulene.out &
@@ -77,7 +88,7 @@ Then activate the *.bashrc* file
 source /home/$USER/.bashrc
 ```
 Try to logout and login again, now you can run NWChem via *nwchem*.
-# Running NWChem
+## Running NWChem
 You can try to run nwchem with example file offered by the developer. A ton of input & output files are at **/usr/local/src/NWCHEM/nwchem-6.6/examples/** and **/usr/local/src/NWCHEM/nwchem-6.6/QA/tests**. Running calculation on standalone machine or HPC cluster with OpenMPI parallel using command
 ```
 mpirun -np N nwchem INPUT-FILE.nw >& OUTPUT-FILE.log
@@ -105,7 +116,7 @@ mpirun -genv OMP_NUM_THREADS M -genv MV2_ENABLE_AFFINITY 0 -np N nwchem INPUT-FI
 ```
 The total number of cpu cores used for this calculation will be M x N. <br />
 If you run NWChem using command like *"mpirun -np N nwchem INPUT-FILE.nw"*, this means the memory required for this calculation = (1 GB)x(N processors). More details of memory arrangement can be found on [this website](http://www.nwchem-sw.org/index.php/Release66:Top-level#MEMORY)
-# Error & Fixing
+## Error & Fixing
 * Error: *libmpi_f90.so.1: cannot open*
 When: Installing NWChem using **make** or **configuration setting up** command.<br />
 Fix: You can fix this error using command
@@ -132,10 +143,14 @@ Fix: Check the suitable libraries that you can use by command
 ```
 mpif90 -show
 ```
-## OpenMPI 1.6.5 Installation
-[Please visit this website](http://lsi.ugr.es/~jmantas/pdp/ayuda/datos/instalaciones/Install_OpenMPI_en.pdf). Not only version 1.6.5, but also other version says 2.x are also used in conjunction with NWChem compilation as long as you set the linkink and compatible libraries correctly.
+## OpenMPI Installation
+* You can use any version of OpenMPI, e.g., OpenMPI 1.6.5.
+* OpenMPI 1.6.5 source code is at [Download here](https://www.open-mpi.org/software/ompi/v1.6/). 
+* Installation step-by-step [Please visit this website](http://lsi.ugr.es/~jmantas/pdp/ayuda/datos/instalaciones/Install_OpenMPI_en.pdf). 
+* Set the environment variables and libraries properly.
 ## OpenBLAS Installation
-You may need to install OpenBLAS yourself. Download source file at [Download here](https://www.open-mpi.org/software/ompi/v1.6/) <br />
-Explanation of installation is here [Installation guide](https://github.com/xianyi/OpenBLAS/wiki/Installation-Guide).
+* You may need to install OpenBLAS yourself. [Download here](https://github.com/xianyi/OpenBLAS)
+* Installation is here [Installation guide](https://github.com/xianyi/OpenBLAS/wiki/Installation-Guide).
+* OSX: Brew installation will put OpenBlas in `/usr/local/opt/openblas`
 ## More details
 I also provide the scripts (in this repository) of NWChem compilation for other platform or parallel achitecture. Additionally, if compiling of NWChem manually is too difficult, you can install NWChem executable using *rpm* and *yum*, visit [this website](https://sites.google.com/site/compchem403/personal-area/linux-knowledge/install-nwchem). The binary rpm file of various flavor of NWChem version 6.6, i.e., nwchem-common, nwchem-openmpi, and nwchem-mpich can be found at [PKGS.org](https://pkgs.org/download/nwchem) and [RPM Find](https://www.rpmfind.net/linux/rpm2html/search.php?query=nwchem&submit=Search+...). However, [this website](https://sites.google.com/site/compchem403/personal-area/linux-knowledge/install-nwchem). was written in Thai. If you have any problems you can consult the [Q&A forum of NWChem](http://www.nwchem-sw.org/index.php/Special:AWCforum) or visit [NWChem compilation](http://www.nwchem-sw.org/index.php/Compiling_NWChem#Setting_up_the_proper_environment_variables). You can contact me at e-mail: [rangsiman1993(at)gmail.com](rangsiman1993@gmail.com) and [rangsiman_k(at)sci.tu.ac.th](rangsiman_k@sci.tu.ac.th).
