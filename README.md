@@ -16,13 +16,13 @@ A programing script for auto compile NWChem program with OpenMPI on CentOS and U
 * OSX Options:
     * `brew install gcc`
     * [Build instructions for OSX](https://wiki.helsinki.fi/display/HUGG/Installing+the+GNU+compilers+on+Mac+OS+X)
-## Math libraries
-### OpenMPI Installation
+### Math libraries
+#### OpenMPI Installation
 * You can use any version of OpenMPI, e.g., OpenMPI 1.6.5.
 * OpenMPI 1.6.5 source code is at [Download here](https://www.open-mpi.org/software/ompi/v1.6/). 
 * Installation step-by-step [Please visit this website](http://lsi.ugr.es/~jmantas/pdp/ayuda/datos/instalaciones/Install_OpenMPI_en.pdf). 
 * Set the environment variables and libraries properly.
-### OpenBLAS Installation
+#### OpenBLAS Installation
 * You may need to install OpenBLAS yourself. [Download here](https://github.com/xianyi/OpenBLAS)
 * Installation is here [Installation guide](https://github.com/xianyi/OpenBLAS/wiki/Installation-Guide).
 * OSX: Brew installation will put OpenBlas in `/usr/local/opt/openblas`
