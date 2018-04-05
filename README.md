@@ -2,7 +2,7 @@
 
 ![Capture_Menu](https://github.com/rangsimanketkaew/NWChem/blob/master/etc/Capture_menu.PNG)
 
-A programing script for auto compile NWChem program on CentOS and Ubuntu. Do not trust the script but it works for me. It can also be adjusted to be compatible with other Linux distribution. <br />
+A programing script for auto compile NWChem program on CentOS and Ubuntu. . It can also be adjusted to be compatible with other Linux distribution. <br />
 
 ## Requirement
 * NWChem version 6.8 (lastest version)
@@ -67,19 +67,19 @@ Run the script using command
 chmod 755 cp-nw-CentOS-OpenMPI-auto.sh
 ./cp-nw-CentOS-OpenMPI-auto.sh
 ```
---> Enter 1 for compiling NWChem. <br />
+--> Enter 2 for compiling NWChem. <br />
 --> Enter the directory of nwchem-6.x to be used as $NWCHEM_TOP. <br />
 The process will take you about 30 minutes. <br />
   * **(4)**  Setting of environmental variable for NWChem: Run the script using command
 ```
 ./cp-nw-CentOS-OpenMPI-auto.sh
 ```
---> Enter "2" <br />
+--> Enter "3" <br />
   * **(5)**  Make resource file for NWChem: Run the script using command
 ```
 ./cp-nw-CentOS-OpenMPI-auto.sh
 ```
---> Enter "3" <br />
+--> Enter "4" <br />
 The resource file of NWChem *.nwchemrc* should be located at your $HOME directory. <br />
 ## Post-Compilation
 Run a sample calculation to check whether NWChem program is installed perfectly. I include [a input file](https://raw.githubusercontent.com/rangsimanketkaew/NWChem/master/test/test-azulene-dft/test-azulene.nw) of geometry optimization of azulene using DFT/M06-2X/6-31G(d) in gas phase.
@@ -156,4 +156,9 @@ Fix: Check the suitable libraries that you can use by command
 mpif90 -show
 ```
 ## More details
-I also provide the scripts (in this repository) of NWChem compilation for other platform or parallel achitecture. Additionally, if compiling of NWChem manually is too difficult, you can install NWChem executable using *rpm* and *yum*, visit [this website](https://sites.google.com/site/compchem403/personal-area/linux-knowledge/install-nwchem). The binary rpm file of various flavor of NWChem version 6.6, i.e., nwchem-common, nwchem-openmpi, and nwchem-mpich can be found at [PKGS.org](https://pkgs.org/download/nwchem) and [RPM Find](https://www.rpmfind.net/linux/rpm2html/search.php?query=nwchem&submit=Search+...). However, [this website](https://sites.google.com/site/compchem403/personal-area/linux-knowledge/install-nwchem). was written in Thai. If you have any problems you can consult the [Q&A forum of NWChem](http://www.nwchem-sw.org/index.php/Special:AWCforum) or visit [NWChem compilation](http://www.nwchem-sw.org/index.php/Compiling_NWChem#Setting_up_the_proper_environment_variables). You can contact me at e-mail: [rangsiman1993(at)gmail.com](rangsiman1993@gmail.com) and [rangsiman_k(at)sci.tu.ac.th](rangsiman_k@sci.tu.ac.th).
+- You should pay attention to NWChem manual before using my script. Do not trust the script but it works for me.
+- I also provide the scripts (in this repository) of NWChem compilation for other platform or parallel achitecture. 
+- If compiling of NWChem using hand-made script is too difficult, you can install NWChem executable using *rpm* and *yum*, visit [this website](https://sites.google.com/site/compchem403/personal-area/linux-knowledge/install-nwchem). The binary rpm file of various flavor of NWChem version 6.6, i.e., nwchem-common, nwchem-openmpi, and nwchem-mpich can be found at [PKGS.org](https://pkgs.org/download/nwchem) and [RPM Find](https://www.rpmfind.net/linux/rpm2html/search.php?query=nwchem&submit=Search+...). 
+- [This post](https://sites.google.com/site/compchem403/personal-area/linux-knowledge/install-nwchem) in my website might be helpful.
+- If you have any problems you can consult the [Q&A forum of NWChem](http://www.nwchem-sw.org/index.php/Special:AWCforum) or visit [NWChem compilation](http://www.nwchem-sw.org/index.php/Compiling_NWChem#Setting_up_the_proper_environment_variables). 
+- You can contact me at e-mail: [rangsiman1993(at)gmail.com](rangsiman1993@gmail.com) and [rangsiman_k(at)sci.tu.ac.th](rangsiman_k@sci.tu.ac.th).
