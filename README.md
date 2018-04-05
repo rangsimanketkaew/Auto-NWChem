@@ -26,6 +26,7 @@ A programing script for auto compile NWChem program on CentOS and Ubuntu. Do not
 * You may need to install OpenBLAS yourself. [Download here](https://github.com/xianyi/OpenBLAS)
 * Installation is here [Installation guide](https://github.com/xianyi/OpenBLAS/wiki/Installation-Guide).
 * OSX: Brew installation will put OpenBlas in `/usr/local/opt/openblas`
+---
 ## Installation
 - **(1)**  Install required package <br />
 > **CentOS**: Install the following package using yum command (root or sudo) <br />
@@ -36,7 +37,7 @@ yum install python-devel gcc-gfortran openblas-devel openblas-serial64 openmpi-d
 ```
 sudo apt-get install python-dev gfortran libopenblas-dev libopenmpi-dev openmpi-bin tcsh make 
 ```
-fff<br />
+For other Linux distro should consult the manual. <br />
   * **(2)**  Download program from github <br />
 Create directory NWCHEM at */usr/local/src/*. Then move to NWCHEM direcotry
 ```
