@@ -1,7 +1,7 @@
 # NWChem Auto Compilation
 A programing script for auto compile NWChem program on CentOS and Ubuntu. Do not trust the script but it works for me. It can also be adjusted to be compatible with other Linux distribution.
 ## Requirement
-* NWChem version 6.x (recommended is 6.8)
+* NWChem version 6.8 (lastest version)
 * CentOS version 6.x / 7.x or 16.x / 17.x (or other Linux distro)
 * Python version 2.6 / 2.7
 * Suitable OpenMPI libraries
