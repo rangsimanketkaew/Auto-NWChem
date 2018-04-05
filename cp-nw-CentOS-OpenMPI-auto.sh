@@ -4,8 +4,8 @@
 
 echo "========== Welcome ==========
  [1] Compile NWChem program
- [2] Setting environment variable
- [3] Setting resource file
+ [2] Set environment variable
+ [3] Make resource file
  [4] Contact me
  [5] Exit"
 read -p "Enter: " inp1
