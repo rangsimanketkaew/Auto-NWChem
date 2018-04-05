@@ -27,14 +27,15 @@ menu
 comment
 
 if [ $inp1 == 1 ];then
-
 	MPIF90_LIB=`mpif90 -show|grep -o -- '-lm[^ ]\+'|xargs`
 	MPIRUN_VER=`mpirun --version|grep 'mpirun'`
 	echo "<> You are using --> $MPIRUN_VER"
 	echo "<> Suitable MPI libraries are --> $MPIF90_LIB"
+	read -p "Enter to Menu"
+	menu
 
 :<<'comment'
-	 (2) Environmental configuration & Compilation using Make
+	 (2) Configuration & Compile program using Make
 	 export NWCHEM_TOP=/nwchem/install/folder/
 	 I use an openmpi-1.6.5 as mpirun which is installed at $inp3/openmpi/
 	 I use python version 2.7.x (checking by $ python --version)
@@ -42,9 +43,10 @@ if [ $inp1 == 1 ];then
 comment
 
 elif [ $inp1 == 2 ];then
-	read -p "Enter \$NWCHEM_TOP, e.g., /home/jack/nwchem-6.8: " inp2
 
-	if [ -e $inp2 ];then
+	read -p "Enter full path of nwchem program, e.g., /home/nutt/nwchem-6.8: " inp2
+
+	if [ -e $inp2/src ];then
 
 		export NWCHEM_TOP=$inp2
 		cd $NWCHEM_TOP/src
@@ -89,7 +91,7 @@ elif [ $inp1 == 2 ];then
 		fi
 
 	else
-		echo "No >> $inp2 << directory"
+		echo "No program source code found in $inp2 directory"
 		read -p "Enter to Menu"
 		menu
 	fi
@@ -158,8 +160,8 @@ elif [ $inp1 == 4 ];then
 
 elif [ $inp1 == 5 ];then
 	echo -e " <> Rangsiman Ketkaew (MSc), Department of Chemsitry, Thammasat University, Thailand \n" \
-		" <> rangsiman1993@gmail.com \n" \
-		" <> https://github.com/rangsimanketkaew" 
+		"<> rangsiman1993@gmail.com \n" \
+		"<> https://github.com/rangsimanketkaew" 
 
 elif [ $inp1 == 6 ];then
 	echo "Bye bye .... :)"
