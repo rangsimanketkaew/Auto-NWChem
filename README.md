@@ -36,6 +36,7 @@ yum install python-devel gcc-gfortran openblas-devel openblas-serial64 openmpi-d
 ```
 sudo apt-get install python-dev gfortran libopenblas-dev libopenmpi-dev openmpi-bin tcsh make 
 ```
+<br />
   * **(2)**  Download program from github <br />
 Create directory NWCHEM at */usr/local/src/*. Then move to NWCHEM direcotry
 ```
@@ -50,7 +51,7 @@ Then extract the source code *.tar.bz2* file using command
 tar -xvjf nwchem-6.8-release.revision-v6.8-47-gdf6c956-src.2017-12-14.tar.bz2
 ```
 You should see *nwchem-6.8* directory. <br />
-* **(3)** Compiling program <br />
+* **(3)** Compiling NWChem <br />
 Download [cp-nw-CentOS-OpenMPI-auto.sh](https://raw.githubusercontent.com/rangsimanketkaew/NWChem/master/cp-nw-CentOS-OpenMPI-auto.sh) script to */usr/local/src/NWCHEM/nwchem-6.8/*.
 ```
 cd /usr/local/src/NWCHEM/nwchem-6.8/
@@ -61,22 +62,20 @@ Run the script using command
 chmod 755 cp-nw-CentOS-OpenMPI-auto.sh
 ./cp-nw-CentOS-OpenMPI-auto.sh
 ```
-Enter 1 for compiling NWChem. <br />
-Enter the directory of nwchem-6.x to be used as $NWCHEM_TOP. <br />
+--> Enter 1 for compiling NWChem. <br />
+--> Enter the directory of nwchem-6.x to be used as $NWCHEM_TOP. <br />
 The process will take you about 30 minutes. <br />
-  * **(4)**  Setting environmental variable path of NWChem
-Run the script using command
+  * **(4)**  Setting of environmental variable for NWChem: Run the script using command
 ```
 ./cp-nw-CentOS-OpenMPI-auto.sh
 ```
-Enter "2" <br />
-
-  * **(5)**  Setting resource file *.nwchemrc* <br />
-Run the script using command
+--> Enter "2" <br />
+  * **(5)**  Make resource file for NWChem: Run the script using command
 ```
 ./cp-nw-CentOS-OpenMPI-auto.sh
 ```
-Enter "3" <br />
+--> Enter "3" <br />
+The resource file of NWChem *.nwchemrc* should be located at your $HOME directory. <br />
 ## Post-Compilation
 Run a sample calculation to check whether NWChem program is installed perfectly. I include [a input file](https://raw.githubusercontent.com/rangsimanketkaew/NWChem/master/test/test-azulene-dft/test-azulene.nw) of geometry optimization of azulene using DFT/M06-2X/6-31G(d) in gas phase.
 ```
