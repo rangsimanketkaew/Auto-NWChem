@@ -137,7 +137,7 @@ export LD_LIBRARY_PATH=/usr/local/openmpi/lib/:$LD_LIBRARY_PATH
 source $HOME/.bashrc
 ```
 
-* Error: `utilfname: cannot allocate`  or  ``utilfname: cannot allocate:Received an Error in Communication`` <br />
+* Error: `utilfname: cannot allocate`  or  `utilfname: cannot allocate:Received an Error in Communication` <br />
 When: Running NWChem with MPI and cannot allocate the memory with number of processors. <br />
 Fix: You must specify the amount of memory **PER** processor core that NWChem can possibly employs for a calculation. <br />
 This issue can be easily fixed by *memory* keyword to control the certain memory, for example a following command is used to limit the memory to 1 Gigabyte/process.
@@ -145,13 +145,9 @@ This issue can be easily fixed by *memory* keyword to control the certain memory
 memory total 1 GB
 ```
 
-* Error: about MPI libraries <br />
-```
-GNUmakefile:103: recipe for target 'libraries' failed
-make: *** [libraries] Error 1
-```
+* Error: `GNUmakefile:103: recipe for target 'libraries' failed` and `make: *** [libraries] Error 1 ` <br />
 When: Compiling NWChem with make command <br />
-Fix: Check the suitable libraries that you can use by command
+Fix: Check the suitable MPI libraries that you can use. Run the script and press [1] or run following command
 ```
 mpif90 -show
 ```
