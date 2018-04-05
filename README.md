@@ -125,8 +125,8 @@ mpirun -genv OMP_NUM_THREADS M -genv MV2_ENABLE_AFFINITY 0 -np N nwchem INPUT-FI
 The total number of cpu cores used for this calculation will be M x N. <br />
 If you run NWChem using command like *"mpirun -np N nwchem INPUT-FILE.nw"*, this means the memory required for this calculation = (1 GB)x(N processors). More details of memory arrangement can be found on [this website](http://www.nwchem-sw.org/index.php/Release66:Top-level#MEMORY)
 ## Error & Fixing
-* Error: *libmpi_f90.so.1: cannot open*
-When: Installing NWChem using **make** or **configuration setting up** command.<br />
+* Error: *libmpi_f90.so.1: cannot open* <br />
+When: Installing NWChem using **make** or **configuration setting up** command. <br />
 Fix: You can fix this error using command
 ```
 export LD_LIBRARY_PATH=/usr/local/openmpi/lib/:$LD_LIBRARY_PATH
@@ -134,19 +134,19 @@ source $HOME/.bashrc
 ```
 
 * Error: *utilfname: cannot allocate*  or  *utilfname: cannot allocate:Received an Error in Communication* <br />
-when: Running NWChem with MPI and cannot allocate the memory with number of processors.
+When: Running NWChem with MPI and cannot allocate the memory with number of processors.
 Fix: You must specify the amount of memory **PER** processor core that NWChem can possibly employs for a calculation. <br />
 This issue can be easily fixed by *memory* keyword to control the certain memory, for example a following command is used to limit the memory to 1 Gigabyte/process.
 ```
 memory total 1 GB
 ```
 
-* Error: about MPI libraries.
-when: Compiling NWChem with make command
+* Error: about MPI libraries <br />
 ```
 GNUmakefile:103: recipe for target 'libraries' failed
 make: *** [libraries] Error 1
 ```
+When: Compiling NWChem with make command <br />
 Fix: Check the suitable libraries that you can use by command
 ```
 mpif90 -show
