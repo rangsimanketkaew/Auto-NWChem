@@ -4,7 +4,7 @@
 
 A programing script for auto compile NWChem program on CentOS and Ubuntu. . It can also be adjusted to be compatible with other Linux distribution. <br />
 
-## Requirement
+## Prerequisites
 * NWChem version 6.8 (lastest version)
 * CentOS version 6.x / 7.x or 16.x / 17.x (or other Linux distro)
 * Python version 2.6 / 2.7
@@ -31,7 +31,7 @@ A programing script for auto compile NWChem program on CentOS and Ubuntu. . It c
 * Installation is here [Installation guide](https://github.com/xianyi/OpenBLAS/wiki/Installation-Guide).
 * OSX: Brew installation will put OpenBlas in `/usr/local/opt/openblas`
 ---
-## Installation
+## Installing
 - **(1)**  Install required package <br />
 > **CentOS**: Install the following package using yum command (root or sudo) <br />
 ```
@@ -100,7 +100,7 @@ Then activate the *.bashrc* file
 source /home/$USER/.bashrc
 ```
 Try to logout and login again, now you can run NWChem via *nwchem*.
-## Running NWChem
+## Running the tests
 You can try to run nwchem with example file offered by the developer. A ton of input & output files are at **/usr/local/src/NWCHEM/nwchem-6.6/examples/** and **/usr/local/src/NWCHEM/nwchem-6.6/QA/tests**. Running calculation on standalone machine or HPC cluster with OpenMPI parallel using command
 ```
 mpirun -np N nwchem INPUT-FILE.nw >& OUTPUT-FILE.log
