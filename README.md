@@ -41,16 +41,15 @@ Create directory NWCHEM at */usr/local/src/*. Then move to NWCHEM direcotry
 ```
 mkdir /usr/local/src/NWCHEM && cd /usr/local/src/NWCHEM
 ```
-Then download program source code from [NWChem github](https://github.com/nwchemgit/nwchem) to your Linux machine using **wget** command. The release of NWChem can be found [here](https://github.com/nwchemgit/nwchem/releases/tag/v6.8-release). <br />
-I downloaded the NWChem 6.8 using command
+Then download program source code from [NWChem github](https://github.com/nwchemgit/nwchem) to your Linux machine using **wget** command. The release of NWChem can be found [here](https://github.com/nwchemgit/nwchem/releases/tag/v6.8-release). You can download source code (compress file) of NWChem 6.8 using command
 ```
 wget https://github.com/nwchemgit/nwchem/releases/download/v6.8-release/nwchem-6.8-release.revision-v6.8-47-gdf6c956-src.2017-12-14.tar.bz2
 ```
-Extract full source code from *.tar.bz2* file using command.
+Then extract the source code *.tar.bz2* file using command
 ```
 tar -xvjf nwchem-6.8-release.revision-v6.8-47-gdf6c956-src.2017-12-14.tar.bz2
 ```
-Then you should see *nwchem-6.8 directory*. <br />
+You should see *nwchem-6.8* directory. <br />
 * **(3)** Compiling program <br />
 Download [cp-nw-CentOS-OpenMPI-auto.sh](https://raw.githubusercontent.com/rangsimanketkaew/NWChem/master/cp-nw-CentOS-OpenMPI-auto.sh) script to */usr/local/src/NWCHEM/nwchem-6.8/*.
 ```
