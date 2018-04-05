@@ -36,7 +36,7 @@ yum install python-devel gcc-gfortran openblas-devel openblas-serial64 openmpi-d
 ```
 sudo apt-get install python-dev gfortran libopenblas-dev libopenmpi-dev openmpi-bin tcsh make 
 ```
-<br />
+fff<br />
   * **(2)**  Download program from github <br />
 Create directory NWCHEM at */usr/local/src/*. Then move to NWCHEM direcotry
 ```
