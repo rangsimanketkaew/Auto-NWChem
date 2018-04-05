@@ -101,7 +101,7 @@ source /home/$USER/.bashrc
 ```
 Try to logout and login again, now you can run NWChem via *nwchem*.
 ## Running the tests
-You can try to run nwchem with example file offered by the developer. A ton of input & output files are at **/usr/local/src/NWCHEM/nwchem-6.6/examples/** and **/usr/local/src/NWCHEM/nwchem-6.6/QA/tests**. Running calculation on standalone machine or HPC cluster with OpenMPI parallel using command
+You can try to run nwchem with example file offered by the developer. A ton of input & output files are at **$NWCHEM_TOP/QA/tests** and **$NWCHEM_TOP/examples/**. Running NWChem calculation on standalone machine or HPC cluster with OpenMPI parallel using command
 ```
 mpirun -np N nwchem INPUT-FILE.nw >& OUTPUT-FILE.log
 ```
