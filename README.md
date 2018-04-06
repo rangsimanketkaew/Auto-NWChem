@@ -66,15 +66,15 @@ Change permission of script and run script using command
 chmod 755 compile-nwchem-auto.sh
 ./compile-nwchem-auto.sh
 ```
-Enter 2 for compiling NWChem. <br />
+Enter 2 to compile program. <br />
 Enter the full path of nwchem-6.x direcotry to set **NWCHEM_TOP**, e.g., /home/nutt/nwchem-6.8/. <br />
-Enter again if all environment variable corrects. <br />
+If all environment variable corrects, enter again to start compilation. <br />
 The process will take you about 30 minutes. <br />
   * **(4)**  Setting of environmental variable for NWChem: Run the script and enter 3. <br />
   * **(5)**  Make resource file for NWChem: Run the script and enter 4. <br />
-The resource file of NWChem *.nwchemrc* should be located at your $HOME directory. <br />
+The resource file (*.nwchemrc*) should be located at your $HOME directory. <br />
 ## Post-Compilation
-Run a sample calculation to check whether NWChem program is installed perfectly. I include [a input file](https://raw.githubusercontent.com/rangsimanketkaew/NWChem/master/test/test-azulene-dft/test-azulene.nw) of geometry optimization of azulene using DFT/M06-2X/6-31G(d) in gas phase.
+Run a sample calculation to check whether NWChem is installed perfectly. I include [a input file](https://raw.githubusercontent.com/rangsimanketkaew/NWChem/master/test/test-azulene-dft/test-azulene.nw) of geometry optimization of azulene using DFT/M06-2X/6-31G(d) in gas phase.
 ```
 nwchem test-azulene.nw >& test-azulene.out &
 ```
