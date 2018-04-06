@@ -1,48 +1,96 @@
 #!/bin/bash
-# Bash script for compiling of NWChem with OpenMPI on Centos and Ubuntu.
-# Written by Rangsiman Ketkaew, MSc student in Chemistry, CCRU, Thammasat University, Thailand.
+:<<'comment'
+Bash script for compiling NWChem program with OpenMPI on Centos and Ubuntu.
+Written by Rangsiman Ketkaew, MSc student in Chemistry, CCRU, Thammasat University, Thailand.
+version 1.1 Create script
+version 1.2 Make option using CASE
+comment
 
-menu(){
-	clear
-	echo " =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-="
-	echo " << NWChem Auto Compilation Script >>"
-	echo -e " =-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= \n" \
-		"= [1] Check Libraries               = \n" \
-		"= [2] Compile NWChem program        = \n" \
-		"= [3] Set environment variable      = \n" \
-		"= [4] Make resource file            = \n" \
-		"= [5] Contact me                    = \n" \
-		"= [6] Exit or ctrl + c              = \n" \
-	        "=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-= \n"
-	read -p "Enter: " inp1
-}
+if [ "$1" == "-h" ] || [ "$1" == "--help" ] || [ "$1" == "-help" ]; then
+	echo -e "
+################################## NWCHEM Auto Compilation #######################################
 
-menu
+[] Description of each option.
+
+1 = Check Libraries
+    Check version of 'mpirun' (openmpi) & math libraries & version of python that you are using
+2 = Compile NWChem program
+    Config & compile program using make at $NWCHEM_TOP.
+    Caveat: I use an openmpi-1.6.5 ($ mpirun --version.
+            I use python version 2.7 ($ python --version).
+3 = Set environment variable
+    Determine the local storage path for the install files. (e.g., /usr/local/).
+4 = Make resource file
+    Create resource file (.nwchemrc) at your home directory.
+5 = Author & Contact
+6 = Exit or ctrl + c
+    Exit script
+
+##################################################################################################
+
+[] Prerequisites
+
+  - CentOS version 6.x / 7.x or 16.x / 17.x (or other Linux distro)
+  - Bash shell
+  - Python version 2.6 / 2.7
+  - OpenMPI and suitable libraries
+  - Compiler: Intel, GNU, PGI, etc. More details please consult NWChem manual.
+
+##################################################################################################
+
+[] Installing
+
+  1. run this script
+  2. Enter option 1 to check the version and suitable libraries of openmpi.
+  3. Enter option 2 to compile program.
+  4. Wait ... for ... 30 min until make completes.
+  5. Enter option 3 to set the env variable of nwchem.
+  6. Enter option 4 to create the resource file of program.
+  7. Run test calculation & Enjoy NWChem.
+
+  - More details: https://github.com/rangsimanketkaew/NWChem
+
+##################################################################################################
+"|less
+	exit 0
+fi
+
+clear
+echo "##### NWCHEM Auto Compilation #####"
+PS3="##### Enter Your Choice: "
+
+OPT1="Check Libraries"
+OPT2="Compile NWChem program"
+OPT3="Set environment variable"
+OPT4="Make resource file"
+OPT5="Author & Contact"
+OPT6="Exit or ctrl + c"
+OPTION=("$OPT1" "$OPT2" "$OPT3" "$OPT4" "$OPT5" "$OPT6")
+select choice in  "${OPTION[@]}"
+
+do
+	case $choice in
+	$OPT1)
 
 :<<'comment'
 	 (1) Check Libraries
-	 1.Check Math libraries: mpi90 show
-	 2.Check OpenMPI version: mpirun --version
-	 3.Check Python version: python --version
+	 1.Check OpenMPI version: mpirun --version
+	 2.Check Math libraries: mpi90 show
 comment
 
-if [ $inp1 == 1 ];then
 	MPIF90_LIB=`mpif90 -show|grep -o -- '-lm[^ ]\+'|xargs`
 	MPIRUN_VER=`mpirun --version|grep 'mpirun'`
 	echo "<> You are using --> $MPIRUN_VER"
 	echo "<> Suitable MPI libraries are --> $MPIF90_LIB"
-	read -p "Enter to Menu"
-	menu
+
+	;;
+	$OPT2)
 
 :<<'comment'
 	 (2) Configuration & Compile program using Make
 	 export NWCHEM_TOP=/nwchem/install/folder/
-	 I use an openmpi-1.6.5 as mpirun which is installed at $inp3/openmpi/
-	 I use python version 2.7.x (checking by $ python --version)
-	 Show a library for MPI using command $ mpif90 -show or Choose [1] from Menu
+	 Show a library for MPI using command $ mpif90 -show or Choose [1] from Menu  
 comment
-
-elif [ $inp1 == 2 ];then
 
 	read -p "Enter full path of nwchem program, e.g., /home/nutt/nwchem-6.8: " inp2
 
@@ -92,10 +140,10 @@ elif [ $inp1 == 2 ];then
 
 	else
 		echo "No program source code found in $inp2 directory"
-		read -p "Enter to Menu"
-		menu
 	fi
-		exit
+
+	;;
+	$OPT3)
 
 :<<'comment'
 	 (3) set environment variables for NWChem
@@ -104,7 +152,6 @@ elif [ $inp1 == 2 ];then
 	 Make directories
 comment
 
-elif [ $inp1 == 3 ];then
 	read -p "Enter directory for nwchem.exe and libraries: " inp3
 
 	if [ -e $inp3 ]; then 
@@ -130,20 +177,18 @@ elif [ $inp1 == 3 ];then
 
 	else
 		echo "No $inp3 directory"
-		read -p "enter to Menu"
-		menu
 	fi
+
+	;;
+	$OPT4)
 
 :<<'comment'
 	 (4) Creat a .nwchemrc file to point to these default data files.
 comment
 
-elif [ $inp1 == 4 ];then
 	if [ -e $HOME/.nwchemrc ];then
 		echo "You already have .nwchemrc file in your home directory"
 		echo "Please check it!"
-		read -p "Enter to Menu"
-		menu
 	else
 		touch $HOME/.nwchemrc
 		echo -e "nwchem_basis_library $inp3/nwchem/data/libraries/ \n" \
@@ -158,17 +203,23 @@ elif [ $inp1 == 4 ];then
 			"charmm_x $inp3/nwchem/data/charmm_x/" >> $HOME/.nwchemrc
 	fi
 
-elif [ $inp1 == 5 ];then
+	;;
+	$OPT5)
+
 	echo -e " <> Rangsiman Ketkaew (MSc), Department of Chemsitry, Thammasat University, Thailand \n" \
 		"<> rangsiman1993@gmail.com \n" \
 		"<> https://github.com/rangsimanketkaew" 
 
-elif [ $inp1 == 6 ];then
+	;;
+	$OPT6)
+	
 	echo "Bye bye .... :)"
-	exit
-else
-	echo "You enter an incorrect choice"
-	read -p "Enter to Menu"
-	menu
-fi
-	exit
+	break
+
+	;;
+	*)
+
+	echo "Invalid option"
+
+	esac
+done
