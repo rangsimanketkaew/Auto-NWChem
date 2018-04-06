@@ -73,9 +73,12 @@ You should see *nwchem-6.8* directory. <br />
 wget https://raw.githubusercontent.com/rangsimanketkaew/NWChem/master/compile-nwchem-auto.sh
 ```
 
-Change permission of script and run script using command
+Change permission of script.
 ```
 chmod 755 compile-nwchem-auto.sh
+```
+Run script using
+```
 ./compile-nwchem-auto.sh
 ```
 Enter 2 to compile program. <br />
@@ -83,6 +86,11 @@ Enter the full path of nwchem-6.x direcotry to set **NWCHEM_TOP**, e.g., /home/n
 If all environment variable corrects, enter again to start compilation. <br />
 The process will take you about 30 minutes. <br />
 
+P.S. use following command to see HELP of script.
+```
+./compile-nwchem-auto.sh -h
+```
+<br />
 * **(4)**  Setting of environmental variable for NWChem: Run the script and enter 3. <br />
 
 * **(5)**  Make resource file for NWChem: Run the script and enter 4. <br />
