@@ -60,24 +60,24 @@ You should see *nwchem-6.8* directory. <br />
 Download [compile-nwchem-auto.sh](https://raw.githubusercontent.com/rangsimanketkaew/NWChem/master/compile-nwchem-auto.sh) script to */usr/local/src/NWCHEM/nwchem-6.8/*.
 ```
 cd /usr/local/src/NWCHEM/nwchem-6.8/
-wget https://raw.githubusercontent.com/rangsimanketkaew/NWChem/master/compile-nwchem-CentOS-OpenMPI-full.sh
+wget https://raw.githubusercontent.com/rangsimanketkaew/NWChem/master/compile-nwchem-auto.sh
 ```
 Run the script using command
 ```
-chmod 755 cp-nw-CentOS-OpenMPI-auto.sh
-./cp-nw-CentOS-OpenMPI-auto.sh
+chmod 755 compile-nwchem-auto.sh
+./compile-nwchem-auto.sh
 ```
 --> Enter 2 for compiling NWChem. <br />
 --> Enter the directory of nwchem-6.x to be used as $NWCHEM_TOP. <br />
 The process will take you about 30 minutes. <br />
   * **(4)**  Setting of environmental variable for NWChem: Run the script using command
 ```
-./cp-nw-CentOS-OpenMPI-auto.sh
+./compile-nwchem-auto.sh
 ```
 --> Enter "3" <br />
   * **(5)**  Make resource file for NWChem: Run the script using command
 ```
-./cp-nw-CentOS-OpenMPI-auto.sh
+./compile-nwchem-auto.sh
 ```
 --> Enter "4" <br />
 The resource file of NWChem *.nwchemrc* should be located at your $HOME directory. <br />
