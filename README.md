@@ -57,7 +57,7 @@ tar -xvjf nwchem-6.8-release.revision-v6.8-47-gdf6c956-src.2017-12-14.tar.bz2
 ```
 You should see *nwchem-6.8* directory. <br />
 * **(3)** Compiling NWChem <br />
-Download [cp-nw-CentOS-OpenMPI-auto.sh](https://raw.githubusercontent.com/rangsimanketkaew/NWChem/master/cp-nw-CentOS-OpenMPI-auto.sh) script to */usr/local/src/NWCHEM/nwchem-6.8/*.
+Download [compile-nwchem-auto.sh](https://raw.githubusercontent.com/rangsimanketkaew/NWChem/master/compile-nwchem-auto.sh) script to */usr/local/src/NWCHEM/nwchem-6.8/*.
 ```
 cd /usr/local/src/NWCHEM/nwchem-6.8/
 wget https://raw.githubusercontent.com/rangsimanketkaew/NWChem/master/compile-nwchem-CentOS-OpenMPI-full.sh
