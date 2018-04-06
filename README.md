@@ -1,7 +1,8 @@
 # NWChem Auto Compilation
 
-<img alt="Capture_Menu" src="https://github.com/rangsimanketkaew/NWChem/blob/master/etc/Capture_menu.PNG" align=middle width="450pt" hight="100pt" /> <br />
-A programing script for auto compile NWChem program on CentOS and Ubuntu. . It can also be adjusted to be compatible with other Linux distribution. <br />
+<img alt="Capture_Menu" src="https://github.com/rangsimanketkaew/NWChem/blob/master/etc/Capture_menu.PNG" align=middle width="450pt" hight="100pt" /> 
+<br />
+A programing script for auto compile NWChem program on CentOS and Ubuntu. It can also be adjusted to be compatible with other Linux distribution. <br />
 
 ## Prerequisites
 * CentOS version 6.x / 7.x or Ubuntu 16.x / 17.x (or other Linux distro)
