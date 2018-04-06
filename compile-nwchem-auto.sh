@@ -93,49 +93,61 @@ comment
 comment
 
 	read -p "Enter full path of nwchem program, e.g., /home/nutt/nwchem-6.8: " inp2
+	read -p "Enter full path of openmpi program, e.g., /usr/local/openmpi-2.0.2/: " MPI_LOCATION
 
 	if [ -e $inp2/src ];then
-
-		export NWCHEM_TOP=$inp2
-		cd $NWCHEM_TOP/src
-# ----------------------------------MPI libraries box -----------------------------------
-		export USE_MPI=y
-		export USE_MPIF=y
-		export USE_MPIF4=y
-		export MPI_LOC=$inp3/openmpi
-		export MPI_LIB=$MPI_LOC/lib
-		export MPI_INCLUDE=$MPI_LOC/include
-		export LIBMPI="-lmpi_f90 -lmpi_f77 -lmpi -ldl -Wl,--export-dynamic -lnsl -lutil"
+# ---------------------------------- NWCHEM_TOP ------------------------------------------
+export NWCHEM_TOP=$inp2
+export MPI_LOC=$MPI_LOCATION
+# ---------------------------------- MPI libraries ---------------------------------------
+export USE_MPI=y
+export USE_MPIF=y
+export USE_MPIF4=y
+export MPI_LOC=$MPI_LOCATION
+export MPI_LIB=$MPI_LOC/lib
+export MPI_INCLUDE=$MPI_LOC/include
+export LIBMPI="$MPIF90_LIB"
+# ----------------------------------- MATH libraries -------------------------------------
+export NWCHEM_TARGET=LINUX64
+export USE_PYTHONCONFIG=y
+export PYTHONVERSION=2.7
+export PYTHONHOME=/usr
+export USE_64TO32=y
+export BLAS_SIZE=4
+export BLASOPT="-lopenblas -lpthread -lrt"
+export SCALAPACK_SIZE=4
+export SCALAPACK="-L/ucr/local/openmpi/lib -lscalapack -lmpiblacs"
+export ELPA="-I/usr/lib64/gfortran/modules/openmpi -L$inp3/openmpi/lib -lelpa"
+export LD_LIBRARY_PATH=/usr/local/openmpi/lib/:$LD_LIBRARY_PATH
+export PATH=/usr/local/openmpi/bin/:$PATH
 # ---------------------------------------------------------------------------------------
-		export NWCHEM_TARGET=LINUX64
-		export USE_PYTHONCONFIG=y
-		export PYTHONVERSION=2.7
-		export PYTHONHOME=/usr
-		export USE_64TO32=y
-		export BLAS_SIZE=4
-		export BLASOPT="-lopenblas -lpthread -lrt"
-		export SCALAPACK_SIZE=4
-		export SCALAPACK="-L$inp3/openmpi/lib -lscalapack -lmpiblacs"
-		export ELPA="-I/usr/lib64/gfortran/modules/openmpi -L$inp3/openmpi/lib -lelpa"
-		export LD_LIBRARY_PATH=$inp3/openmpi/lib/:$LD_LIBRARY_PATH
-		export PATH=$inp3/openmpi/bin/:$PATH
-		echo "Let's build NWCHEM" > $inp2/script-compile.log
-		make nwchem_config NWCHEM_MODULES="all python"
-		echo " Finished configuration setting up using python " >> script-compile.log
-		make 64_to_32
-		echo " Finished changing 64 to 32 " >> script-compile.log
-		echo " Making install, please wait for a while ! " >> script-compile.log
-		make >& script-compile-make.log
-		echo " ------------------------ Make done --------------------------"
+		echo ""
+		echo "Environment variable setting for NWChem program is shown as following"		
+		echo "====================================================================="
+		sed -n 99,123p ./compile-nwchem-auto.sh
+		echo ""
 
-		if [ -e $NWCHEM_TOP/bin/LINUX64/nwchem ]; then
-			echo " nwchem executable can be found now at $NWCHEM_TOP/bin/LINUX64/ "
-			echo " Next step: set environment variable for nwchem "
+		read -p "Enter YES to start compiling: " COMPILE
 
-		else
-			echo " Program compile failed!   No nwchem excutable found"
-			echo " Open script-compile-make.log to check the error"
+		if [ $COMPILE == YES ] || [ $COMPILE == yes ]; then
+			cd $NWCHEM_TOP/src
+			echo "Let's build NWCHEM" > $inp2/script-compile.log
+			make nwchem_config NWCHEM_MODULES="all python"
+			echo " Finished configuration setting up using python " >> script-compile.log
+			make 64_to_32
+			echo " Finished changing 64 to 32 " >> script-compile.log
+			echo " Making install, please wait for a while ! " >> script-compile.log
+			make >& script-compile-make.log
+			echo " ------------------------ Make done --------------------------"
 
+			if [ -e $NWCHEM_TOP/bin/LINUX64/nwchem ]; then
+				echo " nwchem executable can be found now at $NWCHEM_TOP/bin/LINUX64/"
+				echo " Next step: set environment variable for nwchem"
+
+			else
+				echo " Program compile failed!   No nwchem excutable found"
+				echo " Open script-compile-make.log to check the error"
+			fi
 		fi
 
 	else
