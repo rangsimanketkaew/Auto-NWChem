@@ -3,7 +3,7 @@
    <img alt="Capture_Menu" src="https://github.com/rangsimanketkaew/NWChem/blob/master/etc/Capture_menu.PNG" align=middle width="450pt" hight="100pt" /> 
 <p/>
 <br />
-A programing script for auto compile NWChem program on CentOS and Ubuntu. It can also be adjusted to be compatible with other Linux distribution. <br />
+A programing script for auto compile NWChem program on CentOS and Ubuntu.  <br />
 
 ## Prerequisites
 * CentOS version 6.x / 7.x or Ubuntu 16.x / 17.x (or other Linux distro)
@@ -42,7 +42,7 @@ yum install python-devel gcc-gfortran openblas-devel openblas-serial64 openmpi-d
 ```
 sudo apt-get install python-dev gfortran libopenblas-dev libopenmpi-dev openmpi-bin tcsh make 
 ```
-For other Linux distro should consult the manual. <br />
+It can also be adjusted to be compatible with other Linux distribution, please consult NWChem manual. <br />
   * **(2)**  Download program from github <br />
 Create directory NWCHEM at */usr/local/src/*. Then move to NWCHEM direcotry
 ```
