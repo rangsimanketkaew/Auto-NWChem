@@ -13,7 +13,7 @@ A programing script for auto compile NWChem program on CentOS and Ubuntu. . It c
 ### Compilers
 #### Intel Compiler Collection (icc)
 * [Download here](https://software.intel.com/en-us/intel-parallel-studio-xe)
-* Get the free student version (linux), or a real license ($$)
+* Get the free student version (Linux), or a real license ($$$)
 * Includes MKL Math Library
 #### GNU Compiler Collection (gcc)
 * [Download here](http://sourceforge.net/projects/hpc/files/hpc/gcc/gcc-4.9-bin.tar.gz/download?use_mirror=softlayer-dal&download=) 
