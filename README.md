@@ -85,9 +85,9 @@ Run script and follow the instruction there.
 > 2. Script will ask you to enter the full path of nwchem-6.x direcotry to set **NWCHEM_TOP**, e.g., /home/nutt/nwchem-6.8/. <br />
 > 3. The process will take you about 30 minutes. <br />
 
-* **(4)**  Setting of environmental variable for NWChem: Run the script and enter 3. <br />
+* **(4)**  Setting of environmental variable for NWChem. <br />
 
-* **(5)**  Make resource file for NWChem: Run the script and enter 4. <br />
+* **(5)**  Make resource file for NWChem. <br />
 The resource file (*.nwchemrc*) will be created at your home directory. <br />
 
 ## Post-Compilation
