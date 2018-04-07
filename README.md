@@ -8,11 +8,27 @@ A programing script for auto compile NWChem program on CentOS and Ubuntu.  <br /
 
 ## Prerequisites
 
-* CentOS version 6.x / 7.x or Ubuntu 16.x / 17.x (or other Linux distro)
+* Linux distro
+  * CentOS 6.x or 7.x
+  * Ubuntu 16.x - 18.x
 * Bash shell
 * Python version 2.6 / 2.7
 * OpenMPI and suitable libraries
-* Compiler: Intel, GNU, PGI, etc. More details please consult [NWChem manual](http://www.nwchem-sw.org/index.php/Compiling_NWChem#Setting_up_the_proper_environment_variables).
+* Compiler: Intel, GNU, PGI, etc. (More details please consult [NWChem manual](http://www.nwchem-sw.org/index.php/Compiling_NWChem#Setting_up_the_proper_environment_variables))
+
+### Math libraries
+
+#### OpenMPI Installation
+
+* [Download here](https://www.open-mpi.org/software/ompi/v3.0/)
+* Installation step-by-step, [please visit this website](https://sites.google.com/site/rangsiman1993/linux/install-openmpi). 
+* Set the environment variables and libraries properly.
+
+#### OpenBLAS Installation
+
+* [Download here](https://github.com/xianyi/OpenBLAS).
+* Installation is at [Installation guide](https://github.com/xianyi/OpenBLAS/wiki/Installation-Guide).
+* OSX: Brew installation will put OpenBlas in `/usr/local/opt/openblas`
 
 ### Compilers
 
@@ -29,75 +45,54 @@ A programing script for auto compile NWChem program on CentOS and Ubuntu.  <br /
     * `brew install gcc`
     * [Build instructions for OSX](https://wiki.helsinki.fi/display/HUGG/Installing+the+GNU+compilers+on+Mac+OS+X)
 
-### Math libraries
-
-#### OpenMPI Installation
-
-* You can use any version of OpenMPI, e.g., OpenMPI 1.6.5.
-* OpenMPI 1.6.5 source code is at [Download here](https://www.open-mpi.org/software/ompi/v1.6/). 
-* Installation step-by-step [Please visit this website](http://lsi.ugr.es/~jmantas/pdp/ayuda/datos/instalaciones/Install_OpenMPI_en.pdf). 
-* Set the environment variables and libraries properly.
-
-#### OpenBLAS Installation
-
-* [Download here](https://github.com/xianyi/OpenBLAS). You may need to install OpenBLAS yourself. 
-* Installation is here [Installation guide](https://github.com/xianyi/OpenBLAS/wiki/Installation-Guide).
-* OSX: Brew installation will put OpenBlas in `/usr/local/opt/openblas`
----
 ## Installing
 
 * **(1)**  Install required package for NWChem <br />
-> **CentOS**: Install the following package using yum command (root or sudo) <br />
+> **CentOS**:
 ```
-yum install python-devel gcc-gfortran openblas-devel openblas-serial64 openmpi-devel scalapack-openmpi-devel blacs-openmpi-devel elpa-openmpi-devel tcsh --enablerepo=epel
+sudo yum install python-devel gcc-gfortran openblas-devel openblas-serial64 openmpi-devel scalapack-openmpi-devel blacs-openmpi-devel elpa-openmpi-devel tcsh --enablerepo=epel
 ```
-> **Ubuntu**: Install the following package using apt-get command (root or sudo)
+> **Ubuntu**:
 ```
 sudo apt-get install python-dev gfortran libopenblas-dev libopenmpi-dev openmpi-bin tcsh make 
 ```
-The script can be adjusted to be compatible with other Linux distribution, please consult NWChem manual. <br />
+For other Linux distro, please consult NWChem manual. <br />
 
-* **(2)**  Download program source code from [NWChem github](https://github.com/nwchemgit/nwchem) using **wget** to your Linux machine, e.g., /home/nutt/. Release of NWChem can be found [here](https://github.com/nwchemgit/nwchem/releases/tag/v6.8-release).
+* **(2)**  Download program source code from [NWChem github](https://github.com/nwchemgit/nwchem) to your home directory. Release file available at [here](https://github.com/nwchemgit/nwchem/releases/tag/v6.8-release).
 ```
 wget https://github.com/nwchemgit/nwchem/releases/download/v6.8-release/nwchem-6.8-release.revision-v6.8-47-gdf6c956-src.2017-12-14.tar.bz2
 ```
-
 Then extract a *.tar.bz2* file using command
 ```
 tar -xvjf nwchem-6.8-release.revision-v6.8-47-gdf6c956-src.2017-12-14.tar.bz2
 ```
 You should see *nwchem-6.8* directory. <br />
 
-* **(3)** Download [compile-nwchem-auto.sh](https://raw.githubusercontent.com/rangsimanketkaew/NWChem/master/compile-nwchem-auto.sh) to the same directory of nwchem, e.g., your home $HOME, */home/nutt/.
+* **(3)** Download [compile-nwchem-auto.sh](https://raw.githubusercontent.com/rangsimanketkaew/NWChem/master/compile-nwchem-auto.sh) to youe home directory.
 ```
 wget https://raw.githubusercontent.com/rangsimanketkaew/NWChem/master/compile-nwchem-auto.sh
 ```
-
 Change permission of script.
 ```
 chmod 755 compile-nwchem-auto.sh
 ```
-Run script using
+Run script and follow the instruction there.
 ```
 ./compile-nwchem-auto.sh
 ```
-P.S. Use following command to see HELP of script.
-```
-./compile-nwchem-auto.sh -h
-```
-Enter 2 to compile program. <br />
-Enter the full path of nwchem-6.x direcotry to set **NWCHEM_TOP**, e.g., /home/nutt/nwchem-6.8/. <br />
-If all environment variable corrects, enter again to start compilation. <br />
-The process will take you about 30 minutes. <br />
+Enter 2 to compile program.
+  * To see HELP page of script `./compile-nwchem-auto.sh -h`
+  * Script will ask you to enter the full path of nwchem-6.x direcotry to set **NWCHEM_TOP**, e.g., /home/nutt/nwchem-6.8/.
+  * The process will take you about 30 minutes. <br />
 
 * **(4)**  Setting of environmental variable for NWChem: Run the script and enter 3. <br />
 
 * **(5)**  Make resource file for NWChem: Run the script and enter 4. <br />
-The resource file (*.nwchemrc*) should be located at your $HOME directory. <br />
+The resource file (*.nwchemrc*) will be created at your home directory. <br />
 
 ## Post-Compilation
 
-Run a sample calculation to check whether NWChem is installed perfectly. I include [a input file](https://raw.githubusercontent.com/rangsimanketkaew/NWChem/master/test/test-azulene-dft/test-azulene.nw) of geometry optimization of azulene using DFT/M06-2X/6-31G(d) in gas phase.
+Run a sample calculation to check if NWChem is installed correctly. I include [a input file](https://raw.githubusercontent.com/rangsimanketkaew/NWChem/master/test/test-azulene-dft/test-azulene.nw) of geometry optimization of azulene using DFT/M06-2X/6-31G(d) in gas phase.
 ```
 nwchem test-azulene.nw >& test-azulene.out &
 ```
@@ -109,17 +104,17 @@ export PATH=/usr/local/nwchem-6.6/bin/LINUX/nwchem:$PATH
 ```
 To do this every time you login, each user must permanently append the above command to $PATH in *$HOME/.bashrc* file.
 ```
-echo export PATH=/usr/local/nwchem-6.6/bin/LINUX/nwchem:$PATH >> /home/$USER/.bashrc
+echo export PATH=/usr/local/nwchem-6.6/bin/LINUX/nwchem:$PATH >> $HOME/.bashrc
 ```
 Then activate the *.bashrc* file
 ```
 source /home/$USER/.bashrc
 ```
-Try to logout and login again, now you can run NWChem via *nwchem*.
+Logout and login again, now you can run NWChem via *nwchem*.
 
 ## Running the tests
 
-You can try to run nwchem with example file offered by the developer. A ton of input & output files are at **$NWCHEM_TOP/QA/tests** and **$NWCHEM_TOP/examples/**. Running NWChem calculation on standalone machine or HPC cluster with OpenMPI parallel using command
+A ton of input & output files are at **$NWCHEM_TOP/QA/tests** and **$NWCHEM_TOP/examples/**. Running NWChem calculation on standalone machine or HPC cluster with OpenMPI parallel using command
 ```
 mpirun -np N nwchem INPUT-FILE.nw >& OUTPUT-FILE.log
 ```
