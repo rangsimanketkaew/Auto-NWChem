@@ -81,8 +81,8 @@ Run script and follow the instruction there.
 ./compile-nwchem-auto.sh
 ```
 
-> 1. To see HELP page of script `./compile-nwchem-auto.sh -h` <br />
-> 2. Script will ask you to enter the full path of nwchem-6.x direcotry to set **NWCHEM_TOP**, e.g., /home/nutt/nwchem-6.8/. <br />
+> 1. Run `./compile-nwchem-auto.sh -h` for help. <br />
+> 2. The script will ask you to enter the full path of nwchem-6.x direcotry to set **NWCHEM_TOP**, e.g., /home/nutt/nwchem-6.8/. <br />
 > 3. The process will take you about 30 minutes. <br />
 
 * **(4)**  Setting of environment variable for NWChem. <br />
