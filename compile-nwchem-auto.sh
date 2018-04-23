@@ -218,7 +218,7 @@ comment
 	;;
 	$OPT5)
 
-	echo -e " <> Rangsiman Ketkaew \n" \ 
+	echo -e " <> Rangsiman Ketkaew \n" \
 		"   MSc student \n" \
 		"   Computational Chemistry Research Unit \n" \
 		"   C403, LC.5, Department of Chemistry \n" \
