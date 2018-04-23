@@ -221,11 +221,10 @@ comment
 	echo -e " <> Rangsiman Ketkaew \n" \ 
 		"   MSc student \n" \
 		"   Computational Chemistry Research Unit \n" \
-		"   C403, LC.5, Department of Chemsitry \n" \
+		"   C403, LC.5, Department of Chemistry \n" \
 		"   Thammasat University, 12120 Thailand \n" \
-		" \n" \
 		"<> E-Mail: rangsiman1993@gmail.com \n" \
-		"<> https://github.com/rangsimanketkaew" 
+		"<> https://github.com/rangsimanketkaew"
 
 	;;
 	$OPT6)
