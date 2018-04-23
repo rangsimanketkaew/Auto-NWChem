@@ -218,8 +218,13 @@ comment
 	;;
 	$OPT5)
 
-	echo -e " <> Rangsiman Ketkaew (MSc), Department of Chemsitry, Thammasat University, Thailand \n" \
-		"<> rangsiman1993@gmail.com \n" \
+	echo -e " <> Rangsiman Ketkaew \n" \ 
+		"   MSc student \n" \
+		"   Computational Chemistry Research Unit \n" \
+		"   C403, LC.5, Department of Chemsitry \n" \
+		"   Thammasat University, 12120 Thailand \n" \
+		" \n" \
+		"<> E-Mail: rangsiman1993@gmail.com \n" \
 		"<> https://github.com/rangsimanketkaew" 
 
 	;;
