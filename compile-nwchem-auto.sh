@@ -142,7 +142,7 @@ echo "Linux OS is: $(cat /etc/*release|tail -1)"
 export NWCHEM_TOP=$inp2
 export NWCHEM_TARGET=LINUX64
 # ---------------------------------- ARMCI -----------------------------------------------
-export ARMCI_NETWORK=OPENIB
+#export ARMCI_NETWORK=OPENIB
 # ---------------------------------- NWCHEM Functionality --------------------------------
 export USE_NOFSCHECK=TRUE
 export NWCHEM_FSCHECK=N
@@ -186,15 +186,13 @@ export BLASOPT="-lopenblas -lpthread -lrt"
 		if [ $COMPILE == YES ] || [ $COMPILE == yes ]; then
 			cd $NWCHEM_TOP/src
 			echo ""
-			echo "Start to compile NWChem 6.8 ..."
+			echo " Start to compile NWChem 6.8 ..."
 			echo ""
-			echo "Let's build NWCHEM"
+			echo " Building NWChem Executable. Waiting for 20-30 Minutes ..."
 			make nwchem_config NWCHEM_MODULES="all python" >& compile-config.log
-			echo "Finished configuration setting up using python "
 			make 64_to_32 >& compile-64_to_32.log
-			echo "Finished changing 64 to 32 "
-			echo "Making install, please wait for a while ! "
-			make >& compile-make-nwchem.log
+			export MAKEOPTS="USE_64TO32=y"
+			make ${MAKEOPTS} >& compile-make-nwchem.log
 			cp compile-make-nwchem.log compile-make-nwchem.log.2
 			echo ""
 			echo " ------------------------ Compile done --------------------------"
@@ -222,12 +220,12 @@ export BLASOPT="-lopenblas -lpthread -lrt"
 	else
 		if [ -e $NWCHEM_TOP/src/compile-make-nwchem.log.2 ];then
 
-			echo ""
 			echo " ERROR: Program compile failed!  No nwchem excutable found"
 			echo " Check following files to view Log."
 			echo " $NWCHEM_TOP/src/compile-config.log"
 			echo " $NWCHEM_TOP/src/compile-64_to_32.log"
 			echo " $NWCHEM_TOP/src/compile-make-nwchem.log"
+			echo ""
 
 			rm $NWCHEM_TOP/src/compile-make-nwchem.log.2
 		fi
