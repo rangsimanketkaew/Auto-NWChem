@@ -5,17 +5,17 @@
 <p/>
 <br />
 
-A programing script for auto compile NWChem program with OpenMPI on CentOS and Ubuntu.  <br />
+Program for automatic compile NWChem with MPI on Linux cluster.  <br />
 
 ## Prerequisites
 
 * Linux distro
   * CentOS 6.x or 7.x
-  * Ubuntu 16.x - 18.x
+  * Ubuntu 16.x or 17.x
 * Bash shell
-* Python version 2.6 / 2.7
-* OpenMPI and suitable libraries
-* Compiler: Intel, GNU, PGI, etc. (More details please consult [NWChem manual](http://www.nwchem-sw.org/index.php/Compiling_NWChem#Setting_up_the_proper_environment_variables))
+* Python version 1.x or 2.6 or 2.7
+* MPICH or Intel MPI+MKL or OpenMPI
+* Compiler: GNU, Intel, PGI, etc. (More details please consult [NWChem manual](http://www.nwchem-sw.org/index.php/Compiling_NWChem#Setting_up_the_proper_environment_variables))
 
 ### Math libraries
 
@@ -83,13 +83,13 @@ Run script and follow the instruction there.
 ```
 
 > 1. Run `./compile-nwchem-auto.sh -h` for help. <br />
-> 2. The script will ask you to enter the full path of nwchem-6.x direcotry to set **NWCHEM_TOP**, e.g., /home/nutt/nwchem-6.8/. <br />
-> 3. The process will take you about 30 minutes. <br />
+> 2. You will be asked to enter the full path of nwchem-6.x direcotry to set **NWCHEM_TOP**, e.g., /home/nutt/nwchem-6.8/. <br />
+> 3. Compilation process will take you about 30 minutes. <br />
 
-* **(4)**  Setting of environment variable for NWChem. <br />
+* **(4)**  Create NWChem data and libraries for NWChem. <br />
 
-* **(5)**  Make resource file for NWChem. <br />
-The resource file (*.nwchemrc*) will be created at your home directory. <br />
+* **(5)**  Create resource file (*.nwchemrc*) for NWChem. <br />
+The resource file will be created at your home directory. <br />
 
 ## Post-Compilation
 
