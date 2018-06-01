@@ -1,6 +1,9 @@
 #!/bin/bash
-# Bash script for compiling of NWChem on Cluster (multiple computing node) / shared memory using MVAPICH2
-# Written by Rangsiman Ketkaew, MSc student in Chemistry, CCRU, Thammasat University, Thailand.
+#############################################################################################################
+#  Bash script for compiling of NWChem on Cluster (multiple computing node) / shared memory using MVAPICH2  #
+#  Written by Rangsiman Ketkaew (MSc student in Chemistry), Thammasat University, Thailand.                 #
+#############################################################################################################
+
 # It should be able to make use of a larger number of CPUs across distributed nodes.
 # This script utilized the python 2.6 and mvapich2-2.2b_intel2013.
 
