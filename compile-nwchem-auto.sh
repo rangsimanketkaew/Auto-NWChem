@@ -3,8 +3,10 @@
 
 Bash script for compiling NWChem program with OpenMPI on Centos and Ubuntu.
 Written by Rangsiman Ketkaew, MSc student in Chemistry, CCRU, Thammasat University, Thailand.
-version 1.1 Create script
-version 1.2 Make option using CASE
+version 1.0 First version: works with only OpenMPI
+version 1.1 Can make resource file
+version 1.2 Can search MPI libraries automatically
+version 1.3 Bug fixed
 
 comment
 
@@ -133,11 +135,24 @@ comment
 	if [ -e $inp2/src ];then
 	if [ -e $MPI_LOCATION ];then
 	if [ -e $PYTHON_HOME ];then
+
 echo "Install NWChem 6.8 with MPI/OpenMPI"
 echo "Linux OS is: $(cat /etc/*release|tail -1)"
-# ---------------------------------- NWCHEM_TOP ------------------------------------------
+# ---------------------------------- NWCHEM Location -------------------------------------
 export NWCHEM_TOP=$inp2
-export MPI_LOC=$MPI_LOCATION
+export NWCHEM_TARGET=LINUX64
+# ---------------------------------- ARMCI -----------------------------------------------
+export ARMCI_NETWORK=OPENIB
+# ---------------------------------- NWCHEM Functionality --------------------------------
+export USE_NOFSCHECK=TRUE
+export NWCHEM_FSCHECK=N
+export LARGE_FILES=TRUE
+export MRCC_THEORY=Y
+export EACCSD=Y
+export IPCCSD=Y
+export CCSDTQ=Y
+export CCSDTLR=Y
+export NWCHEM_LONG_PATHS=Y
 # ---------------------------------- MPI libraries ---------------------------------------
 export USE_MPI=y
 export USE_MPIF=y
@@ -145,26 +160,25 @@ export USE_MPIF4=y
 export MPI_LOC=$MPI_LOCATION
 export MPI_LIB=$MPI_LOC/lib
 export MPI_INCLUDE=$MPI_LOC/include
+export MPIEXEC=$MPI_LOC/bin/mpiexec
 export LIBMPI="$MPIF90_LIB"
-# ----------------------------------- MATH libraries -------------------------------------
-export NWCHEM_TARGET=LINUX64
+export PATH=$MPI_LOC/bin/:$PATH
+export LD_LIBRARY_PATH=$MPI_LOC/lib/:$LD_LIBRARY_PATH
+# ----------------------------------- Python Libraries -----------------------------------
 export USE_PYTHONCONFIG=y
 export PYTHONVERSION=$PYTHON_VER
 export PYTHONHOME=$PYTHON_HOME
+# ----------------------------------- MATH libraries -------------------------------------
 export USE_64TO32=y
 export BLAS_SIZE=4
 export BLASOPT="-lopenblas -lpthread -lrt"
-export SCALAPACK_SIZE=4
-export SCALAPACK="-L/ucr/local/openmpi/lib -lscalapack -lmpiblacs"
-export ELPA="-I/usr/lib64/gfortran/modules/openmpi -L$inp3/openmpi/lib -lelpa"
-export LD_LIBRARY_PATH=/usr/local/openmpi/lib/:$LD_LIBRARY_PATH
-export PATH=/usr/local/openmpi/bin/:$PATH
 # ---------------------------------------------------------------------------------------
+
 		echo ""
 		echo "Environment variable setting for NWChem program is shown as following"
 		echo "====================================================================="
 		echo ""
-		sed -n 136,162p ./compile-nwchem-auto.sh
+		sed -n 139,175p ./compile-nwchem-auto.sh
 		echo ""
 
 		read -p "Enter YES to start compiling: " COMPILE
