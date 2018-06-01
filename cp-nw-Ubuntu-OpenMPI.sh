@@ -1,6 +1,8 @@
 #!/bin/bash
-# Bash script for compiling of NWChem on Ubuntu 17.10 using OpenMPI
-# Written by Rangsiman Ketkaew, MSc student in Chemistry, CCRU, Thammasat University, Thailand.
+##############################################################################################
+#  Bash script for compiling of NWChem on Ubuntu 17.10 using OpenMPI                         #
+#  Written by Rangsiman Ketkaew (MSc student in Chemistry), Thammasat University, Thailand.  #
+##############################################################################################
 
 # Compiling of NWChem 6.8 on Ubuntu 17.10.1 (Artful Aardvark)
 # Use NWCHEM's BLAS & OpenMPI 1.8.1
