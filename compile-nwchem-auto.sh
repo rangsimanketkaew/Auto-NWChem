@@ -139,10 +139,8 @@ comment
 echo "Install NWChem 6.8 with MPI/OpenMPI"
 echo "Linux OS is: $(cat /etc/*release|tail -1)"
 # ---------------------------------- NWCHEM Location -------------------------------------
-export NWCHEM_TOP=$inp2
+export NWCHEM_TOP=${inp2}
 export NWCHEM_TARGET=LINUX64
-# ---------------------------------- ARMCI -----------------------------------------------
-#export ARMCI_NETWORK=OPENIB
 # ---------------------------------- NWCHEM Functionality --------------------------------
 export USE_NOFSCHECK=TRUE
 export NWCHEM_FSCHECK=N
@@ -157,17 +155,19 @@ export NWCHEM_LONG_PATHS=Y
 export USE_MPI=y
 export USE_MPIF=y
 export USE_MPIF4=y
-export MPI_LOC=$MPI_LOCATION
-export MPI_LIB=$MPI_LOC/lib
-export MPI_INCLUDE=$MPI_LOC/include
-export MPIEXEC=$MPI_LOC/bin/mpiexec
-export LIBMPI="$MPIF90_LIB"
-export PATH=$MPI_LOC/bin/:$PATH
-export LD_LIBRARY_PATH=$MPI_LOC/lib/:$LD_LIBRARY_PATH
+export MPI_LOC=${MPI_LOCATION}
+export MPI_LIB=${MPI_LOC}/lib
+export MPI_INCLUDE=${MPI_LOC}/include
+export MPIEXEC=${MPI_LOC}/bin/mpiexec
+export LIBMPI="${MPIF90_LIB}"
+export PATH=${MPI_LOC}/bin/:$PATH
+export LD_LIBRARY_PATH=${MPI_LOC}/lib/:$LD_LIBRARY_PATH
 # ----------------------------------- Python Libraries -----------------------------------
 export USE_PYTHONCONFIG=y
-export PYTHONVERSION=$PYTHON_VER
-export PYTHONHOME=$PYTHON_HOME
+export PYTHONVERSION=${PYTHON_VER}
+export PYTHONHOME=${PYTHON_HOME}
+export USE_PYTHON64=y
+export PYTHONLIBTYPE=so
 # ----------------------------------- MATH libraries -------------------------------------
 export USE_64TO32=y
 export BLAS_SIZE=4
@@ -188,7 +188,7 @@ export BLASOPT="-lopenblas -lpthread -lrt"
 			echo ""
 			echo " Start to compile NWChem 6.8 ..."
 			echo ""
-			echo " Building NWChem Executable. Waiting for 20-30 Minutes ..."
+			echo " Building NWChem executable. Waiting for 20-30 Minutes ..."
 			make nwchem_config NWCHEM_MODULES="all python" >& compile-config.log
 			make 64_to_32 >& compile-64_to_32.log
 			export MAKEOPTS="USE_64TO32=y"
@@ -212,10 +212,13 @@ export BLASOPT="-lopenblas -lpthread -lrt"
 	fi
 
 	if [ -e $NWCHEM_TOP/bin/LINUX64/nwchem ]; then
+
+		echo " Congratulations !  NWChem is compiled as executable successfully."
+		echo " It can be found at $NWCHEM_TOP/bin/LINUX64/nwchem"
+		echo " Log file is at $NWCHEM_TOP/src/compile*.log"
 		echo ""
-		echo " You already installed NWChem."
-		echo " Now NWChem executable can be found at $NWCHEM_TOP/bin/LINUX64/"
-		echo " You may want to set environment variable for NWChem."
+		echo " You may want to set environment variable of NWChem."
+		echo ""
 
 	else
 		if [ -e $NWCHEM_TOP/src/compile-make-nwchem.log.2 ];then
