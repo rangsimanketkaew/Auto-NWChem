@@ -114,7 +114,7 @@ Logout and login again, now you can run NWChem via *nwchem*.
 
 ## Running the tests
 
-A ton of input & output files are at **$NWCHEM_TOP/QA/tests** and **$NWCHEM_TOP/examples/**. Running NWChem calculation on standalone machine or HPC cluster with OpenMPI parallel using command
+Example of input & output files are available at **$NWCHEM_TOP/QA/tests** and **$NWCHEM_TOP/examples/**. Running NWChem calculation on standalone machine or HPC cluster with OpenMPI parallel using command
 ```
 mpirun -np N nwchem INPUT-FILE.nw >& OUTPUT-FILE.log
 ```
