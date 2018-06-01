@@ -1,6 +1,8 @@
 #!/bin/bash
-# Bash script for compiling of NWChem on Cluster (multiple computing node) / shared memory using MPICH
-# Written by Rangsiman Ketkaew, MSc student in Chemistry, CCRU, Thammasat University, Thailand.
+###########################################################################################################
+#  Bash script for compiling of NWChem on Cluster (multiple computing node) / shared memory using MPICH   #
+#  Written by Rangsiman Ketkaew (MSc student in Chemistry), Thammasat University, Thailand.               #
+###########################################################################################################
 
 export NWCHEM_TOP=/builddir/build/BUILD/nwchem-6.6
 export NWCHEM_TARGET=LINUX64
