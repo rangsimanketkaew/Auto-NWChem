@@ -1,70 +1,55 @@
 #!/bin/bash
-:<<'comment'
 
-Bash script for compiling NWChem program with OpenMPI on Centos and Ubuntu.
-Written by Rangsiman Ketkaew, MSc student in Chemistry, CCRU, Thammasat University, Thailand.
-version 1.0 First version: works with only OpenMPI
+:<<'comment'
+##############################################################################################
+#  Program for compiling NWChem with MPICH / Intel MPI+MKL / OpenMPI on Linux cluster.       #
+#  Written by Rangsiman Ketkaew (MSc student in Chemistry), Thammasat University, Thailand.  #
+##############################################################################################
+
+version 1.0 First version: works with OpenMPI
 version 1.1 Can make resource file
 version 1.2 Can search MPI libraries automatically
-version 1.3 Bug fixed
-
+version 1.3 Works with MPICH & Intel MPI+MKL and Bug fixed
 comment
 
-if [ "$1" == "-h" ] || [ "$1" == "--help" ] || [ "$1" == "-help" ]; then
-echo -e "
-################################## NWCHEM Auto Compilation #######################################
+if [ "$1" == "-h" ] || [ "$1" == "-help" ] || [ "$1" == "--help" ]; then
+cat << EOF
 
-[] Description of each option.
+[x] NWChem Auto Compilation 1.3 
 
-1 = Check MPI Libraries
-    Check provider and version of 'mpiexec' & math libraries & Python version that you are using
+[x] Usage: ./compile-nwchem-auto.sh [-[-]h[elp]]
 
-2 = Compile NWChem program
-    Config & compile program using make at $NWCHEM_TOP.
-    Caveat: I use an openmpi-1.6.5 ($ mpirun --version.
-            I use python version 2.7 ($ python --version).
+[x] Description of option
 
-3 = Set environment variable
-    Determine the local storage path for the install files. (e.g., /usr/local/).
+ 1. Check MPI Architecture    :  Check vendor and version of MPI & Python & Math libraries.
+ 2. Compile NWChem            :  Make config & compile program using make at $NWCHEM_TOP.
+ 3. Create NWChem Data        :  Create NWChem data and libraries files.
+ 4. Create Resource file      :  Create resource file (.nwchemrc) at your home directory.
+ 5. Download NWChem 6.8       :  Download source code of NWChem 6.8 to your machine.
+ 6. Author Info               :  Author & contact
+ 7. Exit Program              :  Exit program. you can also type "ctrl + c".
 
-4 = Make resource file
-    Create resource file (.nwchemrc) at your home directory.
+[x] Prerequisites
 
-5 = Download NWChem 6.8
-    Download source code of NWChem 6.8 to your machine
+ - CentOS version 6 or 7, or Ubuntu 16 or 17 (or other Linux distribution)
+ - Bash shell
+ - Python version 1.x or 2.6 or 2.7
+ - MPICH or Intel MPI+MKL or OpenMPI
+ - Compiler: GNU, Intel, PGI, etc.
 
-6 = Author & Contact
+[x] Instruction of Program Installation
 
-7 = Exit or ctrl + c
-    Exit script
-
-##################################################################################################
-
-[] Prerequisites
-
-  - CentOS version 6.x / 7.x or Ubuntu 16.x / 17.x (or other Linux distro)
-  - Bash shell
-  - Python version 2.6 / 2.7
-  - OpenMPI and suitable libraries
-  - Compiler: Intel, GNU, PGI, etc. More details please consult NWChem manual.
-
-##################################################################################################
-
-[] Installation of NWChem
-
-  1. run this script
-  2. Enter option 1 to check the version and suitable libraries of openmpi.
+  1. Run Program "compile-nwchem-auto.sh"
+  2. Enter option 1 to check the version and suitable libraries of MPI.
   3. Enter option 2 to compile program.
-  4. Wait ... for 30 min ... until compilation completes.
-  5. Enter option 3 to set the env variable of nwchem.
-  6. Enter option 4 to create the resource file of program.
-  7. Run test calculation & Enjoy NWChem.
+     wait until compilation completes (about 20-30 minutes).
+  4. Enter option 3 to set environment variable of NWChem.
+  5. Enter option 4 to create the resource file of '.nwchemrc'.
 
-  - More details: https://github.com/rangsimanketkaew/NWChem
+  - More detail: https://github.com/rangsimanketkaew/NWChem
+  - Bugs report: rangsiman1993@gmail.com
 
-##################################################################################################
-
-"|less
+EOF
 	exit 0
 fi
 
@@ -72,13 +57,13 @@ clear
 echo "************* NWChem Auto Compilation *************"
 PS3="Enter Your Choice: "
 
-OPT1="Check Libraries"
-OPT2="Compile NWChem program"
-OPT3="Set environment variable"
-OPT4="Make resource file"
+OPT1="Check MPI Architecture"
+OPT2="Compile NWChem"
+OPT3="Create NWChem Data"
+OPT4="Create Resource file"
 OPT5="Download NWChem 6.8"
 OPT6="Author & Contact"
-OPT7="Exit or ctrl + c"
+OPT7="Exit Program"
 OPTION=("$OPT1" "$OPT2" "$OPT3" "$OPT4" "$OPT5" "$OPT6" "$OPT7")
 select choice in  "${OPTION[@]}"
 
@@ -87,7 +72,7 @@ do
 	$OPT1)
 
 :<<'comment'
-	 (1) Check Libraries
+	 (1) Check MPI Architecture
 	 1.Check Version of Linux Distro
 	 2.Check OpenMPI version: mpirun --version
 	 3.Check Math libraries: mpi90 show
@@ -127,21 +112,19 @@ comment
 	 Show a library for MPI using command $ mpif90 -show or Choose [1] from Menu  
 comment
 
-	read -p "Enter full path of NWChem source code, e.g., /home/nutt/nwchem-6.8: " inp2
-	read -p "Enter full path of MPI directory, e.g., /usr/local/openmpi-2.0.2: " MPI_LOCATION
-	read -p "Enter version of Python you are using, e.g., 2.7: " PYTHON_VER
-	read -p "Enter full path of Python directory, e.g., /usr/lib64/python2.7: " PYTHON_HOME
+	read -p "Enter full path of NWChem source code, e.g. /home/nutt/nwchem-6.8: " inp2
+	read -p "Enter full path of MPI directory, e.g. /usr/local/openmpi-2.0.2: " MPI_LOCATION
+	read -p "Enter version of Python you are using, e.g. 2.7: " PYTHON_VER
+	read -p "Enter full path of Python directory, e.g. /usr/lib64/python2.7: " PYTHON_HOME
 
 	if [ -e $inp2/src ];then
 	if [ -e $MPI_LOCATION ];then
 	if [ -e $PYTHON_HOME ];then
 
-echo "Install NWChem 6.8 with MPI/OpenMPI"
-echo "Linux OS is: $(cat /etc/*release|tail -1)"
-# ---------------------------------- NWCHEM Location -------------------------------------
+# ------------------------- NWCHEM Location -------------------------
 export NWCHEM_TOP=${inp2}
 export NWCHEM_TARGET=LINUX64
-# ---------------------------------- NWCHEM Functionality --------------------------------
+# ------------------------- NWCHEM Functionality --------------------
 export USE_NOFSCHECK=TRUE
 export NWCHEM_FSCHECK=N
 export LARGE_FILES=TRUE
@@ -151,7 +134,7 @@ export IPCCSD=Y
 export CCSDTQ=Y
 export CCSDTLR=Y
 export NWCHEM_LONG_PATHS=Y
-# ---------------------------------- MPI libraries ---------------------------------------
+# ------------------------- MPI libraries ---------------------------
 export USE_MPI=y
 export USE_MPIF=y
 export USE_MPIF4=y
@@ -162,23 +145,25 @@ export MPIEXEC=${MPI_LOC}/bin/mpiexec
 export LIBMPI="${MPIF90_LIB}"
 export PATH=${MPI_LOC}/bin/:$PATH
 export LD_LIBRARY_PATH=${MPI_LOC}/lib/:$LD_LIBRARY_PATH
-# ----------------------------------- Python Libraries -----------------------------------
+# ------------------------- Python Libraries ------------------------
 export USE_PYTHONCONFIG=y
 export PYTHONVERSION=${PYTHON_VER}
 export PYTHONHOME=${PYTHON_HOME}
 export USE_PYTHON64=y
 export PYTHONLIBTYPE=so
-# ----------------------------------- MATH libraries -------------------------------------
+# ------------------------- MATH libraries --------------------------
 export USE_64TO32=y
 export BLAS_SIZE=4
 export BLASOPT="-lopenblas -lpthread -lrt"
-# ---------------------------------------------------------------------------------------
 
 		echo ""
-		echo "Environment variable setting for NWChem program is shown as following"
 		echo "====================================================================="
-		echo ""
-		sed -n 139,175p ./compile-nwchem-auto.sh
+		echo "======== Environment Variable Setting for NWChem Compilation ========"
+		echo "====================================================================="
+		echo "Install NWChem version 6.8.1 with MPI"
+		echo "Linux OS: $(cat /etc/*release|tail -1)"
+		sed -n 124,157p ./compile-nwchem-auto.sh
+		echo "====================================================================="
 		echo ""
 
 		read -p "Enter YES to start compiling: " COMPILE
@@ -214,10 +199,9 @@ export BLASOPT="-lopenblas -lpthread -lrt"
 	if [ -e $NWCHEM_TOP/bin/LINUX64/nwchem ]; then
 
 		echo " Congratulations !  NWChem is compiled as executable successfully."
+		echo ""
 		echo " It can be found at $NWCHEM_TOP/bin/LINUX64/nwchem"
 		echo " Log file is at $NWCHEM_TOP/src/compile*.log"
-		echo ""
-		echo " You may want to set environment variable of NWChem."
 		echo ""
 
 	else
@@ -238,14 +222,12 @@ export BLASOPT="-lopenblas -lpthread -lrt"
 	$OPT3)
 
 :<<'comment'
-	 (3) set environment variables for NWChem
-	 ----------------------------- #
-	 Determine the local storage path for the install files. (e.g., /usr/local/).
-	 Make directories
+	 (3) Create NWChem Data and Libraries
+	 Determine the local storage path for the install files. (e.g. /usr/local/).
 comment
 
-	read -p "Enter full path of original NWChem directory, e.g., /home/nutt/nwchem-6.8: " inp2
-	read -p "Enter full path of directory where you want to create NWChem libraries: " inp3
+	read -p "Enter full path of original NWChem directory, e.g. /home/nutt/nwchem-6.8: " inp2
+	read -p "Enter full path of new NWChem data & libraries, e.g. /usr/local/: " inp3
 
 	if [ -e $inp2 ]; then
 
@@ -264,7 +246,7 @@ comment
 			cp -r $NWCHEM_TOP/src/basis/libraries $inp3/nwchem/
 			cp -r $NWCHEM_TOP/src/nwpw/libraryps $inp3/nwchem/
 
-		echo "Creat NWChem data & libraries successfully."
+		echo "Created NWChem data & libraries successfully."
 
 		else
 			echo "ERROR: $inp3 not found."
@@ -278,49 +260,49 @@ comment
 	$OPT4)
 
 :<<'comment'
-	 (4) Creat a .nwchemrc file to point to these default data files.
+	 (4) Creat Resource file 
+	  Create ".nwchemrc" file that point to directory of NWChem data and libraries.
 comment
 
-	read -p "Enter full path of NWChem libraries directory, e.g, /usr/local/nwchem/: " inp4
+	if [ ! -e $HOME/.nwchemrc ];then
 
-	if [ -e $inp4/bin/nwchem ]; then
+		read -p "Enter full path of NWChem libraries directory, e.g. /usr/local/nwchem/: " inp4
 
-		if [ ! -e $HOME/.nwchemrc ];then
+		if [ -e $inp4/bin/nwchem ]; then
 
-			echo "You already have NWChen resource file '.nwchemrc' file in your home directory."
-			read -p "You want to continue ? (yes/no): " $inp5
-
-			if [ "$inp5" = "yes" ]; then
-
-				rm $HOME/.nwchemrc
-				touch $HOME/.nwchemrc
-				echo -e \
-				"nwchem_basis_library $inp4/nwchem/libraries/ \n" \
-				"nwchem_nwpw_library $inp4/nwchem/libraryps/ \n" \
-				"ffield amber \n" \
-				"amber_1 $inp4/data/amber_s/ \n" \
-				"amber_2 $inp4/data/amber_q/ \n" \
-				"amber_3 $inp4/data/amber_x/ \n" \
-				"amber_4 $inp4/data/amber_u/ \n" \
-				"spce    $inp4/data/solvents/spce.rst \n" \
-				"charmm_s $inp4/data/charmm_s/ \n" \
-				"charmm_x $inp4/data/charmm_x/" >> $HOME/.nwchemrc
-
+			touch $HOME/.nwchemrc
+			echo -e \
+			"nwchem_basis_library $inp4/nwchem/libraries/ \n" \
+			"nwchem_nwpw_library $inp4/nwchem/libraryps/ \n" \
+			"ffield amber \n" \
+			"amber_1 $inp4/data/amber_s/ \n" \
+			"amber_2 $inp4/data/amber_q/ \n" \
+			"amber_3 $inp4/data/amber_x/ \n" \
+			"amber_4 $inp4/data/amber_u/ \n" \
+			"spce    $inp4/data/solvents/spce.rst \n" \
+			"charmm_s $inp4/data/charmm_s/ \n" \
+			"charmm_x $inp4/data/charmm_x/" >> $HOME/.nwchemrc
 			echo "NWChem resouce file is created at $HOME/.nwchemrc"
 
-			fi
+		else
+			echo "ERROR: $inp4 not found"
+
 		fi
-	
 	else
-		echo "ERROR: $inp4 not found"
+		echo "You already have NWChem resource file at $HOME/.nwchemrc"
 
 	fi
 
 	;;
 	$OPT5)
 	
+:<<'comment'
+	 (5) Download NWChem 6.8
+	  Download nwchem-6.8-*.tar.bz2 to Linux machine.
+comment
+
 	echo "Download NWChem 6.8 source code to your Linux machine"
-	read -p "Enter directory where you want to save NWChem 6.8, e.g., /home/nutt/: " NWCHEM68_DIR
+	read -p "Enter directory where you want to save NWChem 6.8, e.g. /home/nutt/: " NWCHEM68_DIR
 
 	if [ -e $NWCHEM68_DIR ];then
 
@@ -337,18 +319,19 @@ comment
 	;;
 	$OPT6)
 
-	echo -e " <> Rangsiman Ketkaew \n" \
-		"   MSc student \n" \
-		"   Computational Chemistry Research Unit \n" \
-		"   C403, LC.5, Department of Chemistry \n" \
-		"   Thammasat University, 12120 Thailand \n" \
-		"<> E-Mail: rangsiman1993@gmail.com \n" \
-		"<> https://github.com/rangsimanketkaew"
+:<<'comment'
+	 (6) Author and Contact
+comment
+
+	echo ""
+	echo -e "  Rangsiman Ketkaew (MSc student)           E-Mail: rangsiman1993@gmail.com\n" \
+		" Computational Chemistry Research Unit\n" \
+		" C403, LC.5, Department of Chemistry       https://sites.google.com/site/rangsiman1993\n" \
+		" Thammasat University, 12120 Thailand      https://github.com/rangsimanketkaew \n"
 
 	;;
 	$OPT7)
 	
-	echo " <<< ===== BYE ===== >>>"
 	break
 
 	;;
