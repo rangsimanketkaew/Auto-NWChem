@@ -77,19 +77,11 @@ Change permission of script.
 ```
 chmod 755 compile-nwchem-auto.sh
 ```
-Run script and follow the instruction there.
+Run script and follow the instruction of compilation.
 ```
 ./compile-nwchem-auto.sh
 ```
-
-> 1. Run `./compile-nwchem-auto.sh -h` for help. <br />
-> 2. You will be asked to enter the full path of nwchem-6.x direcotry to set **NWCHEM_TOP**, e.g., /home/nutt/nwchem-6.8/. <br />
-> 3. Compilation process will take you about 30 minutes. <br />
-
-* **(4)**  Create NWChem data and libraries for NWChem. <br />
-
-* **(5)**  Create resource file (*.nwchemrc*) for NWChem. <br />
-The resource file will be created at your home directory. <br />
+For help page, run `./compile-nwchem-auto.sh -h` or `./compile-nwchem-auto.sh -help`.
 
 ## Post-Compilation
 
