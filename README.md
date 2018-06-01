@@ -4,6 +4,12 @@
    <img alt="Capture_Menu" src="https://github.com/rangsimanketkaew/NWChem/blob/master/etc/Capture_menu.PNG" align=middle width="450pt" hight="100pt" /> 
 <p/>
 <br />
+
+<p align="center">
+   <img alt="Capture_Menu" src="https://github.com/rangsimanketkaew/NWChem/blob/master/etc/Capture_Menu_Code.PNG" align=middle width="450pt" hight="100pt" /> 
+<p/>
+<br />
+
 A programing script for auto compile NWChem program with OpenMPI on CentOS and Ubuntu.  <br />
 
 ## Prerequisites
