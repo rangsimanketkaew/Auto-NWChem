@@ -12,7 +12,7 @@ Program for automatic compile NWChem with MPI on Linux cluster.  <br />
 * Linux distro
   * CentOS 6.x or 7.x
   * Ubuntu 16.x or 17.x
-* Bash shell
+* BLAS/OpenBLAS [ and Scalapack ]
 * Python version 1.x or 2.6 or 2.7
 * MPICH or Intel MPI+MKL or OpenMPI
 * Compiler: GNU, Intel, PGI, etc. (More details please consult [NWChem manual](http://www.nwchem-sw.org/index.php/Compiling_NWChem#Setting_up_the_proper_environment_variables))
