@@ -39,22 +39,22 @@ cat << EOF
 
 [x] Instruction of Program Installation
 
-  1. Run Program "compile-nwchem-auto.sh"
-  2. Enter option 1 to check the version and suitable libraries of MPI.
-  3. Enter option 2 to compile program.
-     wait until compilation completes (about 20-30 minutes).
-  4. Enter option 3 to set environment variable of NWChem.
-  5. Enter option 4 to create the resource file of '.nwchemrc'.
+ 1. Run Program "compile-nwchem-auto.sh"
+ 2. Enter option 1 to check the version and suitable libraries of MPI.
+ 3. Enter option 2 to compile program.
+    wait until compilation completes (about 20-30 minutes).
+ 4. Enter option 3 to set environment variable of NWChem.
+ 5. Enter option 4 to create the resource file of '.nwchemrc'.
 
-  - More detail: https://github.com/rangsimanketkaew/NWChem
-  - Bugs report: rangsiman1993@gmail.com
+ - More detail: https://github.com/rangsimanketkaew/NWChem
+ - Bugs report: rangsiman1993@gmail.com
 
 EOF
 	exit 0
 fi
 
 clear
-echo "************* NWChem Auto Compilation *************"
+echo "********** Automatic NWChem Compilation **********"
 PS3="Enter Your Choice: "
 
 OPT1="Check MPI Architecture"
