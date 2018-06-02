@@ -32,7 +32,7 @@ cat << EOF
 [x] Prerequisites
 
  - CentOS version 6 or 7, or Ubuntu 16 or 17 (or other Linux distribution)
- - Bash shell
+ - BLAS/OpenBLAS [ and Scalapack ]
  - Python version 1.x or 2.6 or 2.7
  - MPICH or Intel MPI+MKL or OpenMPI
  - Compiler: GNU, Intel, PGI, etc.
@@ -113,9 +113,9 @@ comment
 comment
 
 	read -p "Enter full path of NWChem source code, e.g. /home/nutt/nwchem-6.8: " inp2
-	read -p "Enter full path of MPI directory, e.g. /usr/local/openmpi-2.0.2: " MPI_LOCATION
+	read -p "Enter full path of MPI directory, e.g. /usr/local/openmpi: " MPI_LOCATION
 	read -p "Enter version of Python you are using, e.g. 2.7: " PYTHON_VER
-	read -p "Enter full path of Python directory, e.g. /usr/lib64/python2.7: " PYTHON_HOME
+	read -p "Enter full path of Python directory, e.g. /usr: " PYTHON_HOME
 
 	if [ -e $inp2/src ];then
 	if [ -e $MPI_LOCATION ];then
@@ -227,7 +227,7 @@ export BLASOPT="-lopenblas -lpthread -lrt"
 comment
 
 	read -p "Enter full path of original NWChem directory, e.g. /home/nutt/nwchem-6.8: " inp2
-	read -p "Enter full path of new NWChem data & libraries, e.g. /usr/local/: " inp3
+	read -p "Enter full path of new NWChem data & libraries, e.g. /usr/local: " inp3
 
 	if [ -e $inp2 ]; then
 
@@ -266,7 +266,7 @@ comment
 
 	if [ ! -e $HOME/.nwchemrc ];then
 
-		read -p "Enter full path of NWChem libraries directory, e.g. /usr/local/nwchem/: " inp4
+		read -p "Enter full path of NWChem libraries directory, e.g. /usr/local/nwchem: " inp4
 
 		if [ -e $inp4/bin/nwchem ]; then
 
@@ -302,7 +302,7 @@ comment
 comment
 
 	echo "Download NWChem 6.8 source code to your Linux machine"
-	read -p "Enter directory where you want to save NWChem 6.8, e.g. /home/nutt/: " NWCHEM68_DIR
+	read -p "Enter directory where you want to save NWChem 6.8, e.g. /home/nutt: " NWCHEM68_DIR
 
 	if [ -e $NWCHEM68_DIR ];then
 
