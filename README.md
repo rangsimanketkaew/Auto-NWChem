@@ -5,7 +5,7 @@
 <p/>
 <br />
 
-Automated Program for compiling NWchem with MPICH / Intel MPI+MKL / OpenMPI on Linux cluster.  <br />
+An automated program for compiling NWchem with MPICH / Intel MPI+MKL / OpenMPI on Linux cluster.  <br />
 
 ## Prerequisites
 
