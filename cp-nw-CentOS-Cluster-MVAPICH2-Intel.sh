@@ -1,6 +1,6 @@
 #!/bin/bash
 #############################################################################################################
-#  Bash script for compiling of NWChem on Cluster (multiple computing node) / shared memory using MVAPICH2  #
+#  Program for NWChem compilation on CentOS / Rocks Cluster (multiple compute node) using MVAPICH2 Intel    #
 #  Written by Rangsiman Ketkaew (MSc student in Chemistry), Thammasat University, Thailand.                 #
 #############################################################################################################
 
