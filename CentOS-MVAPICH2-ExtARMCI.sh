@@ -1,6 +1,7 @@
 #!/bin/bash
 ############################################################################################################
 #  Program for NWChem compilation on CentOS / Rocks Cluster with MVAPICH2 Intel with ARMCI and Infiniband  #
+#  External ARMCI will be used to compile NWChem.                                                          #
 #  Written by Rangsiman Ketkaew (MSc student in Chemistry), Thammasat University, Thailand.                #
 ############################################################################################################
 
