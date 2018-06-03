@@ -1,6 +1,6 @@
 #!/bin/bash
 ##############################################################################################
-#  Bash script for compiling of NWChem on CentOS with OpenMPI                                #
+#  Program for NWChem compilation on CentOS with OpenMPI                                     #
 #  Written by Rangsiman Ketkaew (MSc student in Chemistry), Thammasat University, Thailand.  #
 ##############################################################################################
 
