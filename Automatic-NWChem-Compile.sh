@@ -2,14 +2,14 @@
 
 :<<'comment'
 ##############################################################################################
-#  Program for compiling NWChem with MPICH / Intel MPI+MKL / OpenMPI on Linux cluster.       #
+#  Program for compiling NWChem with MPICH / MVAPICH2 / MVAPICH23 / Intel MPI+MKL / OpenMPI. #
 #  Written by Rangsiman Ketkaew (MSc student in Chemistry), Thammasat University, Thailand.  #
 ##############################################################################################
 
 version 1.0 First version: works with OpenMPI
 version 1.1 Can make resource file
 version 1.2 Can search MPI libraries automatically
-version 1.3 Works with MPICH & Intel MPI+MKL and Bug fixed
+version 1.3 Works with MPICH & MVAPICH2 & MVAPICH23 & Intel MPI+MKL and Bug fixed
 comment
 
 if [ "$1" == "-h" ] || [ "$1" == "-help" ] || [ "$1" == "--help" ]; then
@@ -17,7 +17,7 @@ cat << EOF
 
 [x] NWChem Auto Compilation 1.3 
 
-[x] Usage: ./compile-nwchem-auto.sh [-[-]h[elp]]
+[x] Usage: ./Automatic-NWChem-Compile.sh [-[-]h[elp]]
 
 [x] Description of option
 
@@ -39,7 +39,7 @@ cat << EOF
 
 [x] Instruction of Program Installation
 
- 1. Run Program "compile-nwchem-auto.sh"
+ 1. Run Program "./Automatic-NWChem-Compile.sh"
  2. Enter option 1 to check the version and suitable libraries of MPI.
  3. Enter option 2 to compile program.
     wait until compilation completes (about 20-30 minutes).
@@ -162,7 +162,7 @@ export BLASOPT="-lopenblas -lpthread -lrt"
 		echo "====================================================================="
 		echo "Install NWChem version 6.8.1 with MPI"
 		echo "Linux OS: $(cat /etc/*release|tail -1)"
-		sed -n 124,157p ./compile-nwchem-auto.sh
+		sed -n 124,157p ./Automatic-NWChem-Compile.sh
 		echo "====================================================================="
 		echo ""
 
