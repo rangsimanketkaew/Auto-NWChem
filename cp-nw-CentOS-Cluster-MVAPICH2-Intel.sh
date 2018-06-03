@@ -1,8 +1,8 @@
 #!/bin/bash
-#############################################################################################################
-#  Program for NWChem compilation on CentOS / Rocks Cluster (multiple compute node) using MVAPICH2 Intel    #
-#  Written by Rangsiman Ketkaew (MSc student in Chemistry), Thammasat University, Thailand.                 #
-#############################################################################################################
+###############################################################################################
+#  Program for NWChem compilation on CentOS / Rocks Cluster with MVAPICH2 Intel               #
+#  Written by Rangsiman Ketkaew (MSc student in Chemistry), Thammasat University, Thailand.   #
+###############################################################################################
 
 # It should be able to make use of a larger number of CPUs across distributed nodes.
 # This script utilized the python 2.6 and mvapich2-2.2b_intel2013.
