@@ -1,6 +1,6 @@
 #!/bin/bash
 ##############################################################################################
-#  Program for NWChem compilation on CentOS with OpenMPI                                     #
+#  Program for NWChem compilation on CentOS with OpenMPI compiled by gFrotran                #
 #  Written by Rangsiman Ketkaew (MSc student in Chemistry), Thammasat University, Thailand.  #
 ##############################################################################################
 
