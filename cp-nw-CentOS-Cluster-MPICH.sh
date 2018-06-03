@@ -1,8 +1,8 @@
 #!/bin/bash
-##########################################################################################################
-#  Program for NWChem compilation on CentOS / Rocks Cluster (multiple compute node) using MPICH          #
-#  Written by Rangsiman Ketkaew (MSc student in Chemistry), Thammasat University, Thailand.              #
-##########################################################################################################
+##################################################################################################
+#  Program for NWChem compilation on CentOS / Rocks Cluster (multiple compute node) with MPICH   #
+#  Written by Rangsiman Ketkaew (MSc student in Chemistry), Thammasat University, Thailand.      #
+##################################################################################################
 
 export NWCHEM_TOP=/builddir/build/BUILD/nwchem-6.6
 export NWCHEM_TARGET=LINUX64
