@@ -1,6 +1,6 @@
 #!/bin/bash
 ##########################################################################################################
-#  Bash script for compiling of NWChem on Cluster (multiple computing node) / shared memory using MPICH  #
+#  Program for NWChem compilation on CentOS / Rocks Cluster (multiple compute node) using MPICH          #
 #  Written by Rangsiman Ketkaew (MSc student in Chemistry), Thammasat University, Thailand.              #
 ##########################################################################################################
 
