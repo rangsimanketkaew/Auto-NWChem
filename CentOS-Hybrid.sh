@@ -1,6 +1,6 @@
 #!/bin/bash
 ##############################################################################################
-#  Program for NWChem compilation on CentOS with OpenMP + MPI                                #
+#  Program for NWChem compilation on CentOS with Hybrid (OpenMP + MVAPICH2 Intel             #
 #  Written by Rangsiman Ketkaew (MSc student in Chemistry), Thammasat University, Thailand.  #
 ##############################################################################################
 
