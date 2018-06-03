@@ -1,6 +1,6 @@
 #!/bin/bash
 ###############################################################################################
-#  Program for NWChem compilation on CentOS / Rocks Cluster with MPICH                        #
+#  Program for NWChem compilation on CentOS / Rocks Cluster with MPICH & Infiniband           #
 #  Written by Rangsiman Ketkaew (MSc student in Chemistry), Thammasat University, Thailand.   #
 ###############################################################################################
 
