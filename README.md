@@ -5,7 +5,7 @@
 <p/>
 <br />
 
-An automated program for compiling NWchem with MPICH / Intel MPI+MKL / OpenMPI on Linux cluster.  <br />
+An automated program for compiling NWchem with MPICH / MVAPICH2 / MVAPICH23 / Intel MPI+MKL / OpenMPI on Linux cluster.  <br />
 
 ## Prerequisites
 
@@ -14,7 +14,7 @@ An automated program for compiling NWchem with MPICH / Intel MPI+MKL / OpenMPI o
   * Ubuntu 16.x or 17.x
 * BLAS/OpenBLAS [ and Scalapack ]
 * Python version 1.x or 2.6 or 2.7
-* MPICH or Intel MPI+MKL or OpenMPI
+* MPICH or MVAPICH2 or MVAPUCH23 or Intel MPI+MKL or OpenMPI or any MPI
 * Compiler: GNU, Intel, PGI, etc. (More details please consult [NWChem manual](http://www.nwchem-sw.org/index.php/Compiling_NWChem#Setting_up_the_proper_environment_variables))
 
 ### Math libraries
@@ -69,19 +69,19 @@ tar -xvjf nwchem-6.8-release.revision-v6.8-47-gdf6c956-src.2017-12-14.tar.bz2
 ```
 You should see *nwchem-6.8* directory. <br />
 
-* **(3)** Download [compile-nwchem-auto.sh](https://raw.githubusercontent.com/rangsimanketkaew/NWChem/master/compile-nwchem-auto.sh) to youe home directory.
+* **(3)** Download [Automatic-NWChem-Compilation.sh](https://github.com/rangsimanketkaew/NWChem/blob/master/Automatic-NWChem-Compile.sh) program to your Linux machine using following command
 ```
 wget https://raw.githubusercontent.com/rangsimanketkaew/NWChem/master/compile-nwchem-auto.sh
 ```
 Change permission of script.
 ```
-chmod 755 compile-nwchem-auto.sh
+chmod 755 Automatic-NWChem-Compile.sh
 ```
 Run script and follow the instruction of compilation.
 ```
-./compile-nwchem-auto.sh
+./Automatic-NWChem-Compile.sh
 ```
-For help page, run `./compile-nwchem-auto.sh -h` or `./compile-nwchem-auto.sh -help`.
+For help page, run `./Automatic-NWChem-Compile.sh -h` or `./Automatic-NWChem-Compile.sh -help`.
 
 ## Post-Compilation
 
