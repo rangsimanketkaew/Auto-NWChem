@@ -1,8 +1,8 @@
 #!/bin/bash
-##############################################################################################
-#  Program for NWChem compilation on CentOS with Hybrid (OpenMP + MVAPICH2 Intel             #
-#  Written by Rangsiman Ketkaew (MSc student in Chemistry), Thammasat University, Thailand.  #
-##############################################################################################
+############################################################################################################
+#  Program for NWChem compilation on CentOS with Hybrid (OpenMP + MVAPICH2 Intel) for Infiniband cluster   #
+#  Written by Rangsiman Ketkaew (MSc student in Chemistry), Thammasat University, Thailand.                #
+############################################################################################################
 
 module purge
 module load /share/apps/modulefiles/gcc48 mvapich2-2.2b_intel2013 python2.7
