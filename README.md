@@ -71,7 +71,7 @@ You should see *nwchem-6.8* directory. <br />
 
 * **(3)** Download [Automatic-NWChem-Compilation.sh](https://github.com/rangsimanketkaew/NWChem/blob/master/Automatic-NWChem-Compile.sh) program to your Linux machine using following command
 ```
-wget https://raw.githubusercontent.com/rangsimanketkaew/NWChem/master/compile-nwchem-auto.sh
+wget https://raw.githubusercontent.com/rangsimanketkaew/NWChem/master/Automatic-NWChem-Compile.sh
 ```
 Change permission of script.
 ```
