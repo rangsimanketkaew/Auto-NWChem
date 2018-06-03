@@ -4,6 +4,10 @@
 #  Written by Rangsiman Ketkaew (MSc student in Chemistry), Thammasat University, Thailand.  #
 ##############################################################################################
 
+# Install reprequisites:
+# yum install python-devel gcc-gfortran tcsh openssh-clients which
+# yum install openblas-devel openblas-serial64 openmpi-devel scalapack-openmpi-devel elpa-openmpi-devel 
+
 export NWCHEM_TOP=/builddir/build/BUILD/nwchem-6.6
 export NWCHEM_TARGET=LINUX64
 export CC=gcc
@@ -38,4 +42,5 @@ export LIBMPI='-lmpi -lmpi_f90 -lmpi_f77'
 $MAKE nwchem_config NWCHEM_MODULES="all python" 2>&1 | tee ../make_nwchem_config_openmpi.log
 $MAKE 64_to_32 2>&1 | tee ../make_64_to_32_openmpi.log
 export MAKEOPTS="USE_64TO32=y"
+
 $MAKE ${MAKEOPTS} 2>&1
