@@ -15,7 +15,7 @@ comment
 if [ "$1" == "-h" ] || [ "$1" == "-help" ] || [ "$1" == "--help" ]; then
 cat << EOF
 
-[x] NWChem Auto Compilation 1.3 
+[x] Automatic NWChem Compilation 1.3 (2018)
 
 [x] Usage: ./Automatic-NWChem-Compile.sh [-[-]h[elp]]
 
@@ -173,7 +173,7 @@ export BLASOPT="-lopenblas -lpthread -lrt"
 			echo ""
 			echo " Start to compile NWChem 6.8 ..."
 			echo ""
-			echo " Building NWChem executable. Waiting for 20-30 Minutes ..."
+			echo " Building NWChem executable ... Waiting for 20-30 minutes."
 			make nwchem_config NWCHEM_MODULES="all python" >& compile-config.log
 			make 64_to_32 >& compile-64_to_32.log
 			export MAKEOPTS="USE_64TO32=y"
