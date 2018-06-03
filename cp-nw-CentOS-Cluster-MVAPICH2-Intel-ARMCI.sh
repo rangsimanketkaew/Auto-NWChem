@@ -1,6 +1,6 @@
 #!/bin/bash
 ##############################################################################################
-#  Program for NWChem compilation on CentOS / Rocks Cluster using MVAPICH2 Intel with ARMCI  #
+#  Program for NWChem compilation on CentOS / Rocks Cluster with MVAPICH2 Intel with ARMCI   #
 #  Written by Rangsiman Ketkaew (MSc student in Chemistry), Thammasat University, Thailand.  #
 ##############################################################################################
 
