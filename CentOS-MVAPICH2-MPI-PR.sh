@@ -1,7 +1,7 @@
 #!/bin/bash
 ############################################################################################################
 #  Program for NWChem compilation on CentOS / Rocks Cluster with MVAPICH2 Intel with ARMCI and Infiniband  #
-#  External ARMCI will be used to compile NWChem.                                                          #
+#  NWChem will be ARMCI with progress rank (MPI-PR).                                                       #
 #  Written by Rangsiman Ketkaew (MSc student in Chemistry), Thammasat University, Thailand.                #
 ############################################################################################################
 
@@ -10,13 +10,6 @@
 
 # The environment variable setting used in this bash script is for compiling NWChem 6.6
 # on CentOS/Rocks Chalawan cluster (http://chalawan.narit.or.th).
-
-# You need to install ARMCI first !
-# cd $NWCHEM_TOP/src/tools
-# ./install-armci-mpi
-# Then set the following two lines
-# export ARMCI_NETWORK=ARMCI
-# export EXTERNAL_ARMCI_PATH=/share/apps/nwchem-6.6/nwchem-6.6/src/tools/..//external-armci
 
 module purge
 module load /share/apps/modulefiles/gcc48 mvapich2-2.2b_intel2013 python2.7
