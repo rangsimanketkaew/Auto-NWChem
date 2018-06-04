@@ -1,7 +1,7 @@
 #!/bin/bash
 ##############################################################################################
-#  Program for NWChem compilation on CentOS with OpenMPI & ScaLAPACKcompiled by gFrotran     #
-#  ScaLAPACK 32 bits rpm-based is used to compile NWChem
+#  Program for NWChem compilation on CentOS with OpenMPI & ScaLAPACK compiled by gFrotran    #
+#  ScaLAPACK of OpenMPI-based is used to compile NWChem                                      #
 #  Written by Rangsiman Ketkaew (MSc student in Chemistry), Thammasat University, Thailand.  #
 ##############################################################################################
 
@@ -13,6 +13,7 @@
 
 # ScaLAPACK will be used as long as you specify the its library correctly.
 # E.g. "-lscalapack", which refers to "libscalapack.so". This can be found by typing "locate scalapack".
+# The default scalapack library is at "/usr/lib64/openmpi/lib/".
 
 export NWCHEM_TOP=/builddir/build/BUILD/nwchem-6.8
 export NWCHEM_TARGET=LINUX64
