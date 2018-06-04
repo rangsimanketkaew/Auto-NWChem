@@ -9,9 +9,14 @@
 # This script utilized the python 2.6 and mvapich2-2.2b_intel2013.
 
 # The environment variable setting used in this bash script is for compiling NWChem 6.6
-# on SGE on Chalawan cluster (http://chalawan.narit.or.th).
+# on CentOS/Rocks Chalawan cluster (http://chalawan.narit.or.th).
 
 # You need to install ARMCI first !
+# cd $NWCHEM_TOP/src/tools
+# ./install-armci-mpi
+# Then set the following two lines
+# export ARMCI_NETWORK=ARMCI
+# export EXTERNAL_ARMCI_PATH=/share/apps/nwchem-6.6/nwchem-6.6/src/tools/..//external-armci
 
 module purge
 module load /share/apps/modulefiles/gcc48 mvapich2-2.2b_intel2013 python2.7
