@@ -10,7 +10,7 @@
 
 # Default OpenBLAS and Python 2.6 or 2.7 rpm-based are recommended.
 
-export NWCHEM_TOP=/builddir/build/BUILD/nwchem-6.6
+export NWCHEM_TOP=/builddir/build/BUILD/nwchem-6.8
 export NWCHEM_TARGET=LINUX64
 export CC=gcc
 export FC=gfortran
