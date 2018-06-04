@@ -105,6 +105,16 @@ source /home/$USER/.bashrc
 ```
 Logout and login again, now you can run NWChem via *nwchem*.
 
+**Optional: recompile.** You are able to recompile the modified code of NWChem without doing full compilation again.
+Create script for setting environment variable. You can use the script that you used to compile your NWChem. <br />
+Then navigate to sub-directtory where you have modified the code and use 'make' to compile, says
+```
+cd $NWCHEM_TOP/src/nwdft/scf_dft
+make
+
+cd $NWCHEM_TOP/src
+make link
+```
 ## Running the tests
 
 Example of input & output files are available at **$NWCHEM_TOP/QA/tests** and **$NWCHEM_TOP/examples/**. Running NWChem calculation on standalone machine or HPC cluster with OpenMPI parallel using command
