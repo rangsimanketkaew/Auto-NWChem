@@ -21,7 +21,7 @@ onintr int
 set NWCHEM_NORMAL = /pkg/nwchem/Casper/i18gcc6/nwchem-6.8.1-fixmrcc/
 set NWCHEM_CASPER = /pkg/nwchem/Casper/i18gcc6/nwchem-6.8.1-fixmrcc/
 set NWCHEM_MPIPR = /pkg/nwchem/MPI-PR/i18gcc6/nwchem-6.8.1-fixmrcc/
-###################################################################
+####################################################################
 
 #############################################
 # Determine NWChem runtime executable
