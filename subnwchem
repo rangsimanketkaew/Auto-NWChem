@@ -1,0 +1,412 @@
+#!/bin/csh
+
+# NWChem 6.8 Interactive PBS Professional
+# Submission for serial/parallel job on 
+# Taiwania cluster.
+#
+# Support: 
+#  [/] Serial & MPI parallel method
+#  [/] Automatically determine job queue
+#  [/] ARMCI: Casper and MPI-PR
+# Not Support:
+#  [x] Cannot determine GPU queue
+#      (but user-defined queue is accepted)
+#  [x] Submit job as non-interactive
+# 
+# Updated 2018.06.18
+
+onintr int
+
+####################################################################
+set NWCHEM_NORMAL = /pkg/nwchem/Casper/i18gcc6/nwchem-6.8.1-fixmrcc/
+set NWCHEM_CASPER = /pkg/nwchem/Casper/i18gcc6/nwchem-6.8.1-fixmrcc/
+set NWCHEM_MPIPR = /pkg/nwchem/MPI-PR/i18gcc6/nwchem-6.8.1-fixmrcc/
+###################################################################
+
+#############################################
+# Determine NWChem runtime executable
+#############################################
+
+if ("null$1" == "null") then
+  set CASPER = 0
+  set MPI_PR = 0
+  goto normal_nwchem
+ else if ("null$1" == "nullcasper") then
+  set NWCHEM_TOP = "$NWCHEM_CASPER"
+  set NWCHEM_EXE = "$NWCHEM_TOP/bin/LINUX64/nwchem"
+  set CASPER = 1
+  set MPI_PR = 0
+  goto start_program
+ else if ("null$1" == "nullmpipr") then
+  set NWCHEM_TOP = "$NWCHEM_MPIPR"
+  set NWCHEM_EXE = "$NWCHEM_TOP/bin/LINUX64/nwchem"
+  set CASPER = 0
+  set MPI_PR = 1
+  goto start_program
+ else if ("null$1" == "null-h" || "null$1" == "null-help") then
+  goto help
+ else if ("null$1" == "null-info") then
+  goto info
+endif
+
+#############################################
+# Neither Casper nor MPI-PR ARMCI is selected. 
+# Use NWChem runtime without ARMCI.
+#############################################
+
+normal_nwchem:
+  set NWCHEM_TOP = "$NWCHEM_NORMAL"
+  set NWCHEM_EXE = $NWCHEM_TOP/bin/LINUX64/nwchem
+
+#############################################
+# Start to request information for submitting 
+# the job ...
+#############################################
+
+start_program:
+
+echo ""
+echo "       #############################################"
+echo "      ##  NWChem 6.8 Interactive PBS submission  ##"
+echo "     ##           on Taiwania Cluster           ##"
+echo "    #############################################"
+echo ""
+
+#############################################
+# Determine Input file
+#############################################
+
+pushd $HOME >& /dev/null
+set PWDHOME = `pwd`
+popd >& /dev/null
+set FULLPATH = `pwd | sed -e "s,$PWDHOME,~,"`
+
+search_input:
+set DEFAULTINPUT = "$FULLPATH/nwchem.nw"
+echo -n "Enter input file [$DEFAULTINPUT]: "
+set JOBINPUT = "$<"
+if ("null$JOBINPUT" == "null") set JOBINPUT = "$DEFAULTINPUT"
+#
+set INPUTFILE = "$FULLPATH/$JOBINPUT"
+if (-f $INPUTFILE) then
+   set JOBINPUT = "$INPUTFILE"
+ else if (-f $INPUTFILE.nw) then
+   set JOBINPUT = "$INPUTFILE.nw"
+endif
+#
+if (! -f $JOBINPUT) then
+  echo "Error: unable to locate input file $JOBINPUT"
+  goto search_input
+endif
+
+#############################################
+# Define name of output file
+#############################################
+
+ set JOBOUTPUT = `basename $JOBINPUT .nw`.out
+ @ i = 1
+ while (-e $JOBOUTPUT) 
+   echo " $JOBOUTPUT already exists !"
+   set JOBOUTPUT = `basename $JOBINPUT .nw`.$i.out
+   @ i ++
+ end
+ set DEFAULTOUTPUT = "$FULLPATH/$JOBOUTPUT"
+ #
+ echo -n "Enter output file [$DEFAULTOUTPUT]: "
+ set OUTPUTFILE = "$<"
+ if ("null$OUTPUTFILE" != "null") then
+ set JOBOUTPUT = "$FULLPATH/$OUTPUTFILE".out
+ else
+ set JOBOUTPUT = "$DEFAULTOUTPUT"
+endif
+ 
+#############################################
+# Define Computing Resource for calculation
+#############################################
+
+ ask_node:
+ echo -n "Number of Compute node [1]: "
+ set JOBNODE = "$<"
+ if ("null$JOBNODE" == "null") then
+  set JOBNODE = 1
+ else if ($JOBNODE >= 601) then
+  echo "Error: Maximum node is 600"
+  goto ask_node
+ else if ($JOBNODE <= 0) then
+  echo "Error: Enter only positive integer"
+  goto ask_node
+ endif
+ #
+ ask_cpu:
+ echo -n "Number of CPU cores [40]: "
+ set JOBCPU = "$<"
+ if ("null$JOBCPU" == "null") then
+  set JOBCPU = 40
+ else if ($JOBCPU >= 41) then
+  echo "Error: Maximum CPU cores/node is 40"
+  goto ask_cpu
+ else if ($JOBCPU <= 0) then
+  echo "Error: Enter only positive integer"
+  goto ask_cpu
+ endif
+ #
+# ask_mpi:
+# echo -n "Number of MPI process [$JOBCPU]: "
+# set JOBMPI = "$<"
+# if ("null$JOBMPI" == "null") then
+  set JOBMPI = $JOBCPU
+# else if ($JOBMPI >= 41) then
+#  echo "Error: Maximum MPI process/node is 40"
+#  goto ask_mpi
+# else if ($JOBMPI <= 0) then
+#  echo "Error: Enter only positive integer"
+#  goto ask_mpi
+# endif
+ #
+# ask_omp:
+# echo -n "Number of OMP Threads [1]: "
+# set JOBOMP = "$<"
+# if ("null$JOBOMP" == "null") then
+  set JOBOMP = 1
+# else if ($JOBOMP >= 41) then
+#  echo "Error: Maximum OpenMP Threads/node is 40"
+#  goto ask_omp
+# else if ($JOBOMP <= 0) then
+#  echo "Error: Enter only positive integer"
+#  goto ask_omp
+# endif
+
+@ TOTALMPI = ($JOBNODE * $JOBMPI)
+#
+if ( $CASPER != 0 || $MPI_PR != 0 ) then
+ if ($TOTALMPI == 1) then
+  echo "Error: Casper or MPI-PR requires MPI process > 1"
+  goto ask_node
+ endif
+endif
+
+#############################################
+# Search suitable queue and wall-time
+#############################################
+
+ if ($TOTALMPI == 1) then
+  set QUEUE = "serial"
+  set JOBTIME = "96:00:00"
+ else if ($TOTALMPI <= 40) then
+  setenv QUEUE "cf40"
+  set JOBTIME = "96:00:00"
+ else if ($TOTALMPI <= 160) then
+  set QUEUE = "cf160"
+  set JOBTIME = "96:00:00"
+ else if ($TOTALMPI <= 400) then
+  set QUEUE = "ct400"
+  set JOBTIME = "96:00:00"
+ else if ($TOTALMPI <= 800) then
+  set QUEUE = "ct800"
+  set JOBTIME = "72:00:00"
+ else if ($TOTALMPI <= 1200) then
+  set QUEUE = "cf1200"
+  set JOBTIME = "48:00:00"
+ else if ($TOTALMPI <= 2000) then
+  set QUEUE = "ct2k"
+  set JOBTIME = "48:00:00"
+ else if ($TOTALMPI <= 6000) then
+  set QUEUE = "ct6k"
+  set JOBTIME = "24:00:00"
+ else if ($TOTALMPI <= 8000) then
+  set QUEUE = "ct8k"
+  set JOBTIME = "24:00:00"
+ else if ($TOTALMPI <= 22400) then
+  set QUEUE = "ct22400"
+  set JOBTIME = "24:00:00"
+endif
+
+echo -n "Job Queue [suitable queue is $QUEUE]: "
+set CHECKQUEUE = "$<"
+if ("null$CHECKQUEUE" == "null") then
+  set JOBQUEUE = "$QUEUE"
+ else if ("null$CHECKQUEUE" == "nullctest") then
+  set JOBQUEUE = ctest
+  set JOBTIME = "00:30:00"
+ else
+  set JOBQUEUE = "$CHECKQUEUE"
+  echo -n "Set wall-time [e.g. 00:30:00]: "
+  set JOBTIME = "$<"
+endif
+
+#############################################
+# Define job name & standard error & output 
+#############################################
+
+set JOBNAME = `basename $JOBINPUT .nw`
+set JOBSTDERR = `dirname $JOBINPUT`/`basename $JOBINPUT .nw`.err
+set JOBSTDOUT = `dirname $JOBINPUT`/`basename $JOBINPUT .nw`.log
+set PROJ_ID = `get_su_balance |awk -F, '{print $2}'`
+
+#############################################
+# Do we need to clean-up Compute node before 
+# run the calculation ?
+#############################################
+
+set CLEANSRC = "/pkg/chem/sys/bin/"
+if (! -f $HOME/.cleanup-devshm.sh) cp $CLEANSRC/cleanup-devshm.sh $HOME/.cleanup-devshm.sh
+if (! -f $HOME/.cleanup-cmx.sh) cp $CLEANSRC/cleanup-cmx.sh $HOME/.cleanup-cmx.sh
+
+if ("null$CASPER" == "null1") then
+ set NWCHEM_RUNTIME = CASPER
+ set NWCHEM_TYPE = "ARMCI: Casper"
+else if ("null$MPI_PR" == "null1") then
+ set NWCHEM_RUNTIME = MPIPR
+ set NWCHEM_TYPE = "ARMCI: MPI-PR"
+else
+ set NWCHEM_RUNTIME = NORM
+ set NWCHEM_TYPE = "No ARMCI"
+endif
+
+#############################################
+# Show all parameters for job submission 
+# using user-defined environment.
+#############################################
+
+ echo "\n"
+ echo " ========== Necessary Settings for PBS submission are following ========== "
+ echo ""
+ echo " NWChem EXE  = NWChem 6.8.1 - $NWCHEM_TYPE"
+ echo " Start on    = `date`"
+ echo ""
+ echo " Input       = $JOBINPUT"
+ echo " Output      = $JOBOUTPUT"
+ echo ""
+ echo " SELECT      = $JOBNODE"
+ echo " NCPUS       = $JOBCPU"
+ echo " MPIPROCS    = $JOBMPI"
+ echo " OMPTREADS   = $JOBOMP"
+ echo " Total MPI processes"
+ echo "             = $JOBNODE x $JOBMPI = $TOTALMPI"
+ echo ""
+ echo " Job Name    = $JOBNAME"
+ echo " Job Queue   = $JOBQUEUE"
+ echo " Wall-time   = $JOBTIME"
+ echo " Std Error   = $JOBSTDERR"
+ echo " Std Output  = $JOBSTDOUT"
+ echo " Project ID  = $PROJ_ID"
+ echo ""
+ echo " ==========================================================================\n"
+
+echo -n "Submit your job now ? [yes]: "
+set CONFIRM = "$<"
+if ("null$CONFIRM" == "null" || "null$CONFIRM" == "nully" || "null$CONFIRM" == "nullyes") then
+else
+  echo "Error: PBS submission aborted !"
+  exit 1
+endif
+
+#############################################
+# Writing all environment variable to 
+# temporaly PBS script
+#############################################
+
+set JOB_SCRIPT = `dirname $JOBOUTPUT`/submit.`basename $JOBOUTPUT .out`.sh
+
+cat <<EOF > $JOB_SCRIPT
+#!/bin/bash
+#PBS -l select=$JOBNODE\:ncpus=$JOBCPU\:mpiprocs=$JOBMPI\:ompthreads=$JOBOMP
+#PBS -l walltime=$JOBTIME
+#PBS -q $JOBQUEUE
+#PBS -N $JOBNAME
+#PBS -P $PROJ_ID
+
+module load intel/2018_u1 cuda/8.0.61 gcc/6.3.0
+
+cd \$PBS_O_WORKDIR
+
+ulimit -c 0
+ulimit -s unlimited
+
+export SCRATCH_DIR=/work1/$USER/SCRATCH/nwchem/nwchem.pbs\${PBS_JOBID/\.srvc1/}
+ if [ ! -d \$SCRATCH_DIR ]; then mkdir -p \$SCRATCH_DIR; fi
+
+export I_MPI_PIN_DOMAIN=omp
+export MPI_ROOT=\$I_MPI_ROOT/intel64
+export MPICC=\$MPI_ROOT/bin/mpiicc
+export MPICXX=\$MPI_ROOT/bin/mpiicpc
+export MPIFC=\$MPI_ROOT/bin/mpiifort
+export NWCHEM_TOP=$NWCHEM_TOP
+export NWCHEM_TARGET=LINUX64
+export NWCHEM_EXECUTABLE=\$NWCHEM_TOP/bin/\$NWCHEM_TARGET/nwchem
+export NWCHEM_BASIS_LIBRARY=/pkg/nwchem/nwchem_basis/basis/libraries/
+export NWCHEM_NWPW_LIBRARY=/pkg/nwchem/nwchem_nwpw/nwpw/libraryps/
+
+if [ ! -f ~/.nwchemrc ]; then 
+ ln -s /pkg/nwchem/etc/default.nwchemrc ~/.nwchemrc
+fi
+export MACHLIST=\$PBS_O_WORKDIR/nodelist.\${PBS_JOBID/\.srvc1/}
+cat \$PBS_NODEFILE | sed -e 's/.*/&\.nchc\.opa/' > \$MACHLIST
+
+###### Casper
+if [ "null$NWCHEM_RUNTIME" = "nullCASPER" ]; then
+  CSP_NG=1
+  for RUNNODE in \`uniq \$MACHLIST\`; do echo "Pre-cleaning at $i"; ssh \$RUNNODE $HOME/.cleanup-devshm.sh; done
+  mpirun -PSM2 -n \$(($JOBNODE*$JOBCPU)) -genv CSP_NG 1 -genv LD_PRELOAD $NWCHEM_TOP/../deps/lib/libcasper.so \
+  \$NWCHEM_EXECUTABLE $JOBINPUT > $JOBOUTPUT 2>&1
+  for RUNNODE in \`uniq \$MACHLIST\`; do echo "Post-cleaning at $i"; ssh \$RUNNODE $HOME/.cleanup-devshm.sh; done
+###### MPI-PR
+ elif [ "null$NWCHEM_RUNTIME" = "nullMPIPR" ]; then
+  for RUNNODE in \`uniq \$MACHLIST\`; do echo "Pre-cleaning at $i"; ssh \$RUNNODE $HOME/.cleanup-cmx.sh; done
+  mpirun -PSM2 -n \$(($JOBNODE*$JOBCPU)) \$NWCHEM_EXECUTABLE $JOBINPUT > $JOBOUTPUT 2>&1
+  for RUNNODE in \`uniq \$MACHLIST\`; do echo "Post-cleaning at $i"; ssh \$RUNNODE $HOME/.cleanup-cmx.sh; done
+###### Without ARMCI
+ else
+  for RUNNODE in \`uniq \$MACHLIST\`; do echo "Pre-cleaning at $i"; ssh \$RUNNODE $HOME/.cleanup-devshm.sh; done
+  mpirun -PSM2 -n \$(($JOBNODE*$JOBCPU)) \$NWCHEM_EXECUTABLE $JOBINPUT > $JOBOUTPUT 2>&1
+  for RUNNODE in \`uniq \$MACHLIST\`; do echo "Post-cleaning at $i"; ssh \$RUNNODE $HOME/.cleanup-devshm.sh; done
+fi
+
+EOF
+
+#############################################
+# Now, submit the job using PBS 
+#############################################
+
+qsub $JOB_SCRIPT
+exit 0
+
+int:  
+ echo "\n"
+ echo "Error: You pressed Ctrl-C, ....quit.... \n"
+ exit 1
+
+info:
+ echo ""
+ echo " Default environment variable for NWChem - PBS submission"
+ echo " ========================================================"
+ echo " Program version   : 6.8.1"
+ echo " NWCHEM_TOP        : /pkg/nwchem/Casper/i18gcc6/nwchem-6.8.1-fixmrcc/"
+ echo " NWCHEM_TARGET     : LINUX64"
+ echo " NWChem EXE        : /pkg/nwchem/Casper/i18gcc6/nwchem-6.8.1-fixmrcc/bin/linux64/nwchem"
+ echo ""
+ echo " Input file        : nwchem.nw"
+ echo " Output file       : nwchem.out"
+ echo ""
+ echo " Number of node    : 1"
+ echo "  Maximum node     : 600"
+ echo " Number of CPUs    : 40"
+ echo "  Maximum CPUs     : 40"
+ echo " Number of MPIs    : equal to number of CPU cores"
+ echo "  Maximum MPIs     : 40"
+ echo " Number of Threads : 1"
+ echo "  Maximum Threads  : 40"
+ echo " ========================================================\n"
+ exit 0
+
+help:
+ echo " NWChem Job Submission using Interactive PBS Profession Scheduler"
+ echo ""
+ echo " Usage:"
+ echo " $ subnwchem             : Submit NWChem job without ARMCI (Default)"
+ echo " $ subnwchem casper      : Submit NWChem job with Casper"
+ echo " $ subnwchem mpipr       : Submit NWChem job with MPI-PR"
+ echo " $ subnwchem [-h|-help]  : Open this help"
+ echo " $ subnwchem -info       : Show default setting\n"
+ echo " NWChem manual: https://github.com/nwchemgit/nwchem/wiki\n"
+ exit 0
