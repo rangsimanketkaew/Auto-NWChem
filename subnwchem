@@ -3,13 +3,11 @@
 # Interactive PBS submission for running NWChem job with 
 # MPI parallel on Taiwania cluster, NCHC, Taiwan
 #
-# Capability:
+# Capabilities:
 #  [/] works with serial, MPI, & OpenMP parallel methods
 #  [/] submit job on GPU/CUDA request
 #  [/] automatically determine suitable PBS job queue
 #  [/] able to use ARMCI methods: Casper and MPI-PR
-#
-#  [x] cannot submit job with non-interactive
 #
 # Updated 2018.06.19  Rangsiman Ketkaew  rangsiman1993@gmail.com
 ####################################################################
