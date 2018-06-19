@@ -12,8 +12,8 @@
 # Updated 2018.06.19  Rangsiman Ketkaew  rangsiman1993@gmail.com
 ####################################################################
 set NWCHEM_VER = 6.8.1
-set NWCHEM_CASPER = /pkg/nwchem/Casper/i18gcc6/nwchem-6.8.1-fixmrcc/
-set NWCHEM_MPIPR = /pkg/nwchem/MPI-PR/i18gcc6/nwchem-6.8.1-fixmrcc/
+set NWCHEM_CASPER = /pkg/nwchem/Casper/i18gcc6/nwchem-6.8.1-fixmrcc
+set NWCHEM_MPIPR = /pkg/nwchem/MPI-PR/i18gcc6/nwchem-6.8.1-fixmrcc
 ####################################################################
 
 onintr int
@@ -515,8 +515,7 @@ endif
   echo " Run on `date` by `whoami`"
   echo ""
   echo " NWChem version         = $NWCHEM_VER - $NWCHEM_TYPE"
-  echo ' $NWCHEM_TOP'           = $NWCHEM_TOP
-  echo ' $NWCHEM_EXE'           = \$NWCHEM_TOP/LINUX64/bin/nwchem
+  echo " NWCHEM_EXE             = $NWCHEM_TOP/LINUX64/bin/nwchem"
   echo ""
   echo " Input file             = $JOBINPUT"
   echo " Output file            = $JOBOUTPUT"
