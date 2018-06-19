@@ -14,6 +14,10 @@
 #  [x] Submit job as non-interactive
 # 
 # Updated 2018.06.18
+#
+# Rangsiman Ketkaew (rangsiman1993@gmail.com)
+# CompChem403, Department of Chemistry, Thammasat University
+# Pathum Thani, Thailand
 
 onintr int
 
