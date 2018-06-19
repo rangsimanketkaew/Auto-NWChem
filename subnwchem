@@ -491,7 +491,7 @@ if ("null$CASPER" == "null1") then
   set NWCHEM_TYPE = "ARMCI: Casper"
 #
   set CLEANCASPER = "$CLEANSRC/cleanup-devshm.sh"
-  if (! -f $CLEANCASPER) echo "Error: failed to locate cleanup-devshm.sh $CLEAN"
+  if (! -f $CLEANCASPER) echo "Error: failed to locate cleanup-devshm.sh in $CLEANSRC"
   if (! -f $HOME/.cleanup-devshm.sh) cp $CLEANCASPER $HOME/.cleanup-devshm.sh
 else if ("null$MPI_PR" == "null1") then
   set NWCHEM_RUNTIME = MPIPR
