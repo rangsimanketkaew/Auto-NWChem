@@ -1,19 +1,17 @@
 #!/bin/csh
 
-# Interactive PBS submission for running NWChem job with MPI parallel
-# on Taiwania cluster, NCHC, Taiwan
+# Interactive PBS submission for running NWChem job with 
+# MPI parallel on Taiwania cluster, NCHC, Taiwan
 #
-# This program can
-#  [/] run in serial & MPI parallel method
-#  [/] automatically determine job queue
-#  [/] use ARMCI methods: Casper and MPI-PR
-# but cannot
-#  [x] determine GPU queue
-#      (user-defined queue is accepted)
-#  [x] submit job with non-interactive
-# 
-# Updated 2018.06.18
-
+# Capability:
+#  [/] works with serial, MPI, & OpenMP parallel methods
+#  [/] submit job on GPU/CUDA request
+#  [/] automatically determine suitable PBS job queue
+#  [/] able to use ARMCI methods: Casper and MPI-PR
+#
+#  [x] cannot submit job with non-interactive
+#
+# Updated 2018.06.19  Rangsiman Ketkaew  rangsiman1993@gmail.com
 ####################################################################
 set NWCHEM_VER = 6.8.1
 set NWCHEM_CASPER = /pkg/nwchem/Casper/i18gcc6/nwchem-6.8.1-fixmrcc/
@@ -22,30 +20,100 @@ set NWCHEM_MPIPR = /pkg/nwchem/MPI-PR/i18gcc6/nwchem-6.8.1-fixmrcc/
 
 onintr int
 
+echo ""
+echo "       #############################################"
+echo "      ##  NWChem 6.8 Interactive PBS submission  ##"
+echo "     ##           on Taiwania Cluster           ##"
+echo "    #############################################"
+echo ""
+
 #############################################
-# Determine NWChem runtime executable
+# Evaluate each argument & matching with 
+# program optional
 #############################################
 
-if ("null$1" == "null") then
-  set NWCHEM_TOP = "$NWCHEM_CASPER"
-  set CASPER = 0
-  set MPI_PR = 0
-  goto start_program
- else if ("null$1" == "nullcasper") then
-  set NWCHEM_TOP = "$NWCHEM_CASPER"
-  set CASPER = 1
-  set MPI_PR = 0
-  goto start_program
- else if ("null$1" == "nullmpipr") then
-  set NWCHEM_TOP = "$NWCHEM_MPIPR"
-  set CASPER = 0
-  set MPI_PR = 1
-  goto start_program
- else if ("null$1" == "null-h" || "null$1" == "null-help") then
-  goto help
- else if ("null$1" == "null-info") then
-  goto info
+set USEGPU = 0
+set ARMCI = 0
+set CASPER = 0
+set MPIPR = 0
+set ARGV_ORDER = "$#argv"
+set CLEANSRC = "/pkg/chem/sys/bin/"
+
+if ($ARGV_ORDER >= 0) then
+  @ i = 1
+  while ($i <= $ARGV_ORDER)
+    set ARGV = $argv[$i]
+#
+    if ("null$ARGV" == "nullgpu") then
+      set USEGPU = 1
+    else if ("null$ARGV" == "nullcasper") then
+      set ARMCI = 1
+      set CASPER = 1
+    else if ("null$ARGV" == "nullmpipr") then
+      set ARMCI = 1
+      set MPIPR = 1
+    else if ("null$ARGV" == "nullinfo") then
+      goto info
+    else if ("null$ARGV" == "nullhelp") then
+      goto help
+    else 
+      echo "Error: invalid argument $ARGV"
+      exit 1
+    endif
+#
+    @ i ++
+  end
 endif
+
+#############################################
+# Check if GPU is requested
+#############################################
+
+if ($USEGPU == "1") then
+   echo "Enabled NWChem/CUDA"
+endif
+
+#############################################
+# Casper is set to against MPI-PR and
+# vice versa
+#############################################
+
+if ( $ARMCI != 1) then
+  goto nwchem_def
+else if ( $CASPER == $MPIPR ) then
+  echo "Error: Conflict between Casper and MPI-PR. Use only of them"
+  exit 1
+endif
+
+#############################################
+# Determine NWChem runtime executable &
+# If ARMCI is requested, check either Casper 
+# or MPI-PR will be used
+#############################################
+
+if ("null$CASPER" == "null1") then
+   set NWCHEM_TOP = "$NWCHEM_CASPER"
+   set CASPER = 1
+   set MPI_PR = 0
+   echo "Enabled ARMCI Casper"
+   goto start_program
+else if ("null$MPIPR" == "null1") then
+   set NWCHEM_TOP = "$NWCHEM_MPIPR"
+   set CASPER = 0
+   set MPI_PR = 1
+   echo "Enabled ARMCI MPI-PR"
+   goto start_program
+endif
+
+#############################################
+# If Casper or MPI-PR is not requested
+# Set NWChem exe to default setting
+#############################################
+
+nwchem_def:
+    set NWCHEM_TOP = "$NWCHEM_CASPER"
+    set CASPER = 0
+    set MPI_PR = 0
 
 #############################################
 # Start program: user is asked to enter 
@@ -53,12 +121,6 @@ endif
 #############################################
 
 start_program:
-echo ""
-echo "       #############################################"
-echo "      ##  NWChem 6.8 Interactive PBS submission  ##"
-echo "     ##           on Taiwania Cluster           ##"
-echo "    #############################################"
-echo ""
 
 #############################################
 # Determine Input file
@@ -69,6 +131,7 @@ echo ""
   popd >& /dev/null
   set FULLPATH = `pwd | sed -e "s,$PWDHOME,~,"`
   
+#  echo "" 
   search_input:
   set DEFAULTINPUT = "$FULLPATH/nwchem.nw"
   echo -n "Enter input file [$DEFAULTINPUT]: "
@@ -107,9 +170,34 @@ echo ""
   else
    set JOBOUTPUT = "$DEFAULTOUTPUT"
   endif
- 
+
 #############################################
-# Define Computing Resource for calculation
+# Define Computing Resource for GPU queue
+#############################################
+
+ask_gpu:
+if ($USEGPU == 1) then
+  echo -n "Number of GPU cores [1]: "
+  set JOBGPU = "$<"
+  if ("null$JOBGPU" == "null") then
+   set JOBGPU = 1
+  else if ($JOBGPU >= 33) then
+   echo "Error: Maximum GPU is 32"
+   goto ask_gpu
+  else if ($JOBGPU <= 0) then
+   echo "Error: Enter only positive integer"
+   goto ask_gpu
+  endif
+endif
+
+# If GPU/CUDA is enabled, skip CPU queue
+if ($USEGPU == 1) then
+  set TOTALGPU = "$JOBGPU"
+  goto gpu_queue
+endif
+
+#############################################
+# Define Computing Resource for CPU queue
 #############################################
 
   ask_node:
@@ -164,8 +252,13 @@ echo ""
   # goto ask_omp
   #endif
 
+set TOTALGPU = "-"
+
+#############################################
+# Calculate total number of MPI process 
+#############################################
+
 @ TOTALMPI = ($JOBNODE * $JOBMPI)
-#
 if ( $CASPER != 0 || $MPI_PR != 0 ) then
  if ($TOTALMPI == 1) then
   echo "Error: Casper or MPI-PR requires MPI process > 1"
@@ -174,45 +267,46 @@ if ( $CASPER != 0 || $MPI_PR != 0 ) then
 endif
 
 #############################################
-# Search suitable queue and wall-time
+# Search suitable CPU queue and wall-time
 #############################################
 
+cpu_queue:
   if ($TOTALMPI == 1) then
-   set QUEUE = "serial"
+   set CPUQUEUE = "serial"
    set JOBTIME = "96:00:00"
   else if ($TOTALMPI <= 40) then
-   setenv QUEUE "cf40"
+   set CPUQUEUE = "cf40"
    set JOBTIME = "96:00:00"
   else if ($TOTALMPI <= 160) then
-   set QUEUE = "cf160"
+   set CPUQUEUE = "cf160"
    set JOBTIME = "96:00:00"
   else if ($TOTALMPI <= 400) then
-   set QUEUE = "ct400"
+   set CPUQUEUE = "ct400"
    set JOBTIME = "96:00:00"
   else if ($TOTALMPI <= 800) then
-   set QUEUE = "ct800"
+   set CPUQUEUE = "ct800"
    set JOBTIME = "72:00:00"
   else if ($TOTALMPI <= 1200) then
-   set QUEUE = "cf1200"
+   set CPUQUEUE = "cf1200"
    set JOBTIME = "48:00:00"
   else if ($TOTALMPI <= 2000) then
-   set QUEUE = "ct2k"
+   set CPUQUEUE = "ct2k"
    set JOBTIME = "48:00:00"
   else if ($TOTALMPI <= 6000) then
-   set QUEUE = "ct6k"
+   set CPUQUEUE = "ct6k"
    set JOBTIME = "24:00:00"
   else if ($TOTALMPI <= 8000) then
-   set QUEUE = "ct8k"
+   set CPUQUEUE = "ct8k"
    set JOBTIME = "24:00:00"
   else if ($TOTALMPI <= 22400) then
-   set QUEUE = "ct22400"
+   set CPUQUEUE = "ct22400"
    set JOBTIME = "24:00:00"
   endif
 
-  echo -n "Job Queue [suitable queue is $QUEUE]: "
+  echo -n "Job Queue [suitable queue is $CPUQUEUE]: "
   set CHECKQUEUE = "$<"
   if ("null$CHECKQUEUE" == "null") then
-    set JOBQUEUE = "$QUEUE"
+    set JOBQUEUE = "$CPUQUEUE"
    else if ("null$CHECKQUEUE" == "nullctest") then
     set JOBQUEUE = ctest
     set JOBTIME = "00:30:00"
@@ -222,35 +316,195 @@ endif
     set JOBTIME = "$<"
   endif
 
+# If CPU queue is used, disabled GPU
+  set JOBGPU = "-" 
+  set SETGPU = ""
+# Skip GPU queue
+  goto job_setting
+
 #############################################
-# Define job name & standard error & output 
+# Search suitable GPU queue and wall-time
+# Previously, $TOTALGPU is set to $JOBCPU
 #############################################
 
+gpu_queue:
+  if ($TOTALGPU <= 4) then
+   set GPUQUEUE = "gp4"
+   set JOBTIME = "96:00:00"
+  else if ($TOTALGPU <= 16) then
+   set GPUQUEUE = "gp16"
+   set JOBTIME = "96:00:00"
+  else if ($TOTALGPU <= 32) then
+   set GPUQUEUE = "gp32"
+   set JOBTIME = "48:00:00"
+  endif
+
+#############################################
+# Number of Compute node that user can request 
+# depends on GPU job queue.
+#############################################
+
+  if ($GPUQUEUE == gp4) then
+    set JOBNODE = 1
+    echo "Number of Compute node for this queue is only 1"
+#
+  else if ($GPUQUEUE == gp16) then
+    ask_node_for_gpu:
+    echo -n "Number of Compute node [2]: "
+    set JOBNODE = "$<"
+    if ("null$JOBNODE" == "null") then
+     set JOBNODE = 1
+    else if ($JOBNODE >= 5) then
+     echo "Error: Maximum node is 4"
+     goto ask_node_for_gpu
+    else if ($JOBNODE <= 0) then
+     echo "Error: Enter only positive integer"
+     goto ask_node_for_gpu
+    else if ($JOBNODE <= 1) then
+     echo "Error: Minimum node is 2"
+     goto ask_node_for_gpu
+    endif
+#
+  else if ($GPUQUEUE == gp32) then
+    ask_node_for_gpu:
+    echo -n "Number of Compute node [2]: "
+    set JOBNODE = "$<"
+    if ("null$JOBNODE" == "null") then
+     set JOBNODE = 1
+    else if ($JOBNODE >= 9) then
+     echo "Error: Maximum node is 8"
+     goto ask_node_for_gpu
+    else if ($JOBNODE <= 0) then
+     echo "Error: Enter only positive integer"
+     goto ask_node_for_gpu
+    else if ($JOBNODE <= 4) then
+     echo "Error: Minimum node is 5"
+     goto ask_node_for_gpu
+    endif
+  endif
+
+  ask_cpu_for_gpu:
+  echo -n "Number of CPU cores [40]: "
+  set JOBCPU = "$<"
+  if ("null$JOBCPU" == "null") then
+   set JOBCPU = 40
+  else if ($JOBCPU >= 41) then
+   echo "Error: Maximum CPU cores/node is 40"
+   goto ask_cpu_for_gpu
+  else if ($JOBCPU <= 0) then
+   echo "Error: Enter only positive integer"
+   goto ask_cpu_for_gpu
+  endif
+#
+  set JOBMPI = $JOBCPU
+#
+  set JOBOMP = 1
+#
+
+  echo -n "Job Queue [suitable GPU queue is $GPUQUEUE]: "
+  set CHECKQUEUE = "$<"
+  if ("null$CHECKQUEUE" == "null") then
+    set JOBQUEUE = "$GPUQUEUE"
+   else if ("null$CHECKQUEUE" == "nullgtest") then
+#
+      ask_gpu_for_gtest:
+      if ($USEGPU == 1) then
+        echo -n "Number of GPU cores [1]: "
+        set JOBGPU = "$<"
+        if ("null$JOBGPU" == "null") then
+         set JOBGPU = 1
+        else if ($JOBGPU >= 9) then
+         echo "Error: Maximum GPU is 8"
+         goto ask_gpu
+        else if ($JOBGPU <= 0) then
+         echo "Error: Enter only positive integer"
+         goto ask_gpu
+        endif
+      endif
+#
+      set TOTALGPU = $JOBGPU
+#
+      ask_cpu_for_gtest:
+      echo -n "Number of CPU cores [4]: "
+      set JOBCPU = "$<"
+      if ("null$JOBCPU" == "null") then
+       set JOBCPU = 4
+      else if ($JOBCPU >= 9) then
+       echo "Error: Maximum CPU cores/node is 8"
+       goto ask_cpu_for_gtest
+      else if ($JOBCPU <= 0) then
+       echo "Error: Enter only positive integer"
+       goto ask_cpu_for_gtest
+      endif
+#
+    set JOBQUEUE = gtest
+    set JOBTIME = "00:30:00"
+    set JOBNODE = 1
+    set JOBMPI = $JOBCPU
+    set JOBOMP = 1
+   else
+    set JOBQUEUE = "$CHECKQUEUE"
+    echo -n "Set wall-time [e.g. 00:30:00]: "
+    set JOBTIME = "$<"
+  endif
+
+# Define 'ngpus' for PBS script
+  set SETGPU = ":ngpus=$TOTALGPU"
+
+#############################################
+# Calculate total number of MPI process 
+#############################################
+
+@ TOTALMPI = ($JOBNODE * $JOBMPI)
+#
+if ( $CASPER != 0 || $MPI_PR != 0 ) then
+ if ($TOTALMPI == 1) then
+  echo "Error: Casper or MPI-PR requires MPI process > 1"
+  goto ask_node
+ endif
+endif 
+
+# Determining computing resources is done
+
+#############################################
+# Define job name & standard error & output 
+# and check project ID.
+#############################################
+
+job_setting:
 set JOBNAME = `basename $JOBINPUT .nw`
 set JOBSTDERR = `basename $JOBINPUT .nw`.stderr
 set JOBSTDOUT = `basename $JOBINPUT .nw`.stdout
 set INPUTNAME = `basename $JOBINPUT .nw`.nw
 set OUTPUTNAME = `basename $JOBOUTPUT .out`.out
-set PROJ_ID = `get_su_balance |awk -F, '{print $2}'`
+if (-f /usr/bin/get_su_balance) then
+ set PROJ_ID = `/usr/bin/get_su_balance |awk -F, '{print $2}'`
+else
+ set PROJ_ID = '$PROJ_ID'
+endif
 
 #############################################
-# Do we need to clean-up Compute node before 
-# run the calculation ?
+# Set NWChem runtime and determine clean-up 
+# file for Casper and MPI-PR methods
 #############################################
-
-set CLEANSRC = "/pkg/chem/sys/bin/"
-if (! -f $HOME/.cleanup-devshm.sh) cp $CLEANSRC/cleanup-devshm.sh $HOME/.cleanup-devshm.sh
-if (! -f $HOME/.cleanup-cmx.sh) cp $CLEANSRC/cleanup-cmx.sh $HOME/.cleanup-cmx.sh
 
 if ("null$CASPER" == "null1") then
- set NWCHEM_RUNTIME = CASPER
- set NWCHEM_TYPE = "ARMCI: Casper"
+  set NWCHEM_RUNTIME = CASPER
+  set NWCHEM_TYPE = "ARMCI: Casper"
+#
+  set CLEANCASPER = "$CLEANSRC/cleanup-devshm.sh"
+  if (! -f $CLEANCASPER) echo "Error: failed to locate cleanup-devshm.sh $CLEAN"
+  if (! -f $HOME/.cleanup-devshm.sh) cp $CLEANCASPER $HOME/.cleanup-devshm.sh
 else if ("null$MPI_PR" == "null1") then
- set NWCHEM_RUNTIME = MPIPR
- set NWCHEM_TYPE = "ARMCI: MPI-PR"
+  set NWCHEM_RUNTIME = MPIPR
+  set NWCHEM_TYPE = "ARMCI: MPI-PR"
+  set CLEANMPIPR = "$CLEANSRC/cleanup-cmx.sh"
+#
+  if (! -f $CLEANMPIPR) echo "Error: failed to locate cleanup-cmx.sh in $CLEANSRC"
+  if (! -f $HOME/.cleanup-cmx.sh) cp $CLEANMPIPR $HOME/.cleanup-cmx.sh
 else
- set NWCHEM_RUNTIME = NORM
- set NWCHEM_TYPE = "No ARMCI"
+  set NWCHEM_RUNTIME = NORM
+  set NWCHEM_TYPE = "No ARMCI"
 endif
 
 #############################################
@@ -262,26 +516,33 @@ endif
   echo " ========== Necessary Settings for PBS submission are following ========== "
   echo " Run on `date` by `whoami`"
   echo ""
-  echo " NWChem      = $NWCHEM_VER - $NWCHEM_TYPE"
-  echo ' $NWCHEM_TOP' = $NWCHEM_TOP
-  echo ' $NWCHEM_EXE' = \$NWCHEM_TOP/LINUX64/bin/nwchem
+  echo " NWChem version         = $NWCHEM_VER - $NWCHEM_TYPE"
+  echo ' $NWCHEM_TOP'           = $NWCHEM_TOP
+  echo ' $NWCHEM_EXE'           = \$NWCHEM_TOP/LINUX64/bin/nwchem
   echo ""
-  echo " Input       = $JOBINPUT"
-  echo " Output      = $JOBOUTPUT"
+  echo " Input file             = $JOBINPUT"
+  echo " Output file            = $JOBOUTPUT"
   echo ""
-  echo " SELECT      = $JOBNODE"
-  echo " NCPUS       = $JOBCPU"
-  echo " MPIPROCS    = $JOBMPI"
-  echo " OMPTREADS   = $JOBOMP"
-  echo " Total MPIs  = $JOBNODE x $JOBMPI = $TOTALMPI processes"
+  echo " Number of compute node = $JOBNODE"
+  echo " Number of CPU cores    = $JOBCPU"
+  echo " Number of GPU          = $TOTALGPU"
+  echo " Number of MPI process  = $JOBMPI"
+  echo " Number of OMP Threads  = $JOBOMP"
+  echo " Total MPI process      = $JOBNODE x $JOBMPI = $TOTALMPI processes"
   echo ""
-  echo " Job Name    = $JOBNAME"
-  echo " Job Queue   = $JOBQUEUE"
-  echo " Wall-time   = $JOBTIME"
-  echo " Std Error   = $FULLPATH/$JOBSTDERR"
-  echo " Std Output  = $FULLPATH/$JOBSTDOUT"
-  echo " Project ID  = $PROJ_ID"
+  echo " Job Name               = $JOBNAME"
+  echo " Job Queue              = $JOBQUEUE"
+  echo " Wall-time              = $JOBTIME"
+  echo " Std Error              = $FULLPATH/$JOBSTDERR"
+  echo " Std Output             = $FULLPATH/$JOBSTDOUT"
+  echo " Project ID             = $PROJ_ID"
   echo " ==========================================================================\n"
+
+  set SETNODE    = "select=$JOBNODE"
+  set SETNCPUS   = ":ncpus=$JOBCPU"
+  set SETMPIPROCS = ":mpiprocs=$JOBMPI"
+  set SETTHREADS = ":ompthreads=$JOBOMP"
+# SETGPU env was already defined above.
 
 echo -n "Submit your job now ? [yes]: "
 set CONFIRM = "$<"
@@ -300,7 +561,7 @@ set JOB_SCRIPT = `dirname $JOBOUTPUT`/submit.`basename $JOBOUTPUT .out`.sh
 
 cat <<EOF > $JOB_SCRIPT
 #!/bin/bash
-#PBS -l select=$JOBNODE\:ncpus=$JOBCPU\:mpiprocs=$JOBMPI\:ompthreads=$JOBOMP
+#PBS -l $SETNODE$SETNCPUS$SETMPIPROCS$SETTHREADS$SETGPU
 #PBS -l walltime=$JOBTIME
 #PBS -q $JOBQUEUE
 #PBS -N $JOBNAME
@@ -374,13 +635,11 @@ qsub $JOB_SCRIPT
 exit 0
 
 int:  
- echo "\nError: You pressed Ctrl-C, ....quit.... \n"
+ echo "\nError: You pressed Ctrl-C  ....quit.... \n"
  exit 1
 
 info:
- echo ""
- echo " Default environment variable for NWChem - PBS submission"
- echo " ========================================================"
+ echo " ============= Default Environment Variable ============="
  echo " Program version   : $NWCHEM_VER"
  echo " ARMCI Casper      : /pkg/nwchem/Casper/i18gcc6/nwchem-6.8.1-fixmrcc/"
  echo " ARMCI MPI-PR      : /pkg/nwchem/MPI-PR/i18gcc6/nwchem-6.8.1-fixmrcc/"
@@ -401,13 +660,18 @@ info:
  exit 0
 
 help:
- echo " NWChem Job Submission using Interactive PBS Profession Scheduler"
- echo " ================================================================\n"
- echo "  Usage:"
- echo "  $ subnwchem             : Submit NWChem job without ARMCI (Default)"
- echo "  $ subnwchem casper      : Submit NWChem job with Casper"
- echo "  $ subnwchem mpipr       : Submit NWChem job with MPI-PR"
- echo "  $ subnwchem [-h|-help]  : Open this help"
- echo "  $ subnwchem -info       : Show default setting\n"
- echo " NWChem manual: https://github.com/nwchemgit/nwchem/wiki\n"
+ echo " DESCRIPTION    Interactive PBS Professional Job Submission for NWChem\n"
+ echo " USAGE          subnwchem [gpu||casper||mpipr] [info] [help]\n"
+ echo " EXAMPLE        subnwchem gpu             submit NWChem using CUDA"
+ echo "                subnwchem gpu casper      submit NWChem using CUDA and Casper\n"
+ echo " COMMANDS"
+ echo "   No argument  Use default setting. Neither CUDA nor ARMCI will be used."
+ echo "   gpu          Requests the use of GPU accelerator."
+ echo "   casper       Requests Casper method (against MPI-PR)."
+ echo "   mpipr        Requests MPI-PR method (against Casper)."
+ echo "   info         Show default setting."
+ echo "   help         Open this help.\n"
+ echo " MORE DETAILS   NWChem Official manual"
+ echo "                https://github.com/nwchemgit/nwchem/wiki\n"
  exit 0
+
