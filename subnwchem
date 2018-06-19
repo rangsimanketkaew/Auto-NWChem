@@ -515,7 +515,7 @@ endif
   echo " Run on `date` by `whoami`"
   echo ""
   echo " NWChem version         = $NWCHEM_VER - $NWCHEM_TYPE"
-  echo " NWCHEM_EXE             = $NWCHEM_TOP/LINUX64/bin/nwchem"
+  echo " NWCHEM_EXE             = $NWCHEM_TOP/bin/LINUX64/nwchem"
   echo ""
   echo " Input file             = $JOBINPUT"
   echo " Output file            = $JOBOUTPUT"
