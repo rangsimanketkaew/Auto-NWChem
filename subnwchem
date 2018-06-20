@@ -93,7 +93,7 @@ else
 endif 
 
 #############################################
-# If ARMCI is requeted, check either Casper
+# If ARMCI is requested, check either Casper
 # of MPI-PR will be used.
 #############################################
 
