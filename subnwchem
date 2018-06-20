@@ -9,7 +9,7 @@
 #  [/] automatically determine suitable PBS job queue
 #  [/] able to use ARMCI methods: Casper and MPI-PR
 #
-# Updated 2018.06.19  Rangsiman Ketkaew  rangsiman1993@gmail.com
+# Updated 2018.06.20  Rangsiman Ketkaew  rangsiman1993@gmail.com
 ######################################################################
 set NWCHEM_VER = "6.8.1"
 set NWCHEM_CASPER = "/pkg/nwchem/Casper/i18gcc6/nwchem-6.8.1-fixmrcc"
