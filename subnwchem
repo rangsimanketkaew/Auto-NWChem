@@ -4,7 +4,7 @@
 # MPI parallel on Taiwania cluster, NCHC, Taiwan
 #
 # Capabilities:
-#  [/] works with serial, MPI, & OpenMP parallel methods
+#  [/] support serial, MPI, & OpenMP parallel methods
 #  [/] submit job on GPU/CUDA request
 #  [/] automatically determine optimal PBS job queue
 #  [/] able to use ARMCI methods: Casper and MPI-PR
@@ -25,10 +25,10 @@ every_thing_starts_from_here:
 onintr int
 
 echo ""
-echo "       #############################################"
-echo "      ##  NWChem 6.8 Interactive PBS submission  ##"
-echo "     ##           on Taiwania Cluster           ##"
-echo "    #############################################"
+echo "       #########################################"
+echo "      ##  NWChem Interactive PBS submission  ##"
+echo "     ##       on Taiwania Cluster           ##"
+echo "    #########################################"
 echo ""
 
 #############################################
@@ -787,7 +787,7 @@ help:
  echo "                         methods, Casper and MPI-PR, and with and without GPU/CUDA."
  echo "                         Note that GPU/MPI-PR is not available.\n"   
  echo " COMMANDS"
- echo "   gpu                   Requests the use of GPU accelerator."
+ echo "   gpu                   Requests GPU accelerator."
  echo "   casper                Requests Casper method (against MPI-PR)."
  echo "   mpipr                 Requests MPI-PR method (against Casper)."
  echo "   help                  Open this help.\n"
