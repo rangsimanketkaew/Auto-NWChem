@@ -269,9 +269,9 @@ endif
 
 #############################################
 # Number of MPI process is set to = $JOPCPU.
-# Each MPI uses 1 OMP Threads.
-# to unlock the default setting, uncomment 
-# following lines.
+# Each MPI process uses 1 OMP Thread.
+# To configure these settings, you must 
+# uncomment following lines first.
 #############################################
 
   #ask_mpi:
