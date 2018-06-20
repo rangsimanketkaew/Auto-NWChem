@@ -779,7 +779,7 @@ int:
 help:
  echo ""
  echo " NAME                    subnwchem\n"
- echo " SYNOPSIS                subnwchem [gpu||casper||mpipr] [info] [help]\n"
+ echo " SYNOPSIS                subnwchem [gpu||casper||mpipr] [help]\n"
  echo " EXAMPLE                 subnwchem gpu             submit NWChem using CUDA"
  echo "                         subnwchem gpu casper      submit NWChem using CUDA and Casper\n"
  echo " DESCRIPTION             Interactive PBS Professional Job Submission for NWChem $NWCHEM_VER."
