@@ -624,11 +624,11 @@ else if ($CLEAN_MPIPR == 1) then
 endif
 
 #############################################
-# Show all parameters before submitting job
+# Show job information before submit
 #############################################
 
   echo ""
-  echo " ========== Necessary Settings for PBS submission are following ========== "
+  echo " =========================== $ Job Information $ =========================="
   echo " Run on `date` by `whoami`"
   echo ""
   echo " NWChem runtime         = $NWCHEM_VER - $NWCHEM_TYPE"
