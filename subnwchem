@@ -159,9 +159,8 @@ if (! -e $NWCHEM_TOP) then
 else
   set NWCHEM_EXE = "$NWCHEM_TOP/bin/LINUX64/nwchem"
 endif
-
 if (! -f $NWCHEM_EXE) then
-  echo "Error: Unable to locate nwchem executable file"
+  echo 'Error: Unable to locate "nwchem" executable in $NWCHEM_TOP/bin/LINUX64/ directory.'
 endif
 
 #############################################
