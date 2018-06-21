@@ -11,15 +11,16 @@
 #
 # Updated 2018.06.20  Rangsiman Ketkaew  rangsiman1993@gmail.com
 
-######################################################################
-set NWCHEM_VER = "6.8.1"
-set NWCHEM_CASPER = "/pkg/nwchem/Casper/i18gcc6/nwchem-6.8.1-fixmrcc"
-set NWCHEM_CASPER_GPU = "/pkg/nwchem/Casper/i18/nwchem-6.8.1-fixcuda"
-set NWCHEM_MPIPR = "/pkg/nwchem/MPI-PR/i18gcc6/nwchem-6.8.1-fixmrcc"
-set NWCHEM_MPIPR_GPU = "NOTAVAIALBLE"
-set NWCHEM_GPU = "$NWCHEM_CASPER_GPU"
-set CLEANSRC = "/pkg/chem/sys/bin/"
-######################################################################
+###############################################################################
+set NWCHEM_VER            = "6.8.1"
+set NWCHEM_TOP            = "/pkg/nwchem/Casper/i18gcc6/nwchem-6.8.1-fixmrcc"
+set NWCHEM_TOP_CASPER     = "/pkg/nwchem/Casper/i18gcc6/nwchem-6.8.1-fixmrcc"
+set NWCHEM_TOP_MPIPR      = "/pkg/nwchem/MPI-PR/i18gcc6/nwchem-6.8.1-fixmrcc"
+set NWCHEM_TOP_CASPER_GPU = "/pkg/nwchem/Casper/i18gcc6/nwchem-6.8.1-fixcuda"
+set NWCHEM_TOP_MPIPR_GPU  = "NOTAVAIALBLE"
+set NWCHEM_TOP_GPU        = "$NWCHEM_TOP_CASPER_GPU"
+set CLEANSRC              = "/pkg/chem/sys/bin/"
+###############################################################################
 
 every_thing_starts_from_here:
 
@@ -81,7 +82,7 @@ if ($USEGPU == 1) then
     goto armci_check
   else
 # ARMCU is not used
-    set NWCHEM_TOP = "$NWCHEM_GPU"
+    set NWCHEM_TOP = "$NWCHEM_TOP_GPU"
 # to define $NWCHEM_RUNTIME
     set GPU = 1
     goto start_program
@@ -108,19 +109,19 @@ if ( $CASPER == $MPIPR ) then
 endif
 
 if ("null$CASPER" == "null1") then
-  set NWCHEM_TOP = "$NWCHEM_CASPER"
+  set NWCHEM_TOP = "$NWCHEM_TOP_CASPER"
   set CASPER = 1
   set MPIPR = 0
   echo "Enabled ARMCI Casper"
   if ($USEGPU == 1) then
 # Set CASPER_GPU = 1 to define $NWCHEM_RUNTIME
     set CASPER_GPU = 1
-    set NWCHEM_TOP = "$NWCHEM_CASPER_GPU"
+    set NWCHEM_TOP = "$NWCHEM_TOP_CASPER_GPU"
     goto start_program
   endif
   goto start_program
 else if ("null$MPIPR" == "null1") then
-  set NWCHEM_TOP = "$NWCHEM_MPIPR"
+  set NWCHEM_TOP = "$NWCHEM_TOP_MPIPR"
   set CASPER = 0
   set MPIPR = 1
   echo "Enabled ARMCI MPI-PR"
@@ -129,7 +130,7 @@ else if ("null$MPIPR" == "null1") then
     echo "Error: NWChem with GPU & MPI-PR is not available."
 # Set MPIPR_GPU = 1 to define $NWCHEM_RUNTIME
     set MPIPR_GPU = 1
-    set NWCHEM_TOP = "$NWCHEM_MPIPR_GPU"
+    set NWCHEM_TOP = "$NWCHEM_TOP_MPIPR_GPU"
     goto start_program
   endif
   goto start_program
@@ -137,13 +138,10 @@ endif
 
 #############################################
 # If neither GPU nor ARMCI are requested, 
-# NWChem compiled with Casper will be used.
-# Even though NWChem/Casper is used, 
-# but Ghost processor will not be assianged.
+# Default NWCHEM_TOP is still used.
 #############################################
 
 nwchem_def:
-set NWCHEM_TOP = "$NWCHEM_CASPER"
 set CASPER = 0
 set MPIPR = 0
 
@@ -154,13 +152,16 @@ set MPIPR = 0
 
 start_program:
 if (! -e $NWCHEM_TOP) then
-  echo 'Error: Unable to locate $NWCHEM_TOP'
+  echo 'Error: Unable to locate NWChem directory, $NWCHEM_TOP.'
+  echo 'Please set the suitable path of $NWCHEM_TOP at the beginning lines of this program source code'
   exit 1
 else
   set NWCHEM_EXE = "$NWCHEM_TOP/bin/LINUX64/nwchem"
 endif
 if (! -f $NWCHEM_EXE) then
   echo 'Error: Unable to locate "nwchem" executable in $NWCHEM_TOP/bin/LINUX64/ directory.'
+  echo 'Please locate the suitable "nwchem" executable, and move to $NWCHEM_TOP/bin/LINUX64/'
+  exit 1
 endif
 
 #############################################
@@ -624,7 +625,8 @@ else
 endif
 
 #############################################
-# Check clean-up file for Casper and MPI-PR
+# Check clean-up file of whether Casper or 
+# MPI-PR will be used.
 #############################################
 
 if ($NWCHEM_RUNTIME == GPU) then
@@ -635,6 +637,16 @@ else if ($NWCHEM_RUNTIME == MPIPR_GPU || $NWCHEM_RUNTIME == MPIPR) then
   set CLEAN_MPIPR = 1
 else if ($NWCHEM_RUNTIME == NORM) then
   set CLEAN_CASPER = 1
+endif
+
+#############################################
+# Check if $CLEANSRC exits
+#############################################
+
+if (! -e $CLEANSRC) then 
+  echo 'Error: Unable to locate $CLEANSRC. This directory must conclude cleanup-devshm.sh and cleanup-cmx.sh files.'
+  echo "These clean-up files can be found in /pkg/chem/sys/bin/ on Taiwania cluster."
+  exit 1
 endif
 
 if ($CLEAN_CASPER == 1) then
