@@ -167,10 +167,12 @@ endif
 # Determine Input file.
 #############################################
 
-  pushd $HOME >& /dev/null
-  set PWDHOME = `pwd`
-  popd >& /dev/null
-  set FULLPATH = `pwd | sed -e "s,$PWDHOME,~,"`
+pushd $HOME >& /dev/null
+set PWDHOME = `pwd`
+popd >& /dev/null
+set noglob
+set FULLPATH = `pwd | sed -e "s,$PWDHOME,~,"`
+unset noglob
 
 #  echo "" 
   search_input:
