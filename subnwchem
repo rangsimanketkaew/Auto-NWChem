@@ -174,45 +174,67 @@ set noglob
 set FULLPATH = `pwd | sed -e "s,$PWDHOME,~,"`
 unset noglob
 
-#  echo "" 
-  search_input:
-  set DEFAULTINPUT = "$FULLPATH/nwchem.nw"
-  echo -n "Enter input file [$DEFAULTINPUT]: "
-  set JOBINPUT = "$<"
-  if ("null$JOBINPUT" == "null") set JOBINPUT = "$DEFAULTINPUT"
+search_input:
+set DEFAULTINPUT = "$FULLPATH/nwchem.nw"
+echo -n "Enter input file [$DEFAULTINPUT]: "
+set JOBINPUT = "$<"
+if ("null$JOBINPUT" == "null") then
+  set JOBINPUT = "$DEFAULTINPUT"
+#else
+#  set JOBINPUT_TYPE = `printf $JOBINPUT | tail -c 3`
+#  if ("null$JOBINPUT_TYPE" != "null.nw") then
+#    echo "Error: NWChem input file must be *.nw"
+#    goto search_input
+#  else
+#    set INPUTFILE = "$JOBINPUT"
+#  endif
+endif
 #
-  set INPUTFILE = "$FULLPATH/$JOBINPUT"
-  if (-f $INPUTFILE) then
-     set JOBINPUT = "$INPUTFILE"
-   else if (-f $INPUTFILE.nw) then
-     set JOBINPUT = "$INPUTFILE.nw"
-  endif
+set INPUTFILE = "$FULLPATH/$JOBINPUT"
+if (-f $INPUTFILE) then
+   set JOBINPUT = "$INPUTFILE"
+ else if (-f $INPUTFILE.nw) then
+   set JOBINPUT = "$INPUTFILE.nw"
+endif
 #
-  if (! -f $JOBINPUT) then
-    echo "Error: failed to locate input file "$JOBINPUT""
-    goto search_input
-  endif
+if (! -f $JOBINPUT) then
+  echo "Error: failed to locate input file "$JOBINPUT""
+  goto search_input
+endif
 
 #############################################
 # Define name of output file.
 #############################################
 
-  set JOBOUTPUT = `basename $JOBINPUT .nw`.out
-  @ i = 1
-  while (-e $JOBOUTPUT) 
-    echo " $JOBOUTPUT already exists !"
-    set JOBOUTPUT = `basename $JOBINPUT .nw`.$i.out
-    @ i ++
-  end
-  set DEFAULTOUTPUT = "$FULLPATH/$JOBOUTPUT"
+set noglob
+set JOBOUTPUT  = `dirname $JOBINPUT`/`basename $JOBINPUT .nw`.out
+unset noglob
+
+@ i = 1
+while (-e $JOBOUTPUT)
+  echo " $JOBOUTPUT already exists !"
+  set noglob
+  set JOBOUTPUT = `dirname $JOBINPUT`/`basename $JOBINPUT .nw`.$i.out
+  unset noglob
+  @ i ++
+end
+set DEFAULTOUTPUT = "$JOBOUTPUT"
 #
-  echo -n "Enter output file [$DEFAULTOUTPUT]: "
-  set OUTPUTFILE = "$<"
-  if ("null$OUTPUTFILE" != "null") then
-   set JOBOUTPUT = "$FULLPATH/$OUTPUTFILE".out
-  else
-   set JOBOUTPUT = "$DEFAULTOUTPUT"
+echo -n "Enter output file [$DEFAULTOUTPUT]: "
+set OUTPUTFILE = "$<"
+if ("null$OUTPUTFILE" != "null") then
+  set noglob
+  set JOBOUTPUT = "$FULLPATH/$OUTPUTFILE"
+# If user-defined output name is not in .out
+# Set foo to foo.out
+  set JOBOUTPUT_TYPE = `printf $JOBOUTPUT | tail -c 4`
+  if ("null$JOBOUTPUT_TYPE" != "null.out") then
+    set JOBOUTPUT = "$FULLPATH/$OUTPUTFILE".out
   endif
+  unset noglob
+else
+  set JOBOUTPUT = "$DEFAULTOUTPUT"
+endif
 
 #############################################
 # Define Computing Resource for GPU queue.
