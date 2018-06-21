@@ -26,15 +26,15 @@ every_thing_starts_from_here:
 
 onintr int
 
-set GPU = 0
-set USEGPU = 0
-set ARMCI = 0
-set CASPER = 0
-set CASPER_GPU = 0
-set MPIPR = 0
-set MPIPR_GPU = 0
+set GPU          = 0
+set USEGPU       = 0
+set ARMCI        = 0
+set CASPER       = 0
+set CASPER_GPU   = 0
+set MPIPR        = 0
+set MPIPR_GPU    = 0
 set CLEAN_CASPER = 0
-set CLEAN_MPIPR = 0
+set CLEAN_MPIPR  = 0
 
 echo ""
 echo "       #########################################"
