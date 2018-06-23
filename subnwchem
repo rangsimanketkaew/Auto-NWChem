@@ -334,7 +334,7 @@ set TOTALGPU = "-"
 @ TOTALMPI = ($JOBNODE * $JOBMPI)
 if ( $CASPER != 0 || $MPIPR != 0 ) then
   if ($TOTALMPI == 1) then
-    echo "Error: Casper or MPI-PR requires MPI process > 1"
+    echo "Error: ARMCI Casper are MPI-PR require MPI process > 1"
     goto ask_node
   endif
 endif
@@ -381,6 +381,9 @@ check_cpu_queue:
   set CHECKQUEUE = "$<"
   if ("null$CHECKQUEUE" == "null") then
     set JOBQUEUE = "$CPUQUEUE"
+  else if ("null$CHECKQUEUE" == "nullserial") then
+    set JOBQUEUE = serial
+    goto sum_cpu
   else if ("null$CHECKQUEUE" == "nullctest") then
     set JOBQUEUE = ctest
     set JOBTIME = "00:30:00"
@@ -414,7 +417,16 @@ check_cpu_time:
       endif
   endif
 
+# Check if requested MPI processes match ctest policy
+if ($JOBQUEUE == ctest) then
+  if ($TOTALMPI >= 81) then
+    echo "Error: total MPI processes you requested, $TOTALMPI processes, violates policy of ctest queue."
+    goto check_cpu_queue
+  endif
+endif
+
 # If CPU queue is used, disabled GPU
+sub_cpu:
   set JOBGPU = "-" 
   set SETGPU = ""
   goto job_setting
@@ -497,6 +509,18 @@ gpu_queue:
 ## OMP_NUM_THREADS is set to 1 (per MPI).
   set JOBOMP = 1
 
+#############################################
+# Determine total number of MPI process.
+#############################################
+
+@ TOTALMPI = ($JOBNODE * $JOBMPI)
+if ( $CASPER != 0 || $MPIPR != 0 ) then
+  if ($TOTALMPI == 1) then
+    echo "Error: ARMCI Casper and MPI-PR require MPI process > 1"
+    goto ask_node
+  endif
+endif
+
 check_gpu_queue:
   echo -n "Job Queue [optimal GPU queue is $GPUQUEUE]: "
   set CHECKQUEUE = "$<"
@@ -570,19 +594,7 @@ check_gpu_time:
   endif
 
 # Define 'ngpus' for PBS script
-  set SETGPU = ":ngpus=$TOTALGPU"
-
-#############################################
-# Determine total number of MPI process.
-#############################################
-
-@ TOTALMPI = ($JOBNODE * $JOBMPI)
-if ( $CASPER != 0 || $MPIPR != 0 ) then
- if ($TOTALMPI == 1) then
-  echo "Error: Casper or MPI-PR requires MPI process > 1"
-  goto ask_node
- endif
-endif 
+  set SETGPU = ":ngpus=$TOTALGPU" 
 
 #############################################
 # Define job name & standard error & output 
