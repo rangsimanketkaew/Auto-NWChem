@@ -817,7 +817,7 @@ endif
 #############################################
 
 qsub $JOB_SCRIPT
-  echo "Your job is submitted."
+  echo "Your job has been submitted."
   exit 0
 
 int:  
