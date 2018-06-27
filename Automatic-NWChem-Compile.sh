@@ -25,13 +25,13 @@ cat << EOF
  2. Compile NWChem            :  Make config & compile program using make at $NWCHEM_TOP.
  3. Create NWChem Data        :  Create NWChem data and libraries files.
  4. Create Resource file      :  Create resource file (.nwchemrc) at your home directory.
- 5. Download NWChem 6.8       :  Download source code of NWChem 6.8 to your machine.
+ 5. Download NWChem 6.8.1     :  Download source code of NWChem 6.8 to your machine.
  6. Author Info               :  Author & contact
- 7. Exit Program              :  Exit program. you can also type "ctrl + c".
+ 7. Exit Program              :  Exit program. you can also type "Ctrl + C".
 
 [x] Prerequisites
 
- - CentOS version 6 or 7, or Ubuntu 16 or 17 (or other Linux distribution)
+ - RHEL, CentOS, and Ubuntu (or other Linux distributions)
  - BLAS/OpenBLAS [ and Scalapack ]
  - Python version 1.x or 2.6 or 2.7
  - MPICH or Intel MPI+MKL or OpenMPI
@@ -61,7 +61,7 @@ OPT1="Check MPI Architecture"
 OPT2="Compile NWChem"
 OPT3="Create NWChem Data"
 OPT4="Create Resource file"
-OPT5="Download NWChem 6.8"
+OPT5="Download NWChem 6.8.1"
 OPT6="Author & Contact"
 OPT7="Exit Program"
 OPTION=("$OPT1" "$OPT2" "$OPT3" "$OPT4" "$OPT5" "$OPT6" "$OPT7")
@@ -112,7 +112,7 @@ comment
 	 Show a library for MPI using command $ mpif90 -show or Choose [1] from Menu  
 comment
 
-	read -p "Enter full path of NWChem source code, e.g. /home/nutt/nwchem-6.8: " inp2
+	read -p "Enter full path of NWChem source code, e.g. /home/nutt/nwchem-6.8.1: " inp2
 	read -p "Enter full path of MPI directory, e.g. /usr/local/openmpi: " MPI_LOCATION
 	read -p "Enter version of Python you are using, e.g. 2.7: " PYTHON_VER
 	read -p "Enter full path of Python directory, e.g. /usr: " PYTHON_HOME
@@ -171,7 +171,7 @@ export BLASOPT="-lopenblas -lpthread -lrt"
 		if [ $COMPILE == YES ] || [ $COMPILE == yes ]; then
 			cd $NWCHEM_TOP/src
 			echo ""
-			echo " Start to compile NWChem 6.8 ..."
+			echo " Start to compile NWChem 6.8.1 ..."
 			echo ""
 			echo " Building NWChem executable ... Waiting for 20-30 minutes."
 			make nwchem_config NWCHEM_MODULES="all python" >& compile-config.log
@@ -226,7 +226,7 @@ export BLASOPT="-lopenblas -lpthread -lrt"
 	 Determine the local storage path for the install files. (e.g. /usr/local/).
 comment
 
-	read -p "Enter full path of original NWChem directory, e.g. /home/nutt/nwchem-6.8: " inp2
+	read -p "Enter full path of original NWChem directory, e.g. /home/nutt/nwchem-6.8.1: " inp2
 	read -p "Enter full path of new NWChem data & libraries, e.g. /usr/local: " inp3
 
 	if [ -e $inp2 ]; then
@@ -297,20 +297,20 @@ comment
 	$OPT5)
 	
 :<<'comment'
-	 (5) Download NWChem 6.8
+	 (5) Download NWChem 6.8.1
 	  Download nwchem-6.8-*.tar.bz2 to Linux machine.
 comment
 
-	echo "Download NWChem 6.8 source code to your Linux machine"
-	read -p "Enter directory where you want to save NWChem 6.8, e.g. /home/nutt: " NWCHEM68_DIR
+	echo "Download NWChem 6.8.1 source code to your Linux machine"
+	read -p "Enter directory where you want to save NWChem 6.8.1, e.g. /home/nutt: " NWCHEM68_DIR
 
 	if [ -e $NWCHEM68_DIR ];then
 
-		NWCHEM68_SRC=nwchem-6.8-release.revision-v6.8-47-gdf6c956-src.2017-12-14.tar.bz2
-		wget https://github.com/nwchemgit/nwchem/releases/download/v6.8-release/$NWCHEM68_SRC -P $NWCHEM68_DIR
+		NWCHEM68_SRC=nwchem-6.8.1-release.revision-v6.8-133-ge032219-src.2018-06-14.tar.bz2
+		wget https://github.com/nwchemgit/nwchem/releases/download/6.8.1-release/$NWCHEM68_SRC -P $NWCHEM68_DIR
 		tar -xvjf $NWCHEM68_DIR/$NWCHEM68_SRC
 		echo ""
-		echo "Done ! NWChem source code is at $NWCHEM68_DIR/nwchem-6.8"
+		echo "Done ! NWChem source code is at $NWCHEM68_DIR/nwchem-6.8.1"
 
 	else
 		echo "ERROR: $NWCHEM68_DIR not found"
