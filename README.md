@@ -107,8 +107,8 @@ Logout and login again, now you can run NWChem via *nwchem*.
 
 ## Partial recompile
 
-When you modify the code in `src` directory, program must be compiled again. Full compilation of NWChem normally takes 20 - 30 minutes. To recompile program for particularly code that you have modified, you can use `make` to install and link a new executable, which takes a few seconds/minutes. <be />
-Create the scrip that includes all necessary environment variables setting which are defined when you compiled the original source code of program. You can use the script that you used to compile program for the first time. Then just append the following command lines to the script, e.g., you have modified fortran code in `$NWCHEM_TOP/src/nwdft/scf_dft` directory.
+When you modify the code in `src` directory, program executable `nwchem` is needed to be compiled again. Due to full compilation of NWChem normally takes 20 - 30 minutes, you can easily recompile program executable withon a few seconds/minutes, depending on how much you have modified the code. To do this, just use `make` and `make link` commands to install that particular modified fortran code and link a new executable.<be />
+First, create the scrip that includes all necessary environment variables setting that you have used for full compilation. (For this script, you can use the script that you used to compile program for the first time.) Then nevigate to sub-directory where you have modified the code and then append the following commands to the recompile script, e.g., you have modified fortran code in `$NWCHEM_TOP/src/nwdft/scf_dft` directory.
 
 ```
 export USE_64TO32=y
@@ -120,7 +120,8 @@ cd $NWCHEM_TOP/src
 make link
 ```
 
-NWChem execuable file, `$NWCHEM_TOP/bin/LINUX64/nwchem`, will be replaced with the updated executable. 
+NWChem execuable file, `$NWCHEM_TOP/bin/LINUX64/nwchem`, will be replaced with the updated executable.  <br />
+P.S. `export USE_64TO32=Y` is needed for compilng program based on 32bit Libraries.
 
 
 ## Running the tests
