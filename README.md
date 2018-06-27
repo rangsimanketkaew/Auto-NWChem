@@ -9,8 +9,7 @@ An automated program for compiling NWchem with MPICH / MVAPICH2 / MVAPICH23 / In
 
 ## Prerequisites
 
-* Linux distro
-  * RHEL, CentOS, Ubuntu
+* Linux distribution: RHEL, CentOS, Ubuntu
 * BLAS/OpenBLAS [ and Scalapack ]
 * Python version 1.x or 2.6 or 2.7
 * MPICH or MVAPICH2 or MVAPUCH23 or Intel MPI+MKL or OpenMPI or any MPI
@@ -156,7 +155,7 @@ If you run NWChem using command like *"mpirun -np N nwchem INPUT-FILE.nw"*, this
 
 ---
 
-### Distributed memory cluster
+### Distributed system
 Visit [this repository](https://github.com/rangsimanketkaew/PBS-submission) for using job scheduler, such as PBS Pro, PBS, and SGE to submit NWChem job on connected cluster.
 
 
