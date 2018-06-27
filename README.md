@@ -47,7 +47,7 @@ An automated program for compiling NWchem with MPICH / MVAPICH2 / MVAPICH23 / In
 ## Installing
 
 * **(1)**  Install required package for NWChem <br />
-> **CentOS**:
+> **RHEL & CentOS**:
 ```
 sudo yum install python-devel gcc-gfortran openblas-devel openblas-serial64 openmpi-devel scalapack-openmpi-devel blacs-openmpi-devel elpa-openmpi-devel tcsh --enablerepo=epel
 ```
