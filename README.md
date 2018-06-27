@@ -107,21 +107,22 @@ Logout and login again, now you can run NWChem via *nwchem*.
 
 ## Partial recompile
 
-NWChem compilation normally takes 20 - 30 minutes. You can recompile the modified NWChem code without full compilation, which takes a few seconds/minutes. First, use the script that you used for full compiling NWChem to define all necessary environment variables. <br />
-Navigate to sub-directtory where you have modified the code and then use the following commands
+When you modify the code in `src` directory, program must be compiled again. Full compilation of NWChem normally takes 20 - 30 minutes. To recompile program for particularly code that you have modified, you can use `make` to install and link a new executable, which takes a few seconds/minutes. <be />
+Create the scrip that includes all necessary environment variables setting which are defined when you compiled the original source code of program. You can use the script that you used to compile program for the first time. Then just append the following command lines to the script, e.g., you have modified fortran code in `$NWCHEM_TOP/src/nwdft/scf_dft` directory.
+
 ```
 export USE_64TO32=y
-```
-Then use make to compile.
-```
+
 cd $NWCHEM_TOP/src/nwdft/scf_dft
 make
-```
-Then use make link to create executable.
-```
+
 cd $NWCHEM_TOP/src
 make link
 ```
+
+NWChem execuable file, `$NWCHEM_TOP/bin/LINUX64/nwchem`, will be replaced with the updated executable. 
+
+
 ## Running the tests
 
 Example of input & output files are available at **$NWCHEM_TOP/QA/tests** and **$NWCHEM_TOP/examples/**. Running NWChem calculation on standalone machine or HPC cluster with OpenMPI parallel using command
