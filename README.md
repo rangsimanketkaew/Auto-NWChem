@@ -61,13 +61,13 @@ For other Linux distro, please consult NWChem manual. <br />
 
 * **(2)**  Download program source code from [NWChem github](https://github.com/nwchemgit/nwchem) to your home directory. Release file available at [here](https://github.com/nwchemgit/nwchem/releases/tag/v6.8-release).
 ```
-wget https://github.com/nwchemgit/nwchem/releases/download/v6.8-release/nwchem-6.8-release.revision-v6.8-47-gdf6c956-src.2017-12-14.tar.bz2
+wget https://github.com/nwchemgit/nwchem/releases/download/6.8.1-release/nwchem-6.8.1-release.revision-v6.8-133-ge032219-src.2018-06-14.tar.bz2
 ```
 Then extract a *.tar.bz2* file using command
 ```
-tar -xvjf nwchem-6.8-release.revision-v6.8-47-gdf6c956-src.2017-12-14.tar.bz2
+tar -xvf nwchem-6.8.1-release.revision-v6.8-133-ge032219-src.2018-06-14.tar.bz2
 ```
-You should see *nwchem-6.8* directory. <br />
+You should see *nwchem-6.8.1* directory. <br />
 
 * **(3)** Download [Automatic-NWChem-Compilation.sh](https://github.com/rangsimanketkaew/NWChem/blob/master/Automatic-NWChem-Compile.sh) program to your Linux machine using following command
 ```
@@ -123,9 +123,8 @@ make link
 NWChem execuable file, `$NWCHEM_TOP/bin/LINUX64/nwchem`, will be replaced with the updated executable.  <br />
 P.S. `export USE_64TO32=Y` is needed for compilng program based on 32bit Libraries.
 
-
 ## Running the tests
-
+### Standalone machine
 Example of input & output files are available at **$NWCHEM_TOP/QA/tests** and **$NWCHEM_TOP/examples/**. Running NWChem calculation on standalone machine or HPC cluster with OpenMPI parallel using command
 ```
 mpirun -np N nwchem INPUT-FILE.nw >& OUTPUT-FILE.log
@@ -153,6 +152,8 @@ mpirun -genv OMP_NUM_THREADS M -genv MV2_ENABLE_AFFINITY 0 -np N nwchem INPUT-FI
 ```
 The total number of cpu cores used for this calculation will be M x N. <br />
 If you run NWChem using command like *"mpirun -np N nwchem INPUT-FILE.nw"*, this means the memory required for this calculation = (1 GB)x(N processors). More details of memory arrangement can be found on [this website](http://www.nwchem-sw.org/index.php/Release66:Top-level#MEMORY)
+### Distributed memory cluster
+Visit [this repository](https://github.com/rangsimanketkaew/PBS-submission) for using job scheduler, such as PBS Pro, PBS, and SGE to submit NWChem job on connected cluster.
 
 ## Error & Fixing
 
