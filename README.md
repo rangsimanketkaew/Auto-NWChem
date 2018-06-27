@@ -141,7 +141,9 @@ where N and M = number of processors and threads (integer & positive number), re
 ```
 mpirun -genv OMP_NUM_THREADS M -np N nwchem INPUT-FILE.nw >& OUTPUT-FILE.log 
 ```
+
 ---
+
 Running on MPI Cluster using MPICH
 ```
 mpirun -np $NSLOTS nwchem INPUT-FILE.nw >& OUTPUT-FILE.log
@@ -152,8 +154,12 @@ mpirun -genv OMP_NUM_THREADS M -genv MV2_ENABLE_AFFINITY 0 -np N nwchem INPUT-FI
 ```
 The total number of cpu cores used for this calculation will be M x N. <br />
 If you run NWChem using command like *"mpirun -np N nwchem INPUT-FILE.nw"*, this means the memory required for this calculation = (1 GB)x(N processors). More details of memory arrangement can be found on [this website](http://www.nwchem-sw.org/index.php/Release66:Top-level#MEMORY)
+
+---
+
 ### Distributed memory cluster
 Visit [this repository](https://github.com/rangsimanketkaew/PBS-submission) for using job scheduler, such as PBS Pro, PBS, and SGE to submit NWChem job on connected cluster.
+
 
 ## Error & Fixing
 
