@@ -91,11 +91,11 @@ Caveat! Note that the day I posted this script I was using NWChem version 6.6 an
 
 **Optional: PATH SETTING.** Instead of running nwchem using its absolute (full) path, you can make an aliase of NWChem program by adding the *nwchem* absolute path to $PATH using command
 ```
-export PATH=/usr/local/nwchem-6.6/bin/LINUX/nwchem:$PATH
+export PATH=/usr/local/nwchem-6.8.1/bin/LINUX/nwchem:$PATH
 ```
 To do this every time you login, each user must permanently append the above command to $PATH in *$HOME/.bashrc* file.
 ```
-echo export PATH=/usr/local/nwchem-6.6/bin/LINUX/nwchem:$PATH >> $HOME/.bashrc
+echo export PATH=/usr/local/nwchem-6.8.1/bin/LINUX/nwchem:$PATH >> $HOME/.bashrc
 ```
 Then activate the *.bashrc* file
 ```
