@@ -1,6 +1,7 @@
 #!/bin/bash
 ###########################################################################################################
-#  Program for NWChem compilation on CentOS / Rocks Cluster with MVAPICH2 Intel and Infiniband and Casper #
+#  Program for NWChem compilation on CentOS / Rocks Cluster with MVAPICH2 Intel and Infiniband            #
+#  ARMCI MPI-PR and Casper are requested.
 #  Written by Rangsiman Ketkaew (MSc student in Chemistry), Thammasat University, Thailand.               #
 ###########################################################################################################
 
@@ -18,7 +19,8 @@ module load /share/apps/modulefiles/gcc48 mvapich2-2.2b_intel2013 python2.7
 export MKLROOT=/share/apps/intel/composer_xe_2013_sp1.3.174/mkl
 export NWCHEM_TOP=/share/apps/nwchem-6.6/nwchem-6.6
 export NWCHEM_TARGET=LINUX64
-export ARMCI_NETWORK=OPENIB
+export ARMCI_NETWORK=MPI-PR
+export LD_PRELOAD=/share/apps/nwchem-6.8/Math-RK/casper-1.0b2-RK/lib/libcasper.so
 export CC=icc
 export FC=ifort link
 #export USE_ARUR=TRUE
@@ -50,8 +52,6 @@ export MPIEXEC=/share/apps/mpi/mvapich2-2.2b_intel2013/bin/mpiexec
 export MPI_LIB=/share/apps/mpi/mvapich2-2.2b_intel2013/lib
 export MPI_INCLUDE=/share/apps/mpi/mvapich2-2.2b_intel2013/include
 export LDFLAGS="-L/export/apps/compilers/intel2013/composer_xe_2013_sp1.3.174/compiler/lib/intel64/"
-# Casper
-export LD_PRELOAD=/share/apps/nwchem-6.8/Math-RK/casper-1.0b2-RK/lib/libcasper.so
 
 #$MAKE realclean
 $MAKE nwchem_config NWCHEM_MODULES="all python" 2>&1 | tee ../make_nwchem_config_mpich.log
