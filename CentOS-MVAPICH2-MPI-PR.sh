@@ -15,13 +15,12 @@ module purge
 module load /share/apps/modulefiles/gcc48 mvapich2-2.2b_intel2013 python2.7
 
 export MKLROOT=/share/apps/intel/composer_xe_2013_sp1.3.174/mkl
-export NWCHEM_TOP=/share/apps/nwchem-6.6/nwchem-6.8-armci
+export NWCHEM_TOP=/share/apps/nwchem-6.6/nwchem-6.8-ARMCI-MPI-PR
 export NWCHEM_TARGET=LINUX64
-export ARMCI_NETWORK=ARMCI
+export ARMCI_NETWORK=MPI-PR
 export EXTERNAL_ARMCI_PATH=/share/apps/nwchem-6.6/nwchem-6.6/src/tools/..//external-armci
 export CC=icc
 export FC=ifort link
-#export USE_ARUR=TRUE
 export USE_NOFSCHECK=TRUE
 export NWCHEM_FSCHECK=N
 export LARGE_FILES=TRUE
