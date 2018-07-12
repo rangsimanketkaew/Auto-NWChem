@@ -1,13 +1,11 @@
-## Make a .nwchemrc file at yout own home directory ( $HOME/.nwchemrc ) which includes following commands
+## Make a .nwchemrc file at yout own home directory ( $HOME/.nwchemrc ) and append following commands
 
-  nwchem_basis_library /usr/local/nwchem/data/libraries/
-  nwchem_nwpw_library /usr/local/nwchem/data/libraryps/
-  ffield amber
-  amber_1 /usr/local/nwchem/data/amber_s/
-  amber_2 /usr/local/nwchem/data/amber_q/
-  amber_3 /usr/local/nwchem/data/amber_x/
-  amber_4 /usr/local/nwchem/data/amber_u/
-  spce    /usr/local/nwchem/data/solvents/spce.rst
-  charmm_s /usr/local/nwchem/data/charmm_s/
-  charmm_x /usr/local/nwchem/data/charmm_x/
- 
+nwchem_basis_library /share/apps/nwchem-6.8/src/nwchem-6.8.1/src/basis/libraries/
+ffield amber
+amber_1 /share/apps/nwchem-6.8/src/nwchem-6.8.1/src/data/amber_s/
+amber_2 /share/apps/nwchem-6.8/src/nwchem-6.8.1/src/data/amber_x/
+amber_3 /share/apps/nwchem-6.8/src/nwchem-6.8.1/src/data/amber_q/
+amber_4 /share/apps/nwchem-6.8/src/nwchem-6.8.1/src/data/amber_u/
+##spce /share/apps/nwchem-5.1o/usr.local.lib.nwchem/solvents/spce.rst
+charmm_s /share/apps/nwchem-6.8/src/nwchem-6.8.1/src/data/charmm_s/
+charmm_x /share/apps/nwchem-6.8/src/nwchem-6.8.1/src/data/charmm_x/
