@@ -1,4 +1,9 @@
 #!/bin/bash
+##################################################################################
+# Compile NWChem 6.8.1 with ARMCI MPI-PR and Casper on RHEL distribution 64 bit
+# build program by Intel Compiler, Intel Parallel Studio XE Cluster Edition
+# Rangsiman Ketkaew, Thammasat University, Thailand
+##################################################################################
 
 ###module purge
 module python2.7
