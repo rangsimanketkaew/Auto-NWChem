@@ -5,14 +5,14 @@
 <p/>
 <br />
 
-An automated program for compiling NWchem with MPICH / MVAPICH2 / MVAPICH23 / Intel MPI+MKL / OpenMPI on Linux cluster.  <br />
+An automated program for compiling NWchem with MPI on Linux cluster.  <br />
 
 ## Prerequisites
 
 * Linux distribution: RHEL, CentOS, Ubuntu
-* BLAS/OpenBLAS [ and Scalapack ]
-* Python version 1.x or 2.6 or 2.7
-* MPICH or MVAPICH2 or MVAPUCH23 or Intel MPI+MKL or OpenMPI or any MPI
+* BLAS library
+* Python 2.x
+* MPICH or MVAPICH2 or MVAPUCH23 or OpenMPI
 * Compiler: GNU, Intel, PGI, etc. (More details please consult [NWChem manual](http://www.nwchem-sw.org/index.php/Compiling_NWChem#Setting_up_the_proper_environment_variables))
 
 ### Math libraries
