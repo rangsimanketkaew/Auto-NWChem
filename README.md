@@ -1,9 +1,8 @@
 # NWChem Auto Compilation
 
 <p align="center">
-   <img alt="Capture_Menu" src="https://github.com/rangsimanketkaew/NWChem/blob/master/etc/Capture_Menu.PNG" align=middle width="450pt" hight="100pt" /> 
+   <img alt="Capture_Menu" src="https://github.com/rangsimanketkaew/NWChem/blob/master/etc/Capture_Menu.PNG" align=middle width="500pt" hight="100pt" /> 
 <p/>
-<br />
 
 An automated program for compiling NWchem with MPI on Linux cluster.  <br />
 
@@ -79,7 +78,7 @@ Run script and follow the instruction of compilation.
 ```
 ./Automatic-NWChem-Compile.sh
 ```
-For help page, run `./Automatic-NWChem-Compile.sh -h` or `./Automatic-NWChem-Compile.sh -help`.
+For help page, run `./Automatic-NWChem-Compile.sh -help`
 
 ## Post-Compilation
 
