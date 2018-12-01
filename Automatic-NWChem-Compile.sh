@@ -1,24 +1,30 @@
 #!/bin/bash
 
 :<<'comment'
-##############################################################################################
-#  Automatic NWChem Compilaton Program with Message Passing Interface (MPI) Protocol.        #
-#  MPICH, MVAPICH2, MVAPICH23, Intel MPI, OpenMPI.                                           #
-#  Written by Rangsiman Ketkaew (MSc student in Chemistry), Thammasat University, Thailand.  #
-##############################################################################################
+#############################################################
+#  Automatic NWChem Compilaton Program                      #
+#                                                           #
+#  Written by Rangsiman Ketkaew, MSc student in Chemistry   #
+#  Computational Chemistry Research Unit                    #
+#  Department of Chemistry                                  #
+#  Faculty of Science and Technology                        #
+#  Thammasat University, Thailand.                          #
+#############################################################
 
+## History
 version 1.0 Automatic NWChem Compilation
 version 1.1 Create NWChem resource file
 version 1.2 Automatically search Fortran and MPI libraries
 version 1.3 Support MPICH, MVAPICH2, MVAPICH23, Intel MPI, and OpenMPI
 version 2.0 MPI detection bug fixed
+
 comment
 
 ######################################################
-# You are allowed to adjust the code in this block.
 VERSION="6.8.1"
 NWCHEM_GIT="https://github.com/nwchemgit/nwchem/releases/download/6.8.1-release"
 NWCHEM_SRC="nwchem-6.8.1-release.revision-v6.8-133-ge032219-src.2018-06-14.tar.bz2"
+NWCHEM_GIT_SRC="$NWCHEM_GIT/$NWCHEM_SRC"
 ######################################################
 
 if [ "$1" == "-h" ] || [ "$1" == "-help" ] || [ "$1" == "--help" ]; then
@@ -92,11 +98,11 @@ comment
 	MPIRUN=`command -v mpirun`
 
 	if [ -z "$MPIF90" ];then
-		echo "ERROR: \"mpif90\" command not found. Please check if you have loaded Fortran compiler."
+		echo "ERROR: \"mpif90\" command not found. Please check if Fortran compiler is currently available on your Linux."
 		exit 1
 
 	elif [ -z "$MPIRUN" ];then
-      	        echo "ERROR: \"mpirun\" command not found. Please check if you have loaded MPI binary."
+      	        echo "ERROR: \"mpirun\" command not found. Please check if MPI library is currently available on your Linux."
 	        exit 1
 
 	else
@@ -145,10 +151,10 @@ comment
 	MPIRUN_SEARCH=`which mpirun`
 	MPI_LOCATION=`echo $MPIRUN_SEARCH | sed -e 's/\/bin\/mpirun//'`
 
-	read -p "Enter absolute path of NWChem source code, e.g. /home/rangsiman/nwchem-${VERSION}/: " inp1
+	read -p "Enter absolute path of NWChem source code, e.g. /home/$USER/nwchem-${VERSION}/: " inp1
 	if [ -z $inp1 ];then
 		echo "ERROR: Please enter absolute path of NWChem source code."
-		exit 1	
+		exit 1
 	fi
 
 	read -p "Enter version of Python you are using, e.g. 2.6: " PYTHON_VER
@@ -296,7 +302,7 @@ comment
 
 	if [ ! -e $HOME/.nwchemrc ];then
 
-		read -p "Enter absolute path of NWChem top directory, e.g. /home/rangsiman/nwchem-${VERSION}: " inp2
+		read -p "Enter absolute path of NWChem top directory, e.g. /home/$USER/nwchem-${VERSION}: " inp2
 
 		if [ -e $inp2/src/basis ]; then
 
@@ -333,15 +339,23 @@ comment
 comment
 
 	echo "Download NWChem $VERSION source code to your Linux machine"
-	read -p "Enter directory where you want to store NWChem $VERSION source code, e.g. /home/rangsiman/: " NWCHEM_DIR
+	read -p "Enter directory where you want to store NWChem $VERSION source code, e.g. /home/$USER/: " NWCHEM_DIR
 
 	if [ -e $NWCHEM_DIR ];then
 
-		NWCHEM_SRC="$NWCHEM_LATEST_SRC" 
-		wget $NWCHEM_GIT/$NWCHEM_SRC -P $NWCHEM_DIR
-		tar -xvf $NWCHEM_DIR/$NWCHEM_SRC
+		wget $NWCHEM_GIT_SRC -P $NWCHEM_DIR
+
+		echo "***********************************************************************************"
 		echo ""
 		echo "Done!"
+		echo ""
+		echo "NWChem source code (src) has been downloaded to $NWCHEM_DIR."
+		echo "Go to $NWCHEM_DIR and use the following command to uncompress the tarball."
+		echo ""
+		echo "$ tar -xvf $NWCHEM_SRC"
+		echo ""
+		echo "***********************************************************************************"
+		echo ""
 
 	else
 		echo "ERROR: $NWCHEM_DIR not found."
