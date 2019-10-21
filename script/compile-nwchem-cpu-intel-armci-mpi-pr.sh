@@ -6,6 +6,7 @@
 #  - Intel C++ and Fortran compilers 
 #  - Intel MPI & MKL
 # ATLAS, BLACS, LAPACK, ScaLAPACK
+# ARMCI Network for high efficient calculation enhancement using MPI-PR
 
 ##----------------------- Intel library -------------------------------
 source $HOME/intel/parallel_studio_xe_2019/bin/psxevars.sh intel64
