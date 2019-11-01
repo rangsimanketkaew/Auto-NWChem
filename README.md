@@ -9,20 +9,21 @@ An automated program for compiling NWchem with MPI on Linux cluster.  <br />
 ## Prerequisites
 
 * Linux distribution: RHEL, CentOS, Ubuntu
-* BLAS library
-* Python 2.x
-* MPICH or MVAPICH2 or MVAPUCH23 or OpenMPI
 * Compiler: GNU, Intel, PGI, etc. (More details please consult [NWChem manual](http://www.nwchem-sw.org/index.php/Compiling_NWChem#Setting_up_the_proper_environment_variables))
+* Python 2.7
+* MPICH or MVAPICH2 or MVAPUCH23 or OpenMPI
+* BLAS
+* ScaLAPACK (optional)
 
-### Math libraries
+### Parallel and Math libraries
 
-#### OpenMPI Installation
+#### Installing OpenMPI
 
 * [Download here](https://www.open-mpi.org/software/ompi/v3.0/)
 * Installation step-by-step, [please visit this website](https://sites.google.com/site/rangsiman1993/linux/install-openmpi). 
 * Set the environment variables and libraries properly.
 
-#### OpenBLAS Installation
+#### Installing OpenBLAS
 
 * [Download here](https://github.com/xianyi/OpenBLAS).
 * Installation is at [Installation guide](https://github.com/xianyi/OpenBLAS/wiki/Installation-Guide).
@@ -30,22 +31,22 @@ An automated program for compiling NWchem with MPI on Linux cluster.  <br />
 
 ### Compilers
 
-#### Intel Compiler Collection (icc)
+#### Installing Intel Compiler Collection (icc and ifort)
 
 * [Download here](https://software.intel.com/en-us/intel-parallel-studio-xe)
 * Get the free student version (Linux), or a real license ($$$)
 * Includes MKL Math Library
 
-#### GNU Compiler Collection (gcc)
+#### Installing GNU Compiler Collection (gcc and gfortran)
 
 * [Download here](http://sourceforge.net/projects/hpc/files/hpc/gcc/gcc-4.9-bin.tar.gz/download?use_mirror=softlayer-dal&download=) 
 * OSX Options:
     * `brew install gcc`
     * [Build instructions for OSX](https://wiki.helsinki.fi/display/HUGG/Installing+the+GNU+compilers+on+Mac+OS+X)
 
-## Installing
+## Installing NWChem
 
-* **(1)**  Install required package for NWChem <br />
+* **(1)**  Install all dependencies for NWChem <br />
 > **RHEL & CentOS**:
 ```
 sudo yum install python-devel gcc-gfortran openblas-devel openblas-serial64 openmpi-devel scalapack-openmpi-devel blacs-openmpi-devel elpa-openmpi-devel tcsh --enablerepo=epel
@@ -56,7 +57,7 @@ sudo apt-get install python-dev gfortran libopenblas-dev libopenmpi-dev openmpi-
 ```
 For other Linux distro, please consult NWChem manual. <br />
 
-* **(2)**  Download program source code from [NWChem github](https://github.com/nwchemgit/nwchem) to your home directory. Release file available at [here](https://github.com/nwchemgit/nwchem/releases/tag/v6.8-release).
+* **(2)**  Download program source code from [NWChem github](https://github.com/nwchemgit/nwchem) to your home directory. Release file available at [here](https://github.com/nwchemgit/nwchem/releases/tag/v6.8.1-release).
 ```
 wget https://github.com/nwchemgit/nwchem/releases/download/6.8.1-release/nwchem-6.8.1-release.revision-v6.8-133-ge032219-src.2018-06-14.tar.bz2
 ```
@@ -187,8 +188,8 @@ mpif90 -show
 
 - You should pay attention to NWChem manual before using my script. Do not trust the script but it works for me.
 - I also provide the scripts for compiling and installing NWChem for other platforms and parallel achitectures. 
-- If use of those hand-made scripts is too difficult, you can install pre-compiled NWChem executable, for example, on CentOS using *rpm* or *yum* manager, visit [this website](https://sites.google.com/site/compchem403/personal-area/linux-knowledge/install-nwchem) for more details. A binary rpm file of different flavor of NWChem version 6.6 such as `nwchem-common`, `nwchem-openmpi`, and `nwchem-mpich` can be found at [PKGS.org](https://pkgs.org/download/nwchem) and [RPM Find](https://www.rpmfind.net/linux/rpm2html/search.php?query=nwchem&submit=Search+...). 
-- [This post](https://sites.google.com/site/rangsiman1993/abinitio/install-nwchem) on my website may be helpful.
+- If use of those hand-made scripts is too difficult, you can install pre-compiled NWChem executable, for example, on CentOS using *rpm* or *yum*, and on Ubuntu using *apt*. A binary rpm file of different flavor of NWChem version 6.6 such as `nwchem-common`, `nwchem-openmpi`, and `nwchem-mpich` can be found at [PKGS.org](https://pkgs.org/download/nwchem) and [RPM Find](https://www.rpmfind.net/linux/rpm2html/search.php?query=nwchem&submit=Search+...). 
+- [This post](https://sites.google.com/site/rangsiman1993/comp-chem/program-install/install-nwchem-rhel-centos) on my website may be helpful. Additionally, [this post](https://sites.google.com/site/rangsiman1993/comp-chem/program-install/nwchem-compile-error-and-fix) tell about frequently found error and solution.
 - If you have any problems, please google yourself first. If you still cannot resolve the problem, just go to [Q&A forum of NWChem](http://www.nwchem-sw.org/index.php/Special:AWCforum) or visit [NWChem compilation](http://www.nwchem-sw.org/index.php/Compiling_NWChem#Setting_up_the_proper_environment_variables). 
 
 Good Luck :)
