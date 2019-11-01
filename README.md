@@ -186,10 +186,12 @@ mpif90 -show
 ## More details
 
 - You should pay attention to NWChem manual before using my script. Do not trust the script but it works for me.
-- I also provide the scripts (in this repository) of NWChem compilation for other platform or parallel achitecture. 
-- If compiling of NWChem using hand-made script is too difficult, you can install NWChem executable using *rpm* and *yum*, visit [this website](https://sites.google.com/site/compchem403/personal-area/linux-knowledge/install-nwchem). The binary rpm file of various flavor of NWChem version 6.6, i.e., nwchem-common, nwchem-openmpi, and nwchem-mpich can be found at [PKGS.org](https://pkgs.org/download/nwchem) and [RPM Find](https://www.rpmfind.net/linux/rpm2html/search.php?query=nwchem&submit=Search+...). 
-- [This post](https://sites.google.com/site/rangsiman1993/abinitio/install-nwchem) in my website might be helpful.
-- If you have any problems you can consult the [Q&A forum of NWChem](http://www.nwchem-sw.org/index.php/Special:AWCforum) or visit [NWChem compilation](http://www.nwchem-sw.org/index.php/Compiling_NWChem#Setting_up_the_proper_environment_variables). 
+- I also provide the scripts for compiling and installing NWChem for other platforms and parallel achitectures. 
+- If use of those hand-made scripts is too difficult, you can install pre-compiled NWChem executable, for example, on CentOS using *rpm* or *yum* manager, visit [this website](https://sites.google.com/site/compchem403/personal-area/linux-knowledge/install-nwchem) for more details. A binary rpm file of different flavor of NWChem version 6.6 such as `nwchem-common`, `nwchem-openmpi`, and `nwchem-mpich` can be found at [PKGS.org](https://pkgs.org/download/nwchem) and [RPM Find](https://www.rpmfind.net/linux/rpm2html/search.php?query=nwchem&submit=Search+...). 
+- [This post](https://sites.google.com/site/rangsiman1993/abinitio/install-nwchem) on my website may be helpful.
+- If you have any problems, please google yourself first. If you still cannot resolve the problem, just go to [Q&A forum of NWChem](http://www.nwchem-sw.org/index.php/Special:AWCforum) or visit [NWChem compilation](http://www.nwchem-sw.org/index.php/Compiling_NWChem#Setting_up_the_proper_environment_variables). 
+
+Good Luck :)
 
 ## Author
 
