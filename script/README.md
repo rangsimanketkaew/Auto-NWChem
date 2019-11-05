@@ -6,7 +6,7 @@
 
 - Compilers
 
-| Language | Developer | Command | MPI1 | OpenMP |
+| Language | Developer | Command | MPI  | OpenMP |
 |----------|-----------|---------|------|--------|
 | Fortran 77 | GNU | gfortran | mpif77 | gfortran -fopenmp |
 | Fortran 90/95/03 | GNU | gfortran | mpif90 | gfortran -fopenmp |
