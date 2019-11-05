@@ -4,13 +4,13 @@
 #  Written by Rangsiman Ketkaew (MSc student in Chemistry), Thammasat University, Thailand.  #
 ##############################################################################################
 
-# Install reprequisites:
-# yum install python-devel gcc-gfortran tcsh openssh-clients which
-# yum install openblas-devel openblas-serial64 openmpi-devel scalapack-openmpi-devel elpa-openmpi-devel 
+# Prerequisites
+# sudo yum install python-devel gcc-gfortran tcsh openssh-clients which
+# sudo yum install openblas-devel openblas-serial64 openmpi-devel scalapack-openmpi-devel elpa-openmpi-devel 
 
 # Default OpenBLAS and Python 2.6 or 2.7 rpm-based are recommended.
 
-export NWCHEM_TOP=/builddir/build/BUILD/nwchem-6.8
+export NWCHEM_TOP=/full/path/of/nwchem-6.8
 export NWCHEM_TARGET=LINUX64
 export CC=gcc
 export FC=gfortran

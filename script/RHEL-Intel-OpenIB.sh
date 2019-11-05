@@ -5,13 +5,11 @@
 # Rangsiman Ketkaew, Thammasat University, Thailand
 ##################################################################################
 
-#module purge
+module purge
 module python2.7
 
-export NWCHEM_TOP="$HOME/nwchem-6.8.1"
-cd $NWCHEM_TOP/src
-
-### NWChem module request
+##----------------------- NWChem configuration ------------------------
+export NWCHEM_TOP=/home/nutt/nwchem-6.8.1
 export NWCHEM_TARGET=LINUX64
 export USE_NOFSCHECK=TRUE
 export NWCHEM_FSCHECK=N
@@ -31,14 +29,14 @@ export USE_PYTHON64=y
 export ARMCI_NETWORK=OPENIB
 ### Enable OpenMP support
 export USE_OPENMP=T
-### MPI
+## ---------------------- MPI Libraries box ---------------------------
 export I_MPI_ROOT="$HOME/intel/parallel_studio_xe_2018/compilers_and_libraries_2018/linux/mpi"
 export MPI_ROOT="$I_MPI_ROOT/intel64"
 export MPICC="$MPI_ROOT/bin/mpiicc"
 export MPICXX="$MPI_ROOT/bin/mpiicpc"
 export MPIFC="$MPI_ROOT/bin/mpiifort"
 export MKLROOT="$HOME/intel/parallel_studio_xe_2018/compilers_and_libraries_2018/linux/mkl"
-###Math Library, and Compiler
+## ---------------------- Math support --------------------------------
 export CC=icc
 export FC=ifort link
 export USE_MPI=y
@@ -59,6 +57,8 @@ export SCALAPACK_SIZE=8
 export SCALAPACK="-L${MKLROOT}/lib/intel64 -lmkl_scalapack_ilp64 -lmkl_intel_ilp64 -lmkl_intel_thread \
  -lmkl_core -lmkl_blacs_intelmpi_ilp64 -liomp5 -lpthread -lm -ldl"
 
+cd $NWCHEM_TOP/src
+
 #$MAKE realclean
-make -j12 nwchem_config NWCHEM_MODULES="all python" 2>&1 | tee ../make_nwchem_config_mpich.log
-make -j12 FC=ifort CC=icc 2>&1 | tee ../makefile.log
+make nwchem_config NWCHEM_MODULES="all python" 2>&1 | tee ../make_nwchem_config_mpich.log
+make FC=ifort CC=icc 2>&1 | tee ../makefile.log

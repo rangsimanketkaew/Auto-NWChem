@@ -1,12 +1,16 @@
 #!/bin/bash
 
-export NWCHEM_TOP=/home/ubuntu/nwchem-6.8.1/
+# Install NWChem 6.8.1 with MPI parallellism method on AWS EC2 Linux system.
+# Compile with GNU compiler and OpenMPI v.4.0.
+
+export NWCHEM_TOP=/home/ubuntu/nwchem-6.8.1
 
 ## *Note that if you are using OpenMPI 4.0 or higher you must change the MPI library, like this:*
 sed -i "s/MPI_Errhandler_set/MPI_Comm_set_errhandler/g" $NWCHEM_TOP/src/tools/ga-5.6.5/tcgmsg/tcgmsg-mpi/misc.c
 sed -i "s/MPI_Type_struct/MPI_Type_create_struct/g" $NWCHEM_TOP/src/tools/ga-5.6.5/comex/src-armci/message.c
 ## For more information please visit https://www-lb.open-mpi.org/faq/?category=mpi-removed.
 
+##----------------------- NWChem configuration ------------------------
 export NWCHEM_TARGET=LINUX64
 export NWCHEM_MODULES="all python"
 export MAKE=/usr/bin/make

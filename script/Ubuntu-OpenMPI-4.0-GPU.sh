@@ -1,14 +1,16 @@
 #!/bin/bash
 
-# Install NWChem with parallel method and GPU on AWS EC2 system.
+# Install NWChem 6.8.1 with MPI parallellism method and GPU enabled on AWS EC2 Linux system.
 # Compile with GNU compiler and OpenMPI v.4.0.
 
-export NWCHEM_TOP=/home/ubuntu/nwchem-6.8.1-gpu/
+export NWCHEM_TOP=/home/ubuntu/nwchem-6.8.1
 
-# Avoid error with use of OpenMPI 4.0.
+## *Note that if you are using OpenMPI 4.0 or higher you must change the MPI library, like this:*
 sed -i "s/MPI_Errhandler_set/MPI_Comm_set_errhandler/g" $NWCHEM_TOP/src/tools/ga-5.6.5/tcgmsg/tcgmsg-mpi/misc.c
 sed -i "s/MPI_Type_struct/MPI_Type_create_struct/g" $NWCHEM_TOP/src/tools/ga-5.6.5/comex/src-armci/message.c
+## For more information please visit https://www-lb.open-mpi.org/faq/?category=mpi-removed.
 
+##----------------------- NWChem configuration ------------------------
 export NWCHEM_TARGET=LINUX64
 export NWCHEM_MODULES="all python"
 export MAKE=/usr/bin/make
@@ -27,15 +29,14 @@ export CCSDTLR=y
 export IPCCSD=y
 export EACCSD=y
 ## ---------------------- MPI Libraries box ---------------------------
-#export LD_LIBRARY_PATH=/usr/local/lib/:$LD_LIBRARY_PATH
 export USE_MPI=y
 export USE_MPIF=y
 export USE_MPIF4=y
 export MPI_LOC=/usr/local/
-#export MPI_LIB=/usr/local/lib
-#export MPI_INCLUDE=/usr/local/include
-#export LIBMPI="-lmpi_usempi -lmpi_mpifh -lmpi"
-#export LIBMPI="-lmpi_usempif08 -lmpi_usempi_ignore_tkr -lmpi_mpifh -lmpi"
+export MPI_LIB=/usr/local/lib
+export MPI_INCLUDE=/usr/local/include
+export LIBMPI="-lmpi_usempi -lmpi_mpifh -lmpi"
+export LIBMPI="-lmpi_usempif08 -lmpi_usempi_ignore_tkr -lmpi_mpifh -lmpi"
 #--------------------------- GPU Enabled ------------------------------
 export TCE_CUDA=Y
 export CUDA="nvcc"
@@ -51,5 +52,5 @@ export FC="gfortran"
 #rm -f 64_to_32 32_to_64 tools/build tools/install
 
 make nwchem_config
-make 64_to_32 -j2
-make -j2
+make 64_to_32
+make

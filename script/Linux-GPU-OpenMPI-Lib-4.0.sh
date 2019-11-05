@@ -4,12 +4,13 @@
 # Compile with GNU compiler and OpenMPI v.4.0.
 # Execute this shell script at $NWCHEM_TOP/src only!!!
 
-export NWCHEM_TOP=/home/ubuntu/nwchem-6.8.1-gpu/
+export NWCHEM_TOP=/home/nutt/nwchem-6.8.1
 
 # Two code lines below are avoiding error with use of OpenMPI v.4.0 or higher.
 sed -i "s/MPI_Errhandler_set/MPI_Comm_set_errhandler/g" $NWCHEM_TOP/src/tools/ga-5.6.5/tcgmsg/tcgmsg-mpi/misc.c
 sed -i "s/MPI_Type_struct/MPI_Type_create_struct/g" $NWCHEM_TOP/src/tools/ga-5.6.5/comex/src-armci/message.c
 
+##----------------------- NWChem configuration ------------------------
 export NWCHEM_TARGET=LINUX64
 export NWCHEM_MODULES="all python"
 export MAKE=/usr/bin/make
@@ -32,10 +33,10 @@ export USE_MPI=y
 export USE_MPIF=y
 export USE_MPIF4=y
 export MPI_LOC=/usr/local/
-#export MPI_LIB=/usr/local/lib
-#export MPI_INCLUDE=/usr/local/include
-#export LIBMPI="-lmpi_usempi -lmpi_mpifh -lmpi"
-#export LIBMPI="-lmpi_usempif08 -lmpi_usempi_ignore_tkr -lmpi_mpifh -lmpi"
+export MPI_LIB=/usr/local/lib
+export MPI_INCLUDE=/usr/local/include
+export LIBMPI="-lmpi_usempi -lmpi_mpifh -lmpi"
+export LIBMPI="-lmpi_usempif08 -lmpi_usempi_ignore_tkr -lmpi_mpifh -lmpi"
 #--------------------------- GPU Enabled ------------------------------
 export TCE_CUDA=Y
 export CUDA="nvcc"
