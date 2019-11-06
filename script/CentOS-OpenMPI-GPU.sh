@@ -1,21 +1,12 @@
 #!/bin/bash
-##############################################################################################
-#  Program for NWChem compilation on CentOS with OpenMPI and CUDA compiled by gFrotran       #
-#  Nvidia CUDA architecture is used to accelerate TCE model                                  #
-#  Written by Rangsiman Ketkaew (MSc student in Chemistry), Thammasat University, Thailand.  #
-##############################################################################################
+
+# Compile and Install NWChem CentOS with OpenMPI and GPU enabled
 
 # Prerequisites
 # sudo yum install python-devel gcc-gfortran tcsh openssh-clients which
 # sudo yum install openblas-devel openblas-serial64 openmpi-devel scalapack-openmpi-devel elpa-openmpi-devel 
 
-# Default OpenBLAS and Python 2.6 or 2.7 rpm-based are recommended.
-
-# Install the latest version of NVIDIA driver and CUDA toolkit.
-# They will be installed at /usr/local/cuda/ be default. 
-# Then append the full path of CUDA compiler to $PATH environment variable in your $HOME/.bashrc file.
-
-export NWCHEM_TOP=/full/path/of/nwchem-6.8
+export NWCHEM_TOP=/full/path/of/nwchem-6.8.1
 export NWCHEM_TARGET=LINUX64
 export CC=gcc
 export FC=gfortran
@@ -50,6 +41,8 @@ export TCE_CUDA=Y
 export CUDA_LIBS="-L/usr/local/cuda-9.1/lib64/ -L/usr/local/cuda-9.1/lib64/ -lcudart"
 export CUDA_FLAGS="-arch sm_50 "
 export CUDA_INCLUDE="-I. -I/usr/local/cuda-9.1/include/"
+
+cd $NWCHEM_TOP/src
 
 $MAKE nwchem_config NWCHEM_MODULES="all python" 2>&1 | tee ../make_nwchem_config_openmpi.log
 $MAKE 64_to_32 2>&1 | tee ../make_64_to_32_openmpi.log

@@ -2,7 +2,7 @@
 
 # Note that the following environment variables and configuration settings are optimized for 
 # compiling NWChem 6.8.1 on CentOS-based Chalawan Cluster equipped with Infiniband interconnect
-# (http://chalawan.narit.or.th) using OpenMP + MPICH.
+# (http://chalawan.narit.or.th) using OpenMP + MPICH and GPU enabled.
 # It should be able to make use of a larger number of CPUs across distributed nodes.
 
 export NWCHEM_TOP=/builddir/build/BUILD/nwchem-6.8.1
@@ -36,6 +36,11 @@ export MPIEXEC=/usr/lib64/mpich/bin/mpiexec
 export MPI_LIB=/usr/lib64/mpich/lib
 export MPI_INCLUDE=/usr/include/mpich-x86_64
 export LIBMPI="-lmpich"
+export TCE_CUDA=Y
+export CUDA="nvcc"
+export CUDA_LIBS="-L/usr/local/cuda-10.1/lib64/ -L/usr/local/cuda-10.1/lib64/ -lcudart"
+export CUDA_FLAGS="-arch sm_50 "
+export CUDA_INCLUDE="-I. -I/usr/local/cuda-10.1/include/"
 
 cd $NWCHEM_TOP/src
 

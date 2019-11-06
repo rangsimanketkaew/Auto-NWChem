@@ -1,7 +1,8 @@
 #!/bin/bash
 
-# Install NWChem with parallel method on AWS EC2 system.
-# Compile with GNU compiler and OpenMPI v.4.0.
+# Install NWChem with MPI parallelism method on AWS EC2 system
+# Intel Parallel Studio for Linux 2019 update edition 5
+# OpenMPI v.4.0.
 
 export NWCHEM_TOP=/home/nutt/nwchem-6.8.1
 
@@ -48,5 +49,3 @@ cd $NWCHEM_TOP/src
 make nwchem_config
 make 64_to_32
 make
-
-

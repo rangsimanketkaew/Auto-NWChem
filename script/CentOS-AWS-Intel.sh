@@ -1,11 +1,10 @@
 #!/bin/bash
 
-# Install NWChem with parallel method on AWS EC2 system.
-# NWCHem 6.8.1
+# Install NWChem with OpenMP + MPI parallelism method on AWS EC2 system
 # Intel Parallel Studio for Linux 2019 update edition 5
 #  - Intel C++ and Fortran compilers 
-#  - Intel MPI & MKL
-# ATLAS, BLACS, LAPACK, ScaLAPACK
+#  - Intel MPI & MKL (BLAS, LAPACK, ScaLAPACK)
+# ARMCI MPI-PR for high efficient calculation
 
 ##----------------------- Intel library -------------------------------
 source /opt/intel/parallel_studio_xe_2019/bin/psxevars.sh intel64

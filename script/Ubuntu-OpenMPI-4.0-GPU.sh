@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Install NWChem 6.8.1 with MPI parallellism method and GPU enabled on AWS EC2 Linux system.
-# Compile with GNU compiler and OpenMPI v.4.0.
+# Compile and Install NWChem 6.8.1 with MPI and GPU enabled on AWS EC2 Linux system.
+# GNU compiler and OpenMPI v.4.0.
 
 export NWCHEM_TOP=/home/ubuntu/nwchem-6.8.1
 
@@ -45,6 +45,8 @@ export CUDA_FLAGS="-arch sm_50 "
 export CUDA_INCLUDE="-I. -I/usr/local/cuda-10.1/include/"
 export FC="gfortran"
 ## --------------------------------------------------------------------
+
+cd $NWCHEM_TOP/src
 
 #Following three lines of command is for recompilation
 #find ./ -name "dependencies" -exec rm {} \; -print

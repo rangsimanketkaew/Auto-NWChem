@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Install NWChem 6.8.1 with MPI parallellism method on AWS EC2 Linux system.
-# Compile with GNU compiler and OpenMPI v.4.0.
+# Compile and Install NWChem 6.8.1 with MPI on AWS EC2 Linux system.
+# GNU compiler and OpenMPI v.4.0.
 
 export NWCHEM_TOP=/home/ubuntu/nwchem-6.8.1
 
@@ -34,6 +34,13 @@ export USE_MPIF=y
 export USE_MPIF4=y
 export MPI_LOC=/usr/local/
 ## --------------------------------------------------------------------
+
+cd $NWCHEM_TOP/src
+
+#Following three lines of command is for recompilation
+#find ./ -name "dependencies" -exec rm {} \; -print
+#make clean
+#rm -f 64_to_32 32_to_64 tools/build tools/install
 
 make nwchem_config
 make 64_to_32

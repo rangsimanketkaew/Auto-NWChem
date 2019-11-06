@@ -1,16 +1,13 @@
 #!/bin/bash
 
-# Install NWChem with parallel method on AWS EC2 system.
-# NWCHem 6.8.1
+# Install NWChem with OpenMP + MPI parallelism method on AWS EC2 system
 # Intel Parallel Studio for Linux 2019 update edition 5
 #  - Intel C++ and Fortran compilers 
-#  - Intel MPI & MKL
-# ATLAS, BLACS, LAPACK, ScaLAPACK
+#  - Intel MPI & MKL (BLAS, LAPACK, ScaLAPACK)
+# ARMCI MPI-PR for high efficient calculation
 # GPU enabled
+#  - NVIDIA drivers
 #  - CUDA toolkit
-#  - NVIDIA library
-
-# You must adjust the path of $NWCHEM_TOP to satisfy your system!!!
 
 ##----------------------- Intel library -------------------------------
 source /opt/intel/parallel_studio_xe_2019/bin/psxevars.sh intel64
@@ -42,6 +39,8 @@ export CC=icc
 export FC=ifort link
 ##----------------------- OpenMP support ------------------------------
 export USE_OPENMP=T
+##------------------------ ARMCI support ------------------------------
+export ARMCI_NETWORK=MPI-PR
 ## ---------------------- Intel MPI support ---------------------------
 export MPI_ROOT="/opt/intel/impi/2019.5.281/intel64"
 export MPICC="$MPI_ROOT/bin/mpiicc"

@@ -1,14 +1,9 @@
 #!/bin/bash
-###########################################################################################################
-#  Program for NWChem compilation on CentOS / Rocks Cluster with MVAPICH2 Intel and Infiniband            #
-#  ARMCI MPI-PR and Casper are requested.
-#  Written by Rangsiman Ketkaew (MSc student in Chemistry), Thammasat University, Thailand.               #
-###########################################################################################################
 
-# The environment variable and configuration settings in this bash script is optimized and used 
-# for compiling NWChem 6.6, 6.8, and 6.8.1 on CentOS/Rocks Chalawan cluster (http://chalawan.narit.or.th).
+# Note that the following environment variables and configuration settings are optimized for 
+# compiling NWChem 6.8.1 on CentOS-based Chalawan Cluster equipped with Infiniband interconnect
+# (http://chalawan.narit.or.th) using OpenMP + MVAPICH2, ARMCI MPI-PR, and Casper.
 # It should be able to make use of a larger number of CPUs across distributed nodes.
-# This script utilized the python 2.6 and mvapich2-2.2b_intel2013.
 
 # Prerequisite
 # Install Casper before compile NWChem, please see http://www.mcs.anl.gov/project/casper/
@@ -17,7 +12,7 @@ module purge
 module load /share/apps/modulefiles/gcc48 mvapich2-2.2b_intel2013 python2.7
 
 export MKLROOT=/share/apps/intel/composer_xe_2013_sp1.3.174/mkl
-export NWCHEM_TOP=/share/apps/nwchem-6.6/nwchem-6.6
+export NWCHEM_TOP=/share/apps/nwchem-6.8.1
 export NWCHEM_TARGET=LINUX64
 export ARMCI_NETWORK=MPI-PR
 export LD_PRELOAD=/share/apps/nwchem-6.8/Math-RK/casper-1.0b2-RK/lib/libcasper.so
@@ -41,6 +36,7 @@ export BLASOPT="-lmkl_intel_lp64 -lmkl_intel_thread -lmkl_core -liomp5 -lpthread
 export BLAS_SIZE=4
 export MAKE=/usr/bin/make
 export LD_LIBRARY_PATH="/share/apps/mpi/mvapich2-2.2b_intel2013/lib:/share/apps/python/lib/:/export/apps/intel/composer_xe_2013_sp1.3.174/compiler/lib/intel64/"
+export USE_OPENMP=y
 export USE_MPI=y
 export USE_MPIF=y
 export USE_MPIF4=y
@@ -48,6 +44,8 @@ export MPIEXEC=/share/apps/mpi/mvapich2-2.2b_intel2013/bin/mpiexec
 export MPI_LIB=/share/apps/mpi/mvapich2-2.2b_intel2013/lib
 export MPI_INCLUDE=/share/apps/mpi/mvapich2-2.2b_intel2013/include
 export LDFLAGS="-L/export/apps/compilers/intel2013/composer_xe_2013_sp1.3.174/compiler/lib/intel64/"
+
+cd $NWCHEM_TOP/src
 
 $MAKE nwchem_config NWCHEM_MODULES="all python" 2>&1 | tee ../make_nwchem_config_mpich.log
 $MAKE 64_to_32 2>&1 | tee ../make_64_to_32_mpich.log

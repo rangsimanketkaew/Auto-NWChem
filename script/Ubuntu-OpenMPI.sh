@@ -1,12 +1,7 @@
 #!/bin/bash
 
-# Install NWChem with MPI parallellism method on Linux system.
-# Compile with GNU compiler and OpenMPI v.1.8.1.
-
-# Compiling of NWChem 6.8.1 on Ubuntu 17.10.1 (Artful Aardvark)
-# Use NWCHEM's BLAS & OpenMPI 1.8.1
-# mpif90 -show = -lmpi_usempi -lmpi_mpifh -lmpi
-# The lines in MPI libraries box should be adjusted to satify the library/environment of your machine.
+# Compile and Install NWChem 6.8.1 with MPI and GPU enabled on AWS EC2 Linux system.
+# GNU compiler and OpenMPI v.1.8.1.
 
 ##----------------------- NWChem configuration ------------------------
 export NWCHEM_TOP=/home/nutt/nwchem-6.8.1
@@ -30,6 +25,13 @@ export MPI_LIB=/usr/local/openmpi-1.8.1/lib
 export MPI_INCLUDE=/usr/local/openmpi-1.8.1/include
 export LIBMPI="-lmpi_usempi -lmpi_mpifh -lmpi"
 ##---------------------------------------------------------------------
+
+cd $NWCHEM_TOP/src
+
+#Following three lines of command is for recompilation
+#find ./ -name "dependencies" -exec rm {} \; -print
+#make clean
+#rm -f 64_to_32 32_to_64 tools/build tools/install
 
 make nwchem_config NWCHEM_MODULES="all python"
 make 64_to_32
