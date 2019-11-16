@@ -1,6 +1,6 @@
 #!/bin/bash
 ##################################################################################
-# Compile NWChem 7.0.0 beta with ARMCI & GPU enabled
+# Compile NWChem 7.0.0 beta 1 with ARMCI & GPU enabled
 # CentOS 7 64-bit system
 # Intel(R) Xeon(R) Gold 6132 CPU @ 2.60GHz
 # Memory DDR4-2666 MHz
