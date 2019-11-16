@@ -60,7 +60,7 @@ MKL Link Line advisor: https://software.intel.com/en-us/articles/intel-mkl-link-
 gdb -c core.99999
 ```
 
-ldd
+- ldd
 
 ```
 ldd $NWCHEM_TOP/bin/LINUX64/nwchem
