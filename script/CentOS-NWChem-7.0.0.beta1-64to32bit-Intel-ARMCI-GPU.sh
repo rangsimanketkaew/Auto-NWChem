@@ -36,16 +36,9 @@ export USE_PYTHONCONFIG=y
 export USE_PYTHON64=y
 ### ARMCI method
 export ARMCI_NETWORK=ARMCI
-export EXTERNAL_ARMCI_PATH=/home/rangsiman/nwchem-7.0.0-cuda/src/tools/../..//external-armci
+export EXTERNAL_ARMCI_PATH=/home/rangsiman/nwchem-7.0.0-cuda/external-armci
 ### Enable OpenMP support
 export USE_OPENMP=T
-## ---------------------- MPI Libraries box ---------------------------
-export I_MPI_ROOT="/opt/ohpc/pub/apps/intel/compilers_and_libraries_2019.1.144/linux/mpi"
-export MPI_ROOT="$I_MPI_ROOT/intel64"
-export MPICC="$MPI_ROOT/bin/mpiicc"
-export MPICXX="$MPI_ROOT/bin/mpiicpc"
-export MPIFC="$MPI_ROOT/bin/mpiifort"
-export MKLROOT="/opt/ohpc/pub/apps/intel/compilers_and_libraries_2019.1.144/linux/mkl"
 ## ---------------------- Math support --------------------------------
 export CC=icc
 export FC=ifort
@@ -56,6 +49,7 @@ export MPI_INCLUDE="/opt/ohpc/pub/apps/intel/compilers_and_libraries_2019.1.144/
 export MPI_LIB="/opt/ohpc/pub/apps/intel/compilers_and_libraries_2019.1.144/linux/mpi/intel64/lib/release -L/opt/ohpc/pub/apps/intel/compilers_and_libraries_2019.1.144/linux/mpi/intel64/lib"
 export LIBMPI="-lmpifort -lmpi -ldl -lrt -lpthread"
 export BLAS_SIZE=8
+export MKLROOT="/opt/ohpc/pub/apps/intel/compilers_and_libraries_2019.1.144/linux/mkl"
 export BLASOPT="-L${MKLROOT}/lib/intel64 -lmkl_intel_ilp64 -lmkl_intel_thread -lmkl_core -liomp5 -lpthread -lm -ldl"
 export LAPACK_SIZE=8
 export LAPACK_LIB="$BLASOPT"
