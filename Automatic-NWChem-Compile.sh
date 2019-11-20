@@ -497,7 +497,7 @@ comment
 		wget $NWCHEM_GIT_SRC -P $NWCHEM_DIR
 
 		echo " "
-		echo " Done! NWChem source code (src) has been downloaded to $NWCHEM_DIR."
+		echo " Done! NWChem source code has been downloaded to $NWCHEM_DIR"
 		echo ""
 
 		read -p "Do you want to extract the tarball now?: [Yes]/No: " inp
