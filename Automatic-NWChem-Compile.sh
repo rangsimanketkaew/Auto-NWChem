@@ -15,7 +15,7 @@
 version 1.0 Automatic NWChem Compilation
 version 1.1 Create NWChem resource file
 version 1.2 Automatically search Fortran and MPI libraries
-version 1.3 Support MPICH, MVAPICH2, MVAPICH23, Intel MPI, and OpenMPI
+version 1.3 Support OpenMPI, MPICH, MVAPICH2, and Intel MPI
 version 2.0 MPI detection bug fixed
 
 comment
@@ -145,37 +145,169 @@ comment
 
 :<<'comment'
 	 (2) Setting up configuration compilation using paralell making
-	 export NWCHEM_TOP="/directory/of/nwchem/"
+	 export NWCHEM_TOP="/absolute/path/to/top/directory/of/nwchem/"
 comment
 
-	MPIRUN_SEARCH=`which mpirun`
-	MPI_LOCATION=`echo $MPIRUN_SEARCH | sed -e 's/\/bin\/mpirun//'`
+	read -p "Enter absolute path of NWChem top directory: [/home/$USER/nwchem-${VERSION}]: " inp
+	if [ -z $inp ];then
+		USER_NWCHEM_TOP="/home/$USER/nwchem-${VERSION}"
+	else
+		if [ ! -d $inp ];then
+			echo "Directory you entered does not exist."
+			exit 1
+		fi
+	fi
 
-	read -p "Enter absolute path of NWChem source code, e.g. /home/$USER/nwchem-${VERSION}/: " inp1
-	if [ -z $inp1 ];then
-		echo "ERROR: Please enter absolute path of NWChem source code."
+	read -p "Enter NWChem target: [LINUX64]: " inp
+	if [[ -z $inp || ${inp,,} == "linux64" ]];then
+		USER_NWCHEM_TARGET="LINUX64"
+	else
+		echo "ERROR: This program supports only LINUX64 target"
 		exit 1
 	fi
 
-	read -p "Enter version of Python you are using, e.g. 2.6: " PYTHON_VER
-	if [ -z $PYTHON_VER ];then
-		echo "ERROR: Please enter version of Python."
-		exit 1	
+	read -p "Enter NWChem target: [all]: " inp
+	if [[ -z $inp || ${inp,,} == "all" ]];then
+		USER_NWCHEM_MODULES="all"
+	else
+		USER_NWCHEM_MODULES="$inp"
 	fi
 
-	read -p "Enter absolute path of Python directory, e.g. /usr/: " PYTHON_HOME
-	if [ -z $PYTHON_HOME ];then
-		echo "ERROR: Please enter absolute path of Python directory."
-		exit 1	
+	read -p "Compile with Python: [Yes]/No: " inp
+	if [[ -z $inp || ${inp,,} == "yes" ]];then
+		CHECK_PYTHON="y"
+		USER_NWCHEM_MODULES="${USER_NWCHEM_MODULES} python"
+
+		read -p "Enter version of Python you are using: 2.6/[2.7]: " inp
+		if [ -z $inp ];then
+			USER_PYTHON_VERSION="2.7"
+		else
+			USER_PYTHON_VERSION=$inp
+		fi
+
+		read -p "Enter absolute path of Python directory: [/usr]: " inp
+		if [ -z $inp ];then
+			USER_PYTHON_HOME="/usr"
+		else
+			USER_PYTHON_HOME=$inp
+			if [ ! -d $USER_PYTHON_HOME ];then
+				echo "ERROR: Directory you entered does not exist."
+				exit 1
+			fi
+		fi
+
+		read -p "Use Python 64 bit: [Yes]/No: " inp
+		if [[ -z $inp || ${inp,,} == "yes" ]];then
+			USER_PYTHON64="y"
+		elif [ ${inp,,} == "no" ];then
+			USER_PYTHON64="n"
+		else
+			echo "ERROR: You entered incorrect answer."
+			exit 1
+		fi
+
+		read -p "Enter type of Python library: [so]: " inp
+		if [ -z $inp ];then
+			USER_PYTHONLIBTYPE="so"
+		else
+			USER_PYTHONLIBTYPE=$inp
+		fi
+
+	elif [ ${inp,,} == "no" ];then
+		CHECK_PYTHON="n"
+		USER_PYTHON_VERSION=""
+		USER_PYTHON_HOME=""
+		USER_PYTHON64=""
+		USER_PYTHONLIBTYPE=""
+
+	else
+		echo "ERROR: You entered incorrect answer."
+		exit 1
 	fi
 
-	export NWCHEM_TOP=$inp1
+	read -p "Compile with special method: [Yes]/No: " inp
+	if [[ -z $inp || ${inp,,} == "yes" ]];then
+		CHECK_SPECIAL_METHOD="y"
+	elif [ ${inp,,} == "no" ];then
+		CHECK_SPECIAL_METHOD="n"
+	else
+		echo "ERROR: You entered incorrect answer."
+		exit 1
+	fi
 
-	if [ -e $NWCHEM_TOP/src ];then
-		if [ -e $MPI_LOCATION ];then
-			if [ -e $PYTHON_HOME ];then
+	read -p "Compile with MPI: [yes]/no: " inp
+	if [[ -z $inp || ${inp,,} == "yes" ]];then
+	
+		USER_MPI_INCLUDE=$(${USER_NWCHEM_TOP}/src/tools/guess-mpidefs | awk '{if(NR==1) print $0}')
+		USER_MPI_LIB=$(${USER_NWCHEM_TOP}/src/tools/guess-mpidefs | awk '{if(NR==2) print $0}')
+		USER_LIBMPI=$(${USER_NWCHEM_TOP}/src/tools/guess-mpidefs | awk '{if(NR==3) print $0}')
+	elif [ ${inp,,} == "no" ];then
+		CHECK_MPI="n"
+	else
+		echo "ERROR: You entered incorrect answer."
+		exit 1
+	fi
 
-cat << EOF > $PWD/configure_nwchem_compile.sh
+	read -p "Compile with OpenMP: [yes]/no: " inp
+	if [[ -z $inp || ${inp,,} == "yes" ]];then
+		CHECK_OPENMP="y"
+	elif [ ${inp,,} == "no" ];then
+		CHECK_OPENMP="n"
+	else
+		echo "ERROR: You entered incorrect answer."
+		exit 1
+	fi
+
+	read -p "Compile with OpenBLAS: [yes]/no: " inp
+	if [[ -z $inp || ${inp,,} == "yes" ]];then
+		USER_BLAS_SIZE="4"
+		USER_BLAS_LIB="-lopenblas -lpthread -lrt"
+	elif [ ${inp,,} == "no" ];then
+		USER_BLAS_SIZE=""
+		USER_BLAS_LIB=""
+	else
+		echo "ERROR: You entered incorrect answer."
+		exit 1
+	fi
+
+	read -p "Compile with ARMCI method: [yes]/no: " inp
+	if [[ -z $inp || ${inp,,} == "yes" ]];then
+			read -p "Enter ARMCI Network: [MPI-PR]: " inp
+			if [[ -z $inp || ${inp,,} == "mpi-pr" ]];then
+				USER_ARMCI_NETWORK="MPI-PR"
+			else
+				USER_ARMCI_NETWORK=$inp
+			fi
+	elif [ ${inp,,} == "no" ];then
+		USER_ARMCI_NETWORK=""
+	else
+		echo "ERROR: You entered incorrect answer."
+		exit 1
+	fi
+
+	read -p "C++ and FC Compilers, [gnu]/intel: " inp
+	if [[ -z $inp || ${inp,,} == "yes" ]];then
+		USER_CC="gcc"
+		USER_FC="gfortran"
+	elif [ ${inp,,} == "intel" ];then
+		USER_CC="icc"
+		USER_FC="ifort"
+	else
+		echo "ERROR: You entered incorrect answer."
+		exit 1
+	fi
+
+	read -p "Convert 64to32bit: [yes]/no: " inp
+	if [[ -z $inp || ${inp,,} == "yes" ]];then
+		USER_64TO32="y"
+	elif [ ${inp,,} == "no" ];then
+		USER_64TO32="n"
+	else
+		echo "ERROR: You entered incorrect answer."
+		exit 1
+	fi
+
+cat << EOF > $PWD/INSTALL_NWCHEM.sh
 #!/bin/bash
 
 #######################################################################
@@ -183,112 +315,127 @@ cat << EOF > $PWD/configure_nwchem_compile.sh
 ##            https://github.com/rangsimanketkaew/NWChem             ##
 #######################################################################
 
-# ------------------------- NWCHEM Location -------------------------
-export NWCHEM_TOP=${NWCHEM_TOP}
-export NWCHEM_TARGET=LINUX64
-# ------------------------- NWCHEM Functionality --------------------
-export USE_NOFSCHECK=TRUE
+# ------------------------- NWCHEM Parameter ------------------------
+export NWCHEM_TOP=${USER_NWCHEM_TOP}
+export NWCHEM_TARGET=${USER_NWCHEM_TARGET}
+export NWCHEM_LONG_PATHS=y
 export NWCHEM_FSCHECK=N
+export USE_NOFSCHECK=TRUE
 export LARGE_FILES=TRUE
-export MRCC_THEORY=Y
-export EACCSD=Y
-export IPCCSD=Y
-export CCSDTQ=Y
-export CCSDTLR=Y
-export NWCHEM_LONG_PATHS=Y
-# ------------------------- MPI libraries ---------------------------
-export USE_MPI=y
-export USE_MPIF=y
-export USE_MPIF4=y
-export MPI_LOC=${MPI_LOCATION}
-export MPI_LIB=${MPI_LOC}/lib
-export MPI_INCLUDE=${MPI_LOC}/include
-export MPIEXEC=${MPI_LOC}/bin/mpiexec
-export LIBMPI="${MPIF90_LIB}"
-export PATH=${MPI_LOC}/bin/:\$PATH
-export LD_LIBRARY_PATH=${MPI_LOC}/lib/:\$LD_LIBRARY_PATH
+# ------------------------- NWChem module ---------------------------
+export NWCHEM_MODULES=${USER_NWCHEM_MODULES}
+# ------------------------- Special method compilation---------------
+export MRCC_THEORY=${CHECK_SPECIAL_METHOD}
+export EACCSD=${CHECK_SPECIAL_METHOD}
+export IPCCSD=${CHECK_SPECIAL_METHOD}
+export CCSDTQ=${CHECK_SPECIAL_METHOD}
+export CCSDTLR=${CHECK_SPECIAL_METHOD}
 # ------------------------- Python Libraries ------------------------
-export USE_PYTHONCONFIG=y
-export PYTHONVERSION=${PYTHON_VER}
-export PYTHONHOME=${PYTHON_HOME}
-export USE_PYTHON64=y
-export PYTHONLIBTYPE=so
+export USE_PYTHONCONFIG=${CHECK_PYTHON}
+export PYTHONVERSION=${USER_PYTHON_VERSION}
+export PYTHONHOME=${USER_PYTHON_HOME}
+export USE_PYTHON64=${USER_PYTHON64}
+export PYTHONLIBTYPE=${USER_PYTHONLIBTYPE}
+# ------------------------- OpenMPI libraries -----------------------
+export USE_OPENMP=${CHECK_OPENMP}
+# ------------------------- MPI libraries ---------------------------
+export USE_MPI=${CHECK_MPI}
+export USE_MPIF=${CHECK_MPI}
+export USE_MPIF4=${CHECK_MPI}
+export MPI_INCLUDE=${USER_MPI_INCLUDE}
+export MPI_LIB=${USER_MPI_LIB}
+export LIBMPI=${USER_MPILIB}
 # ------------------------- MATH libraries --------------------------
-export USE_64TO32=y
-export BLAS_SIZE=4
-export BLASOPT="-lopenblas -lpthread -lrt"
+export BLAS_SIZE=${USER_BLAS_SIZE}
+export BLASOPT=${USER_BLAS_LIB}
+# ------------------------- ARMCI method ----------------------------
+export ARMCI_NETWORK=${USER_ARMCI_NETWORK}
+# ------------------------- Compilers -------------------------------
+export CC=${USER_CC}
+export FC=${USER_FC}
+# ------------------------- Convert 64to32bit -----------------------
+export USE_64TO32=${USER_64TO32}
+
 # ------------------------- Compile ---------------------------------
-make nwchem_config NWCHEM_MODULES="all python" >& compile-config.log
-make -j4 64_to_32 >& compile-64_to_32.log
-export MAKEOPTS="USE_64TO32=y"
-make -j4 ${MAKEOPTS} >& compile-make-nwchem.log
+export MAKEMODULES=${USER_NWCHEM_MODULES}
+make nwchem_config ${MAKEMODULES} >& make_config.log
+make 64_to_32 >& make_64to32.log
+export MAKEOPTS="USE_64TO32=${USER_64TO32}"
+make FC=${FC} ${MAKEOPTS} >& make_compile.log
 
 EOF
 
-			echo ""
-			echo "====================================================================="
-			echo "Install NWChem version $VERSION with Message Passing Interface (MPI)"
-			echo ""
-			echo "Configuration compilation has been saved."
-			echo "Please check $PWD/configure_nwchem_compile.sh"
-			echo "====================================================================="
-			echo ""
-	
-			read -p "Enter YES to start compiling: " COMPILE
-	
-			if [ $COMPILE == YES ] || [ $COMPILE == yes ] || [ $COMPILE == y ]; then
-				echo ""
-				echo " Start to compile NWChem ..."
-				echo ""
-				echo " Building NWChem executable ... This will take 20-30 minutes."
-				echo " Please do not close this terminal."
-				cp $PWD/configure_nwchem_compile.sh $NWCHEM_TOP/src
-				cd $NWCHEM_TOP/src
-				chmod +x configure_nwchem_compile.sh
-				# Compile
-				./configure_nwchem_compile.sh
-				#
-				wait
-				cp compile-make-nwchem.log compile-make-nwchem.log.2
-				echo ""
-				echo " -------------------------------------------------------------"
-				echo ""
-			fi
+	echo ""
+	echo "====================================================================="
+	echo "Install NWChem version $VERSION with Message Passing Interface (MPI)"
+	echo ""
+	echo "Configuration compilation has been saved."
+	echo "Please check $PWD/INSTALL_NWCHEM.sh"
+	echo "====================================================================="
+	echo ""
 
-			else
-				echo "ERROR: Python version $PYTHON_VER not found in $PYTHON_HOME directory."
-			fi
+	read -p "Enter YES to start compiling: " COMPILE
 
-		else
-			echo "ERROR: MPI Libraries not found in $MPI_LOCATION directory."
-		fi
+	if [ $COMPILE == YES ] || [ $COMPILE == yes ] || [ $COMPILE == y ]; then
 
-	else
-		echo "ERROR: Program source code not found in $NWCHEM_TOP directory."
+		export NWCHEM_TOP=${USER_NWCHEM_TOP}
+		export NWCHEM_LINUX={$USER_NWCHEM_TARGET}
+
+		echo ""
+		echo " NWChem compilation and installation started!!!"
+		echo ""
+		echo " This can take 20-50 minutes. :-)"
+		echo ""
+		echo " >>>>>>> Please do not terminate this terminal. <<<<<<<"
+		echo ""
+
+		cp $PWD/INSTALL_NWCHEM.sh ${NWCHEM_TOP}/src
+		cd ${NWCHEM_TOP}/src
+		chmod +x INSTALL_NWCHEM.sh
+		# Compile
+		./INSTALL_NWCHEM.sh
+		#
+		wait
+		cp make_compile.log make_compile.log.2
+		echo " Compilation and installation have finished!!!"
+		echo " Checking if NWChem is installed correctly ..."
+		echo ""
+		echo " -------------------------------------------------------------"
+		echo ""
 	fi
 
-	if [ -e $NWCHEM_TOP/bin/LINUX64/nwchem ]; then
+	if [ -e ${NWCHEM_TOP}/bin/${NWCHEM_TOP}/nwchem ]; then
 
+		echo " ======================================================="
 		echo " Congratulations! NWChem has been compiled successfully."
+		echo " ======================================================="
 		echo ""
-		echo " It can be found at $NWCHEM_TOP/bin/LINUX64/nwchem"
-		echo " Log file is at $NWCHEM_TOP/src/compile*.log"
+		echo " NWChem executable can be found at ${NWCHEM_TOP}/bin/${NWCHEM_TOP}/nwchem"
+		echo " Log file is at ${NWCHEM_TOP}/src/compile*.log"
 		echo ""
+		echo " You can try running NWChem by using the following command"
+		echo ""
+		echo " $ ${NWCHEM_TOP}/bin/${NWCHEM_TARGET}/nwchem"
 
 	else
-		if [ -e $NWCHEM_TOP/src/compile-make-nwchem.log.2 ];then
+		if [ -e ${NWCHEM_TOP}/src/make_compile.log.2 ];then
 
-			echo " ERROR: Program compile failed! nwchem excutable not found."
+			echo " ==========================================="
+			echo " Unfortunately, program compilation failed!"
+			echo " ==========================================="
+			echo ""
 			echo " Check following files to view Log."
-			echo " $NWCHEM_TOP/src/compile-config.log"
-			echo " $NWCHEM_TOP/src/compile-64_to_32.log"
-			echo " $NWCHEM_TOP/src/compile-make-nwchem.log"
+			echo ""
+			echo " ${NWCHEM_TOP}/src/make_config.log"
+			echo " ${NWCHEM_TOP}/src/make_64to32.log"
+			echo " ${NWCHEM_TOP}/src/make_compile.log"
 			echo ""
 			echo " Please look at the end of LOG file to see error message."
-			echo " You can consult NWChem developer at http://www.nwchem-sw.org/index.php/Special:AWCforum"
+			echo " You can send the log file to me via e-mail: rangsiman1993@gmail.com"
+			echo " Otherwise, consult NWChem developer at http://www.nwchem-sw.org/index.php/Special:AWCforum"
 			echo ""
 
-			rm $NWCHEM_TOP/src/compile-make-nwchem.log.2
+			rm ${NWCHEM_TOP}/src/make_compile.log.2
 		fi
 	fi
 
@@ -296,36 +443,36 @@ EOF
 	$OPT3)
 
 :<<'comment'
-	 (3) Creat Resource file 
+	 (3) Creat NWChem Resource file 
 	  Create .nwchemrc file that point to directory of NWChem data and libraries.
 comment
 
 	if [ ! -e $HOME/.nwchemrc ];then
 
-		read -p "Enter absolute path of NWChem top directory, e.g. /home/$USER/nwchem-${VERSION}: " inp2
+		read -p "Enter absolute path of NWChem top directory: e.g. /home/$USER/nwchem-${VERSION}: " inp
 
-		if [ -e $inp2/src/basis ]; then
+		if [ -e $inp/src/basis ]; then
 
 			touch $HOME/.nwchemrc
 			echo -e \
-			"nwchem_basis_library $inp2/src/basis/libraries/ \n" \
-			"nwchem_nwpw_library $inp2/src/nwpw/libraryps/ \n" \
+			"nwchem_basis_library $inp/src/basis/libraries/ \n" \
+			"nwchem_nwpw_library $inp/src/nwpw/libraryps/ \n" \
 			"ffield amber \n" \
-			"amber_1 $inp2/src/data/amber_s/ \n" \
-			"amber_2 $inp2/src/data/amber_q/ \n" \
-			"amber_3 $inp2/src/data/amber_x/ \n" \
-			"amber_4 $inp2/src/data/amber_u/ \n" \
-			"spce    $inp2/src/data/solvents/spce.rst \n" \
-			"charmm_s $inp2/src/data/charmm_s/ \n" \
-			"charmm_x $inp2/src/data/charmm_x/" > $HOME/.nwchemrc
+			"amber_1 $inp/src/data/amber_s/ \n" \
+			"amber_2 $inp/src/data/amber_q/ \n" \
+			"amber_3 $inp/src/data/amber_x/ \n" \
+			"amber_4 $inp/src/data/amber_u/ \n" \
+			"spce    $inp/src/data/solvents/spce.rst \n" \
+			"charmm_s $inp/src/data/charmm_s/ \n" \
+			"charmm_x $inp/src/data/charmm_x/" > $HOME/.nwchemrc
 			echo "NWChem resouce file has been created: $HOME/.nwchemrc"
 
 		else
-			echo "ERROR: Basis set directory \"$inp2/src/basis\" not found."
+			echo "ERROR: Basis set directory \"$inp/src/basis\" not found."
 
 		fi
 	else
-		echo "You already have NWChem resource file which is $HOME/.nwchemrc."
+		echo "You already have NWChem resource file which is at $HOME/.nwchemrc."
 		echo "Remove an existing resource file if you want to create a new one."
 
 	fi
