@@ -1,22 +1,28 @@
 #!/bin/bash
 
 :<<'comment'
-#############################################################
-#  Automatic NWChem Compilaton Program                      #
-#                                                           #
-#  Written by Rangsiman Ketkaew, MSc student in Chemistry   #
-#  Computational Chemistry Research Unit                    #
-#  Department of Chemistry                                  #
-#  Faculty of Science and Technology                        #
-#  Thammasat University, Thailand.                          #
-#############################################################
+#################################################
+#  Automatic NWChem Compilaton Program          #
+#  https://github.com/rangsimanketkaew/NWChem   #
+#                                               #
+#  Developed by Rangsiman Ketkaew               #
+#  E-mail: rangsiman1993@gmail.com              #
+#################################################
+#  Normal usage                                 #
+#  $ chmod +x Automatic-NWChem-Compile.sh       #
+#  $ ./Automatic-NWChem-Compile.sh              #
+#                                               #
+#  and follow the onscreen instruction          #
+#################################################
 
 ## History
 version 1.0 Automatic NWChem Compilation
-version 1.1 Create NWChem resource file
+version 1.1 Can create NWChem resource file
 version 1.2 Automatically search Fortran and MPI libraries
 version 1.3 Support OpenMPI, MPICH, MVAPICH2, and Intel MPI
 version 2.0 MPI detection bug fixed
+version 2.1 OpenMP, BLAS, and ScaLAPACK support
+            Improve user-interactive onscreen for building script
 
 comment
 
@@ -31,7 +37,7 @@ if [ "$1" == "-h" ] || [ "$1" == "-help" ] || [ "$1" == "--help" ]; then
 
 cat << EOF
 
-                     Automatic NWChem Compilation 2.0 (2017-2018)
+                     Automatic NWChem Compilation 2.1 (2017-2019)
                      --------------------------------------------
 
 [x] Usage: ./Automatic-NWChem-Compile.sh
@@ -148,7 +154,8 @@ comment
 	 export NWCHEM_TOP="/absolute/path/to/top/directory/of/nwchem/"
 comment
 
-	read -p "Enter absolute path of NWChem top directory: [/home/$USER/nwchem-${VERSION}]: " inp
+	# NWChem top directory
+	read -p "[1/12] Enter absolute path of NWChem top directory: [/home/$USER/nwchem-${VERSION}]: " inp
 	if [ -z $inp ];then
 		USER_NWCHEM_TOP="/home/$USER/nwchem-${VERSION}"
 	else
@@ -158,7 +165,8 @@ comment
 		fi
 	fi
 
-	read -p "Enter NWChem target: [LINUX64]: " inp
+	# NWChem target
+	read -p "[2/12] Enter NWChem target: [LINUX64]: " inp
 	if [[ -z $inp || ${inp,,} == "linux64" ]];then
 		USER_NWCHEM_TARGET="LINUX64"
 	else
@@ -166,26 +174,28 @@ comment
 		exit 1
 	fi
 
-	read -p "Enter NWChem target: [all]: " inp
+	# NWChem module to be compiled and installed
+	read -p "[3/12] Enter NWChem modules: [all]: " inp
 	if [[ -z $inp || ${inp,,} == "all" ]];then
 		USER_NWCHEM_MODULES="all"
 	else
 		USER_NWCHEM_MODULES="$inp"
 	fi
 
-	read -p "Compile with Python: [Yes]/No: " inp
+	# Python
+	read -p "[4/12] Compile with Python: [Yes]/No: " inp
 	if [[ -z $inp || ${inp,,} == "yes" ]];then
 		CHECK_PYTHON="y"
 		USER_NWCHEM_MODULES="${USER_NWCHEM_MODULES} python"
 
-		read -p "Enter version of Python you are using: 2.6/[2.7]: " inp
+		read -p "[4.1/12]Enter version of Python you are using: 2.6/[2.7]: " inp
 		if [ -z $inp ];then
 			USER_PYTHON_VERSION="2.7"
 		else
 			USER_PYTHON_VERSION=$inp
 		fi
 
-		read -p "Enter absolute path of Python directory: [/usr]: " inp
+		read -p "[4.2/12] Enter absolute path of Python directory: [/usr]: " inp
 		if [ -z $inp ];then
 			USER_PYTHON_HOME="/usr"
 		else
@@ -196,7 +206,7 @@ comment
 			fi
 		fi
 
-		read -p "Use Python 64 bit: [Yes]/No: " inp
+		read -p "[4.3/12] Use Python 64 bit: [Yes]/No: " inp
 		if [[ -z $inp || ${inp,,} == "yes" ]];then
 			USER_PYTHON64="y"
 		elif [ ${inp,,} == "no" ];then
@@ -206,7 +216,7 @@ comment
 			exit 1
 		fi
 
-		read -p "Enter type of Python library: [so]: " inp
+		read -p "[4.4/12] Enter type of Python library: [so]: " inp
 		if [ -z $inp ];then
 			USER_PYTHONLIBTYPE="so"
 		else
@@ -225,7 +235,8 @@ comment
 		exit 1
 	fi
 
-	read -p "Compile with special method: [Yes]/No: " inp
+	# Special method such as MRCC and CCSDT
+	read -p "[5/12] Compile with special method: [Yes]/No: " inp
 	if [[ -z $inp || ${inp,,} == "yes" ]];then
 		CHECK_SPECIAL_METHOD="y"
 	elif [ ${inp,,} == "no" ];then
@@ -235,7 +246,8 @@ comment
 		exit 1
 	fi
 
-	read -p "Compile with MPI: [yes]/no: " inp
+	# MPI parallel method
+	read -p "[6/12] Compile with MPI: [Yes]/No: " inp
 	if [[ -z $inp || ${inp,,} == "yes" ]];then
 	
 		USER_MPI_INCLUDE=$(${USER_NWCHEM_TOP}/src/tools/guess-mpidefs | awk '{if(NR==1) print $0}')
@@ -248,7 +260,8 @@ comment
 		exit 1
 	fi
 
-	read -p "Compile with OpenMP: [yes]/no: " inp
+	# OpenMP parallel method
+	read -p "[7/12] Compile with OpenMP: [Yes]/No: " inp
 	if [[ -z $inp || ${inp,,} == "yes" ]];then
 		CHECK_OPENMP="y"
 	elif [ ${inp,,} == "no" ];then
@@ -258,7 +271,8 @@ comment
 		exit 1
 	fi
 
-	read -p "Compile with OpenBLAS: [yes]/no: " inp
+	# BLAS
+	read -p "[8/12] Compile with BLAS: [Yes]/No: " inp
 	if [[ -z $inp || ${inp,,} == "yes" ]];then
 		USER_BLAS_SIZE="4"
 		USER_BLAS_LIB="-lopenblas -lpthread -lrt"
@@ -270,7 +284,21 @@ comment
 		exit 1
 	fi
 
-	read -p "Compile with ARMCI method: [yes]/no: " inp
+	# ScaLAPACK
+	read -p "[9/12] Compile with ScaLAPACK: [Yes]/No: " inp
+	if [[ -z $inp || ${inp,,} == "yes" ]];then
+		USER_SCALAPACK_SIZE="4"
+		USER_SCALAPACK_LIB="-L/usr/lib64/openmpi/lib -lscalapack"
+	elif [ ${inp,,} == "no" ];then
+		USER_SCALAPACK_SIZE=""
+		USER_SCALAPACK_LIB=""
+	else
+		echo "ERROR: You entered incorrect answer."
+		exit 1
+	fi
+
+	# ARMCI network
+	read -p "[10/12] Compile with ARMCI: [Yes]/No: " inp
 	if [[ -z $inp || ${inp,,} == "yes" ]];then
 			read -p "Enter ARMCI Network: [MPI-PR]: " inp
 			if [[ -z $inp || ${inp,,} == "mpi-pr" ]];then
@@ -285,19 +313,27 @@ comment
 		exit 1
 	fi
 
-	read -p "C++ and FC Compilers, [gnu]/intel: " inp
-	if [[ -z $inp || ${inp,,} == "yes" ]];then
+	# Compilers
+	read -p "[11/12] C++ and FC Compilers: [GNU]/Intel/PGI/other: " inp
+	if [[ -z $inp || ${inp,,} == "gnu" ]];then
 		USER_CC="gcc"
 		USER_FC="gfortran"
 	elif [ ${inp,,} == "intel" ];then
 		USER_CC="icc"
 		USER_FC="ifort"
+	elif [ ${inp,,} == "pgi" ];then
+		USER_CC="pgcc"
+		USER_FC="pgfortran"
+	elif [ ${inp,,} == "other" ];then
+		read -p "Enter C++ Compiler, e.g. gcc : " USER_CC
+		read -p "Enter FC Compiler, e.g. gfortran : " USER_FC
 	else
 		echo "ERROR: You entered incorrect answer."
 		exit 1
 	fi
 
-	read -p "Convert 64to32bit: [yes]/no: " inp
+	# Convert 64 to 32 bit
+	read -p "[12/12] Convert 64to32bit: [yes]/no: " inp
 	if [[ -z $inp || ${inp,,} == "yes" ]];then
 		USER_64TO32="y"
 	elif [ ${inp,,} == "no" ];then
@@ -307,7 +343,9 @@ comment
 		exit 1
 	fi
 
-cat << EOF > $PWD/INSTALL_NWCHEM.sh
+INSTALL_SCRIPT="INSTALL_NWCHEM_${NWCHEM_VER}_USING_AUTOMATIC_NWCHEM_COMPILATION.sh"
+
+cat << EOF > $PWD/$INSTALL_SCRIPT
 #!/bin/bash
 
 #######################################################################
@@ -344,10 +382,12 @@ export USE_MPIF=${CHECK_MPI}
 export USE_MPIF4=${CHECK_MPI}
 export MPI_INCLUDE=${USER_MPI_INCLUDE}
 export MPI_LIB=${USER_MPI_LIB}
-export LIBMPI=${USER_MPILIB}
+export LIBMPI=${USER_LIBMPI}
 # ------------------------- MATH libraries --------------------------
 export BLAS_SIZE=${USER_BLAS_SIZE}
 export BLASOPT=${USER_BLAS_LIB}
+export SCALAPACK_SIZE=${USER_SCALAPACK_SIZE}
+export SCALAPACK=${USER_SCALAPACK_LIB}
 # ------------------------- ARMCI method ----------------------------
 export ARMCI_NETWORK=${USER_ARMCI_NETWORK}
 # ------------------------- Compilers -------------------------------
@@ -357,13 +397,16 @@ export FC=${USER_FC}
 export USE_64TO32=${USER_64TO32}
 
 # ------------------------- Compile ---------------------------------
-export MAKEMODULES=${USER_NWCHEM_MODULES}
-make nwchem_config ${MAKEMODULES} >& make_config.log
-make 64_to_32 >& make_64to32.log
-export MAKEOPTS="USE_64TO32=${USER_64TO32}"
-make FC=${FC} ${MAKEOPTS} >& make_compile.log
-
+make nwchem_config >& make_config.log
 EOF
+
+	if [ $USER_64TO32 == "y" ];then
+		echo "make 64_to_32 >& make_64to32.log" >> $PWD/$INSTALL_SCRIPT
+	else
+
+	echo "make FC=${FC} >& make_compile.log" >> $PWD/$INSTALL_SCRIPT
+
+	# ---- end of script preparation ----
 
 	echo ""
 	echo "====================================================================="
@@ -374,9 +417,9 @@ EOF
 	echo "====================================================================="
 	echo ""
 
-	read -p "Enter YES to start compiling: " COMPILE
+	read -p "Enter YES to start compilation: " START_COMPILE
 
-	if [ $COMPILE == YES ] || [ $COMPILE == yes ] || [ $COMPILE == y ]; then
+	if [[ ${START_COMPILE,,} == "yes" || ${START_COMPILE,,} == "y" ]]; then
 
 		export NWCHEM_TOP=${USER_NWCHEM_TOP}
 		export NWCHEM_LINUX={$USER_NWCHEM_TARGET}
@@ -389,11 +432,11 @@ EOF
 		echo " >>>>>>> Please do not terminate this terminal. <<<<<<<"
 		echo ""
 
-		cp $PWD/INSTALL_NWCHEM.sh ${NWCHEM_TOP}/src
+		cp $PWD/$INSTALL_SCRIPT ${NWCHEM_TOP}/src
 		cd ${NWCHEM_TOP}/src
-		chmod +x INSTALL_NWCHEM.sh
+		chmod +x $INSTALL_SCRIPT
 		# Compile
-		./INSTALL_NWCHEM.sh
+		./$INSTALL_SCRIPT
 		#
 		wait
 		cp make_compile.log make_compile.log.2
@@ -473,7 +516,7 @@ comment
 		fi
 	else
 		echo "You already have NWChem resource file which is at $HOME/.nwchemrc."
-		echo "Remove an existing resource file if you want to create a new one."
+		echo "Remove an existing resource file before creating a new one."
 
 	fi
 
@@ -520,10 +563,8 @@ comment
 comment
 
 	echo ""
-	echo -e "  Rangsiman Ketkaew                         E-Mail: rangsiman1993@gmail.com\n" \
-		" Computational Chemistry Research Unit\n" \
-		" C403, LC.5, Department of Chemistry       https://sites.google.com/site/rangsiman1993\n" \
-		" Thammasat University, 12120 Thailand      https://github.com/rangsimanketkaew \n"
+	echo -e "  Rangsiman Ketkaew                       E-Mail: rangsiman1993@gmail.com\n" \
+			" https://rangsimanketkaew.github.io       https://github.com/rangsimanketkaew \n"
 
 	;;
 	$OPT6)
