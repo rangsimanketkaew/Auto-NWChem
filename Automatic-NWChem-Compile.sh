@@ -386,9 +386,9 @@ ${USER_MPI_LIB}
 ${USER_LIBMPI}
 # ------------------------- MATH libraries --------------------------
 export BLAS_SIZE=${USER_BLAS_SIZE}
-export BLASOPT=${USER_BLAS_LIB}
+export BLASOPT="${USER_BLAS_LIB}"
 export SCALAPACK_SIZE=${USER_SCALAPACK_SIZE}
-export SCALAPACK=${USER_SCALAPACK_LIB}
+export SCALAPACK="${USER_SCALAPACK_LIB}"
 # ------------------------- ARMCI method ----------------------------
 export ARMCI_NETWORK=${USER_ARMCI_NETWORK}
 # ------------------------- Compilers -------------------------------
