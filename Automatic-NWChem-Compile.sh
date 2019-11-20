@@ -105,11 +105,11 @@ comment
 
 	if [ -z "$MPIF90" ];then
 		echo "ERROR: \"mpif90\" command not found. Please check if Fortran compiler is currently available on your Linux."
-		exit 1
+		break
 
 	elif [ -z "$MPIRUN" ];then
       	        echo "ERROR: \"mpirun\" command not found. Please check if MPI library is currently available on your Linux."
-	        exit 1
+	        break
 
 	else
 
@@ -136,7 +136,7 @@ comment
 
 	else
 		echo "ERROR: Cannot detect MPI program. This program supports only OpenMPI, MPICH, MVAPICH, and Intel MPI."
-		exit 1
+		break
 
 	fi
 
@@ -161,7 +161,7 @@ comment
 	else
 		if [ ! -d $inp ];then
 			echo "Directory you entered does not exist."
-			exit 1
+			break
 		fi
 	fi
 
@@ -171,7 +171,7 @@ comment
 		USER_NWCHEM_TARGET="LINUX64"
 	else
 		echo "ERROR: This program supports only LINUX64 target"
-		exit 1
+		break
 	fi
 
 	# NWChem module to be compiled and installed
@@ -183,8 +183,8 @@ comment
 	fi
 
 	# Python
-	read -p "[4/12] Compile with Python: [Yes]/No: " inp
-	if [[ -z $inp || ${inp,,} == "yes" ]];then
+	read -p "[4/12] Compile with Python: Yes/[No]: " inp
+	if [ ${inp,,} == "yes" ];then
 		CHECK_PYTHON="y"
 		USER_NWCHEM_MODULES="${USER_NWCHEM_MODULES} python"
 
@@ -202,7 +202,7 @@ comment
 			USER_PYTHON_HOME=$inp
 			if [ ! -d $USER_PYTHON_HOME ];then
 				echo "ERROR: Directory you entered does not exist."
-				exit 1
+				break
 			fi
 		fi
 
@@ -213,7 +213,7 @@ comment
 			USER_PYTHON64="n"
 		else
 			echo "ERROR: You entered incorrect answer."
-			exit 1
+			break
 		fi
 
 		read -p "[4.4/12] Enter type of Python library: [so]: " inp
@@ -223,7 +223,7 @@ comment
 			USER_PYTHONLIBTYPE=$inp
 		fi
 
-	elif [ ${inp,,} == "no" ];then
+	elif [[ -z $inp || ${inp,,} == "no" ]];then
 		CHECK_PYTHON="n"
 		USER_PYTHON_VERSION=""
 		USER_PYTHON_HOME=""
@@ -232,7 +232,7 @@ comment
 
 	else
 		echo "ERROR: You entered incorrect answer."
-		exit 1
+		break
 	fi
 
 	# Special method such as MRCC and CCSDT
@@ -243,7 +243,7 @@ comment
 		CHECK_SPECIAL_METHOD="n"
 	else
 		echo "ERROR: You entered incorrect answer."
-		exit 1
+		break
 	fi
 
 	# MPI parallel method
@@ -257,7 +257,7 @@ comment
 		CHECK_MPI="n"
 	else
 		echo "ERROR: You entered incorrect answer."
-		exit 1
+		break
 	fi
 
 	# OpenMP parallel method
@@ -268,7 +268,7 @@ comment
 		CHECK_OPENMP="n"
 	else
 		echo "ERROR: You entered incorrect answer."
-		exit 1
+		break
 	fi
 
 	# BLAS
@@ -281,7 +281,7 @@ comment
 		USER_BLAS_LIB=""
 	else
 		echo "ERROR: You entered incorrect answer."
-		exit 1
+		break
 	fi
 
 	# ScaLAPACK
@@ -294,7 +294,7 @@ comment
 		USER_SCALAPACK_LIB=""
 	else
 		echo "ERROR: You entered incorrect answer."
-		exit 1
+		break
 	fi
 
 	# ARMCI network
@@ -310,7 +310,7 @@ comment
 		USER_ARMCI_NETWORK=""
 	else
 		echo "ERROR: You entered incorrect answer."
-		exit 1
+		break
 	fi
 
 	# Compilers
@@ -329,7 +329,7 @@ comment
 		read -p "Enter FC Compiler, e.g. gfortran : " USER_FC
 	else
 		echo "ERROR: You entered incorrect answer."
-		exit 1
+		break
 	fi
 
 	# Convert 64 to 32 bit
@@ -340,7 +340,7 @@ comment
 		USER_64TO32="n"
 	else
 		echo "ERROR: You entered incorrect answer."
-		exit 1
+		break
 	fi
 
 INSTALL_SCRIPT="INSTALL_NWCHEM_${NWCHEM_VER}_USING_AUTOMATIC_NWCHEM_COMPILATION.sh"
@@ -354,14 +354,14 @@ cat << EOF > $PWD/$INSTALL_SCRIPT
 #######################################################################
 
 # ------------------------- NWCHEM Parameter ------------------------
-export NWCHEM_TOP=${USER_NWCHEM_TOP}
-export NWCHEM_TARGET=${USER_NWCHEM_TARGET}
+export NWCHEM_TOP="${USER_NWCHEM_TOP}"
+export NWCHEM_TARGET="${USER_NWCHEM_TARGET}"
 export NWCHEM_LONG_PATHS=y
 export NWCHEM_FSCHECK=N
 export USE_NOFSCHECK=TRUE
 export LARGE_FILES=TRUE
 # ------------------------- NWChem module ---------------------------
-export NWCHEM_MODULES=${USER_NWCHEM_MODULES}
+export NWCHEM_MODULES="${USER_NWCHEM_MODULES}"
 # ------------------------- Special method compilation---------------
 export MRCC_THEORY=${CHECK_SPECIAL_METHOD}
 export EACCSD=${CHECK_SPECIAL_METHOD}
@@ -380,9 +380,10 @@ export USE_OPENMP=${CHECK_OPENMP}
 export USE_MPI=${CHECK_MPI}
 export USE_MPIF=${CHECK_MPI}
 export USE_MPIF4=${CHECK_MPI}
-export MPI_INCLUDE=${USER_MPI_INCLUDE}
-export MPI_LIB=${USER_MPI_LIB}
-export LIBMPI=${USER_LIBMPI}
+# output from guess-mpidefs
+${USER_MPI_INCLUDE}
+${USER_MPI_LIB}
+${USER_LIBMPI}
 # ------------------------- MATH libraries --------------------------
 export BLAS_SIZE=${USER_BLAS_SIZE}
 export BLASOPT=${USER_BLAS_LIB}
@@ -405,6 +406,7 @@ EOF
 	fi
 
 	echo "make FC=${FC} >& make_compile.log" >> $PWD/$INSTALL_SCRIPT
+	echo "" >> $PWD/$INSTALL_SCRIPT
 
 	# ---- end of script preparation ----
 
