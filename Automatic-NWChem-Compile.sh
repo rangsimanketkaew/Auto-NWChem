@@ -402,7 +402,7 @@ EOF
 
 	if [ $USER_64TO32 == "y" ];then
 		echo "make 64_to_32 >& make_64to32.log" >> $PWD/$INSTALL_SCRIPT
-	else
+	fi
 
 	echo "make FC=${FC} >& make_compile.log" >> $PWD/$INSTALL_SCRIPT
 
