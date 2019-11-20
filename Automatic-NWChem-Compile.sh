@@ -167,7 +167,7 @@ comment
 
 	# NWChem target
 	read -p "[2/12] Enter NWChem target: [LINUX64]: " inp
-	if [[ -z $inp || ${inp,,} == "linux64" ]];then
+	if [[ -z $inp || "${inp,,}" == "linux64" ]];then
 		USER_NWCHEM_TARGET="LINUX64"
 	else
 		echo "ERROR: This program supports only LINUX64 target"
@@ -176,7 +176,7 @@ comment
 
 	# NWChem module to be compiled and installed
 	read -p "[3/12] Enter NWChem modules: [all]: " inp
-	if [[ -z $inp || ${inp,,} == "all" ]];then
+	if [[ -z $inp || "${inp,,}" == "all" ]];then
 		USER_NWCHEM_MODULES="all"
 	else
 		USER_NWCHEM_MODULES="$inp"
@@ -184,7 +184,7 @@ comment
 
 	# Python
 	read -p "[4/12] Compile with Python: Yes/[No]: " inp
-	if [ ${inp,,} == "yes" ];then
+	if [ "${inp,,}" == "yes" ];then
 		CHECK_PYTHON="y"
 		USER_NWCHEM_MODULES="${USER_NWCHEM_MODULES} python"
 
@@ -207,9 +207,9 @@ comment
 		fi
 
 		read -p "[4.3/12] Use Python 64 bit: [Yes]/No: " inp
-		if [[ -z $inp || ${inp,,} == "yes" ]];then
+		if [[ -z $inp || "${inp,,}" == "yes" ]];then
 			USER_PYTHON64="y"
-		elif [ ${inp,,} == "no" ];then
+		elif [ "${inp,,}" == "no" ];then
 			USER_PYTHON64="n"
 		else
 			echo "ERROR: You entered incorrect answer."
@@ -223,7 +223,7 @@ comment
 			USER_PYTHONLIBTYPE=$inp
 		fi
 
-	elif [[ -z $inp || ${inp,,} == "no" ]];then
+	elif [[ -z $inp || "${inp,,}" == "no" ]];then
 		CHECK_PYTHON="n"
 		USER_PYTHON_VERSION=""
 		USER_PYTHON_HOME=""
@@ -237,9 +237,9 @@ comment
 
 	# Special method such as MRCC and CCSDT
 	read -p "[5/12] Compile with special method: [Yes]/No: " inp
-	if [[ -z $inp || ${inp,,} == "yes" ]];then
+	if [[ -z $inp || "${inp,,}" == "yes" ]];then
 		CHECK_SPECIAL_METHOD="y"
-	elif [ ${inp,,} == "no" ];then
+	elif [ "${inp,,}" == "no" ];then
 		CHECK_SPECIAL_METHOD="n"
 	else
 		echo "ERROR: You entered incorrect answer."
@@ -248,12 +248,12 @@ comment
 
 	# MPI parallel method
 	read -p "[6/12] Compile with MPI: [Yes]/No: " inp
-	if [[ -z $inp || ${inp,,} == "yes" ]];then
+	if [[ -z $inp || "${inp,,}" == "yes" ]];then
 	
 		USER_MPI_INCLUDE=$(${USER_NWCHEM_TOP}/src/tools/guess-mpidefs | awk '{if(NR==1) print $0}')
 		USER_MPI_LIB=$(${USER_NWCHEM_TOP}/src/tools/guess-mpidefs | awk '{if(NR==2) print $0}')
 		USER_LIBMPI=$(${USER_NWCHEM_TOP}/src/tools/guess-mpidefs | awk '{if(NR==3) print $0}')
-	elif [ ${inp,,} == "no" ];then
+	elif [ "${inp,,}" == "no" ];then
 		CHECK_MPI="n"
 	else
 		echo "ERROR: You entered incorrect answer."
@@ -262,9 +262,9 @@ comment
 
 	# OpenMP parallel method
 	read -p "[7/12] Compile with OpenMP: [Yes]/No: " inp
-	if [[ -z $inp || ${inp,,} == "yes" ]];then
+	if [[ -z $inp || "${inp,,}" == "yes" ]];then
 		CHECK_OPENMP="y"
-	elif [ ${inp,,} == "no" ];then
+	elif [ "${inp,,}" == "no" ];then
 		CHECK_OPENMP="n"
 	else
 		echo "ERROR: You entered incorrect answer."
@@ -273,10 +273,10 @@ comment
 
 	# BLAS
 	read -p "[8/12] Compile with BLAS: [Yes]/No: " inp
-	if [[ -z $inp || ${inp,,} == "yes" ]];then
+	if [[ -z $inp || "${inp,,}" == "yes" ]];then
 		USER_BLAS_SIZE="4"
 		USER_BLAS_LIB="-lopenblas -lpthread -lrt"
-	elif [ ${inp,,} == "no" ];then
+	elif [ "${inp,,}" == "no" ];then
 		USER_BLAS_SIZE=""
 		USER_BLAS_LIB=""
 	else
@@ -286,10 +286,10 @@ comment
 
 	# ScaLAPACK
 	read -p "[9/12] Compile with ScaLAPACK: [Yes]/No: " inp
-	if [[ -z $inp || ${inp,,} == "yes" ]];then
+	if [[ -z $inp || "${inp,,}" == "yes" ]];then
 		USER_SCALAPACK_SIZE="4"
 		USER_SCALAPACK_LIB="-L/usr/lib64/openmpi/lib -lscalapack"
-	elif [ ${inp,,} == "no" ];then
+	elif [ "${inp,,}" == "no" ];then
 		USER_SCALAPACK_SIZE=""
 		USER_SCALAPACK_LIB=""
 	else
@@ -299,14 +299,14 @@ comment
 
 	# ARMCI network
 	read -p "[10/12] Compile with ARMCI: [Yes]/No: " inp
-	if [[ -z $inp || ${inp,,} == "yes" ]];then
+	if [[ -z $inp || "${inp,,}" == "yes" ]];then
 			read -p "Enter ARMCI Network: [MPI-PR]: " inp
-			if [[ -z $inp || ${inp,,} == "mpi-pr" ]];then
+			if [[ -z $inp || "${inp,,}" == "mpi-pr" ]];then
 				USER_ARMCI_NETWORK="MPI-PR"
 			else
 				USER_ARMCI_NETWORK=$inp
 			fi
-	elif [ ${inp,,} == "no" ];then
+	elif [ "${inp,,}" == "no" ];then
 		USER_ARMCI_NETWORK=""
 	else
 		echo "ERROR: You entered incorrect answer."
@@ -315,16 +315,16 @@ comment
 
 	# Compilers
 	read -p "[11/12] C++ and FC Compilers: [GNU]/Intel/PGI/other: " inp
-	if [[ -z $inp || ${inp,,} == "gnu" ]];then
+	if [[ -z $inp || "${inp,,}" == "gnu" ]];then
 		USER_CC="gcc"
 		USER_FC="gfortran"
-	elif [ ${inp,,} == "intel" ];then
+	elif [ "${inp,,}" == "intel" ];then
 		USER_CC="icc"
 		USER_FC="ifort"
-	elif [ ${inp,,} == "pgi" ];then
+	elif [ "${inp,,}" == "pgi" ];then
 		USER_CC="pgcc"
 		USER_FC="pgfortran"
-	elif [ ${inp,,} == "other" ];then
+	elif [ "${inp,,}" == "other" ];then
 		read -p "Enter C++ Compiler, e.g. gcc : " USER_CC
 		read -p "Enter FC Compiler, e.g. gfortran : " USER_FC
 	else
@@ -334,9 +334,9 @@ comment
 
 	# Convert 64 to 32 bit
 	read -p "[12/12] Convert 64to32bit: [yes]/no: " inp
-	if [[ -z $inp || ${inp,,} == "yes" ]];then
+	if [[ -z $inp || "${inp,,}" == "yes" ]];then
 		USER_64TO32="y"
-	elif [ ${inp,,} == "no" ];then
+	elif [ "${inp,,}" == "no" ];then
 		USER_64TO32="n"
 	else
 		echo "ERROR: You entered incorrect answer."
@@ -401,7 +401,7 @@ export USE_64TO32=${USER_64TO32}
 make nwchem_config >& make_config.log
 EOF
 
-	if [ $USER_64TO32 == "y" ];then
+	if [ "$USER_64TO32" == "y" ];then
 		echo "make 64_to_32 >& make_64to32.log" >> $PWD/$INSTALL_SCRIPT
 	fi
 
@@ -421,7 +421,7 @@ EOF
 
 	read -p "Enter YES to start compilation: " START_COMPILE
 
-	if [[ ${START_COMPILE,,} == "yes" || ${START_COMPILE,,} == "y" ]]; then
+	if [[ -z $START_COMPILE || "${START_COMPILE,,}" == "yes" || ${START_COMPILE,,} == "y" ]]; then
 
 		export NWCHEM_TOP=${USER_NWCHEM_TOP}
 		export NWCHEM_LINUX={$USER_NWCHEM_TARGET}
