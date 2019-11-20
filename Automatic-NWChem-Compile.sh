@@ -505,7 +505,7 @@ comment
 			tar -xvf $NWCHEM_DIR/$NWCHEM_SRC
 		fi
 
-		echo " Uncompressing NWChem tarball done!
+		echo " Uncompressing NWChem tarball done!"
 		echo ""
 
 	else
