@@ -41,7 +41,9 @@ python-dev gfortran libopenblas-dev libopenmpi-dev openmpi-bin tcsh make
 
 - GNU
 - Intel MKL
-- ...
+- Cray
+
+MKL Link Line advisor: https://software.intel.com/en-us/articles/intel-mkl-link-line-advisor/
 
 ## MPI library
 
@@ -49,6 +51,20 @@ python-dev gfortran libopenblas-dev libopenmpi-dev openmpi-bin tcsh make
 - Intel MPI
 - MPICH
 - MVAPICH
+
+## Debugging
+
+- gdb (or Intel GDB: gdb-ia)
+
+```
+gdb -c core.99999
+```
+
+- ldd
+
+```
+ldd $NWCHEM_TOP/bin/LINUX64/nwchem
+```
 
 ## Contact
 
