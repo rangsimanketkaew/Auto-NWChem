@@ -485,23 +485,27 @@ comment
 	  Download the tarball of nwchem-$VERSION to the present folder.
 comment
 
-	echo "Download NWChem $VERSION source code to your Linux machine"
-	read -p "Enter directory where you want to store NWChem $VERSION source code, e.g. /home/$USER/: " NWCHEM_DIR
+	echo "Download NWChem $VERSION source code from Github repository"
+	read -p "Enter directory where you want to place NWChem $VERSION source code: [/home/$USER/]: " NWCHEM_DIR
 
-	if [ -e $NWCHEM_DIR ];then
+	if [ -z $NWCHEM_DIR ];then
+		NWCHEM_DIR="/home/$USER/"
+	fi
+
+	if [ -d $NWCHEM_DIR ];then
 
 		wget $NWCHEM_GIT_SRC -P $NWCHEM_DIR
 
-		echo "***********************************************************************************"
+		echo " "
+		echo " Done! NWChem source code (src) has been downloaded to $NWCHEM_DIR."
 		echo ""
-		echo "Done!"
-		echo ""
-		echo "NWChem source code (src) has been downloaded to $NWCHEM_DIR."
-		echo "Go to $NWCHEM_DIR and use the following command to uncompress the tarball."
-		echo ""
-		echo "$ tar -xvf $NWCHEM_SRC"
-		echo ""
-		echo "***********************************************************************************"
+
+		read -p "Do you want to extract the tarball now?: [Yes]/No: " inp
+		if [[ -z $inp || ${inp,,} == "yes" ]];then
+			tar -xvf $NWCHEM_DIR/$NWCHEM_SRC
+		fi
+
+		echo " Uncompressing NWChem tarball done!
 		echo ""
 
 	else
