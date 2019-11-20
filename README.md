@@ -11,9 +11,9 @@ An automated program for compiling NWchem with MPI on Linux cluster.  <br />
 * Linux distribution: RHEL, CentOS, Ubuntu
 * Compiler: GNU, Intel, PGI, etc. (More details please consult [NWChem manual](http://www.nwchem-sw.org/index.php/Compiling_NWChem#Setting_up_the_proper_environment_variables))
 * Python 2.7
-* MPICH or MVAPICH2 or MVAPUCH23 or OpenMPI
-* BLAS
-* ScaLAPACK (optional)
+* OpenMPI
+* OpenBLAS
+* OpenScaLAPACK (optional)
 
 ### Parallel and Math libraries
 
@@ -31,12 +31,6 @@ An automated program for compiling NWchem with MPI on Linux cluster.  <br />
 
 ### Compilers
 
-#### Installing Intel Compiler Collection (icc and ifort)
-
-* [Download here](https://software.intel.com/en-us/intel-parallel-studio-xe)
-* Get the free student version (Linux), or a real license ($$$)
-* Includes MKL Math Library
-
 #### Installing GNU Compiler Collection (gcc and gfortran)
 
 * [Download here](http://sourceforge.net/projects/hpc/files/hpc/gcc/gcc-4.9-bin.tar.gz/download?use_mirror=softlayer-dal&download=) 
@@ -44,16 +38,24 @@ An automated program for compiling NWchem with MPI on Linux cluster.  <br />
     * `brew install gcc`
     * [Build instructions for OSX](https://wiki.helsinki.fi/display/HUGG/Installing+the+GNU+compilers+on+Mac+OS+X)
 
+#### Installing Intel Compiler Collection (icc and ifort)
+
+* [Download here](https://software.intel.com/en-us/intel-parallel-studio-xe)
+* Get the free student version (Linux), or a real license ($$$)
+* Includes MKL Math Library
+
 ## Installing NWChem
 
 * **(1)**  Install all dependencies for NWChem <br />
 > **RHEL & CentOS**:
 ```
-sudo yum install python-devel gcc-gfortran openblas-devel openblas-serial64 openmpi-devel scalapack-openmpi-devel blacs-openmpi-devel elpa-openmpi-devel tcsh --enablerepo=epel
+sudo yum -y update
+sudo yum -y install python-devel gcc-gfortran openblas-devel openblas-serial64 openmpi-devel scalapack-openmpi-devel blacs-openmpi-devel elpa-openmpi-devel tcsh --enablerepo=epel
 ```
 > **Ubuntu**:
 ```
-sudo apt-get install python-dev gfortran libopenblas-dev libopenmpi-dev openmpi-bin tcsh make 
+sudo apt -y update && sudo apt -y upgrade
+sudo apt -y install python-dev gfortran libopenblas-dev libopenmpi-dev openmpi-bin tcsh make
 ```
 For other Linux distro, please consult NWChem manual. <br />
 
@@ -83,10 +85,20 @@ For help page, run `./Automatic-NWChem-Compile.sh -help`
 
 ## Post-Compilation
 
-Run a sample calculation to check if NWChem is installed correctly. I include [a input file](https://raw.githubusercontent.com/rangsimanketkaew/NWChem/master/test/test-azulene-dft/test-azulene.nw) of geometry optimization of azulene using DFT/M06-2X/6-31G(d) in gas phase.
+Try running a simple calculation to check if NWChem works well. This is [a input file](https://raw.githubusercontent.com/rangsimanketkaew/NWChem/master/test/test-azulene-dft/test-azulene.nw) doing geometry optimization of azulene in gas phase using DFT/M06-2X/6-31G(d).
+
+- Single run
+
 ```
-nwchem test-azulene.nw >& test-azulene.out &
+$NWCHEM_TOP/bin/$NWCHEM_TARGET/nwchem test-azulene.nw >& test-azulene.out &
 ```
+
+- Parallel run with 4 CPU cores
+
+```
+mpirun -np 4 $NWCHEM_TOP/bin/$NWCHEM_TARGET/nwchem test-azulene.nw >& test-azulene.out &
+```
+
 Caveat! Note that the day I posted this script I was using NWChem version 6.6 and 6.8 on CentOS 6.9. <br />
 
 **Optional: PATH SETTING.** Instead of running nwchem using its absolute (full) path, you can make an aliase of NWChem program by adding the *nwchem* absolute path to $PATH using command
