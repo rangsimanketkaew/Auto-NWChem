@@ -19,34 +19,34 @@ An automated program for compiling NWchem with MPI on Linux cluster.  <br />
 
 #### Installing OpenMPI
 
-* [Download here](https://www.open-mpi.org/software/ompi/v3.0/)
-* Installation step-by-step, [please visit this website](https://sites.google.com/site/rangsiman1993/linux/install-openmpi). 
+* [Download from https://www.open-mpi.org/software/ompi/v3.0/](https://www.open-mpi.org/software/ompi/v3.0/)
+* For step-by-step installation, [please visit this website](https://sites.google.com/site/rangsiman1993/linux/install-openmpi). 
 * Set the environment variables and libraries properly.
 
 #### Installing OpenBLAS
 
-* [Download here](https://github.com/xianyi/OpenBLAS).
-* Installation is at [Installation guide](https://github.com/xianyi/OpenBLAS/wiki/Installation-Guide).
+* [Download from https://github.com/xianyi/OpenBLAS](https://github.com/xianyi/OpenBLAS).
+* Step-by-step Installation is available at [OpenBLAS Installation guide](https://github.com/xianyi/OpenBLAS/wiki/Installation-Guide).
 * OSX: Brew installation will put OpenBlas in `/usr/local/opt/openblas`
 
 ### Compilers
 
 #### Installing GNU Compiler Collection (gcc and gfortran)
 
-* [Download here](http://sourceforge.net/projects/hpc/files/hpc/gcc/gcc-4.9-bin.tar.gz/download?use_mirror=softlayer-dal&download=) 
+* [Download from here](http://sourceforge.net/projects/hpc/files/hpc/gcc/gcc-4.9-bin.tar.gz/download?use_mirror=softlayer-dal&download=) 
 * OSX Options:
     * `brew install gcc`
     * [Build instructions for OSX](https://wiki.helsinki.fi/display/HUGG/Installing+the+GNU+compilers+on+Mac+OS+X)
 
 #### Installing Intel Compiler Collection (icc and ifort)
 
-* [Download here](https://software.intel.com/en-us/intel-parallel-studio-xe)
+* [Download from Intel Software Zone](https://software.intel.com/en-us/intel-parallel-studio-xe)
 * Get the free student version (Linux), or a real license ($$$)
 * Includes MKL Math Library
 
 ## Installing NWChem
 
-* **(1)**  Install all dependencies for NWChem <br />
+* **(1)**  Install all package dependencies <br />
 > **RHEL & CentOS**:
 ```
 sudo yum -y update
@@ -59,17 +59,17 @@ sudo apt -y install python-dev gfortran libopenblas-dev libopenmpi-dev openmpi-b
 ```
 For other Linux distro, please consult NWChem manual. <br />
 
-* **(2)**  Download program source code from [NWChem github](https://github.com/nwchemgit/nwchem) to your home directory. Release file available at [here](https://github.com/nwchemgit/nwchem/releases/tag/v6.8.1-release).
+* **(2)**  Download the program source code from [NWChem github](https://github.com/nwchemgit/nwchem) to your home directory. Release file available [here](https://github.com/nwchemgit/nwchem/releases/tag/v6.8.1-release).
 ```
 wget https://github.com/nwchemgit/nwchem/releases/download/6.8.1-release/nwchem-6.8.1-release.revision-v6.8-133-ge032219-src.2018-06-14.tar.bz2
 ```
-Then extract a *.tar.bz2* file using command
+Then uncompress a *.tar.bz2* file using command
 ```
 tar -xvf nwchem-6.8.1-release.revision-v6.8-133-ge032219-src.2018-06-14.tar.bz2
 ```
 You should see *nwchem-6.8.1* directory. <br />
 
-* **(3)** Download [Automatic-NWChem-Compilation.sh](https://github.com/rangsimanketkaew/NWChem/blob/master/Automatic-NWChem-Compile.sh) program to your Linux machine using following command
+* **(3)** Download [Automatic-NWChem-Compilation.sh](https://github.com/rangsimanketkaew/NWChem/blob/master/Automatic-NWChem-Compile.sh) program to your Linux system using the following command
 ```
 wget https://raw.githubusercontent.com/rangsimanketkaew/NWChem/master/Automatic-NWChem-Compile.sh
 ```
@@ -77,7 +77,7 @@ Change permission of script.
 ```
 chmod 755 Automatic-NWChem-Compile.sh
 ```
-Run script and follow the instruction of compilation.
+Execute a script and follow the on-screen instruction.
 ```
 ./Automatic-NWChem-Compile.sh
 ```
@@ -85,7 +85,7 @@ For help page, run `./Automatic-NWChem-Compile.sh -help`
 
 ## Post-Compilation
 
-Try running a simple calculation to check if NWChem works well. This is [a input file](https://raw.githubusercontent.com/rangsimanketkaew/NWChem/master/test/test-azulene-dft/test-azulene.nw) doing geometry optimization of azulene in gas phase using DFT/M06-2X/6-31G(d).
+Try running a simple calculation to see if NWChem works well. This is [an input file for testing](https://raw.githubusercontent.com/rangsimanketkaew/NWChem/master/test/test-azulene-dft/test-azulene.nw) doing geometry optimization of azulene in gas phase using DFT/M06-2X/6-31G(d).
 
 - Single run
 
@@ -99,7 +99,7 @@ $NWCHEM_TOP/bin/$NWCHEM_TARGET/nwchem test-azulene.nw >& test-azulene.out &
 mpirun -np 4 $NWCHEM_TOP/bin/$NWCHEM_TARGET/nwchem test-azulene.nw >& test-azulene.out &
 ```
 
-Caveat! Note that the day I posted this script I was using NWChem version 6.6 and 6.8 on CentOS 6.9. <br />
+Caveat! The day I posted this script I was using NWChem version 6.6 and 6.8 on CentOS 6.9. <br />
 
 **Optional: PATH SETTING.** Instead of running nwchem using its absolute (full) path, you can make an aliase of NWChem program by adding the *nwchem* absolute path to $PATH using command
 ```
@@ -113,7 +113,7 @@ Then activate the *.bashrc* file
 ```
 source /home/$USER/.bashrc
 ```
-Logout and login again, now you can run NWChem via *nwchem*.
+Logout and login again, now you should be able to run NWChem by calling *nwchem* command.
 
 ## Partial recompile
 
