@@ -71,7 +71,7 @@ You should see *nwchem-6.8.1* directory. <br />
 
 * **(3)** Download [Automatic-NWChem-Compilation.sh](https://github.com/rangsimanketkaew/Auto-NWChem/blob/master/Automatic-NWChem-Compile.sh) program to your Linux system using the following command
 ```
-wget https://raw.githubusercontent.com/rangsimanketkaew/NWChem/master/Automatic-NWChem-Compile.sh
+wget https://raw.githubusercontent.com/rangsimanketkaew/Auto-NWChem/master/Automatic-NWChem-Compile.sh
 ```
 Change permission of script.
 ```
@@ -85,7 +85,7 @@ For help page, run `./Automatic-NWChem-Compile.sh -help`
 
 ## Post-Compilation
 
-Try running a simple calculation to see if NWChem works well. This is [an input file for testing](https://raw.githubusercontent.com/rangsimanketkaew/NWChem/master/test/test-azulene-dft/test-azulene.nw) doing geometry optimization of azulene in gas phase using DFT/M06-2X/6-31G(d).
+Try running a simple calculation to see if NWChem works well. This is [an input file for testing](https://raw.githubusercontent.com/rangsimanketkaew/Auto-NWChem/master/test/test-azulene-dft/test-azulene.nw) doing geometry optimization of azulene in gas phase using DFT/M06-2X/6-31G(d).
 
 - Single run
 
