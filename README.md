@@ -1,7 +1,7 @@
 # NWChem Auto Compilation
 
 <p align="center">
-   <img alt="Capture_Menu" src="https://github.com/rangsimanketkaew/NWChem/blob/master/etc/Capture_Menu.PNG" align=middle width="500pt" hight="100pt" /> 
+   <img alt="Capture_Menu" src="https://github.com/rangsimanketkaew/Auto-NWChem/blob/master/etc/Capture_Menu.PNG" align=middle width="500pt" hight="100pt" /> 
 <p/>
 
 An automated program for compiling NWchem with MPI on Linux cluster.  <br />
@@ -69,7 +69,7 @@ tar -xvf nwchem-6.8.1-release.revision-v6.8-133-ge032219-src.2018-06-14.tar.bz2
 ```
 You should see *nwchem-6.8.1* directory. <br />
 
-* **(3)** Download [Automatic-NWChem-Compilation.sh](https://github.com/rangsimanketkaew/NWChem/blob/master/Automatic-NWChem-Compile.sh) program to your Linux system using the following command
+* **(3)** Download [Automatic-NWChem-Compilation.sh](https://github.com/rangsimanketkaew/Auto-NWChem/blob/master/Automatic-NWChem-Compile.sh) program to your Linux system using the following command
 ```
 wget https://raw.githubusercontent.com/rangsimanketkaew/NWChem/master/Automatic-NWChem-Compile.sh
 ```
