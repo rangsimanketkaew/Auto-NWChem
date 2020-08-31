@@ -8,7 +8,6 @@
 
 module swap PrgEnv-cray PrgEnv-intel
 module load daint-mc # for CPU partition
-module add craype-hugepages64M
 
 ### NWChem stuff
 export NWCHEM_TOP=/where/you/store/nwchem/nwchem-7.0.0
