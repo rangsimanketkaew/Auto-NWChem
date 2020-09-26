@@ -4,14 +4,15 @@
 
 # Prerequisites
 # sudo yum install python-devel
-# openmpi 3.1.3
+# openmpi 3.1.3, openblas 0.3.10, scalapack 2.0.2
 
-module load gcc/5.4.0/
-module load openmpi/3.1.3
-module load openblas-0.3.10/gnu-8.3.0
-module load scalapack-2.0.2
+module purge
+module load gcc/8.3.0
+module load openmpi/3.1.3-gcc-8.3.0
+module load openblas/0.3.10-gcc-8.3.0
+module load scalapack/2.0.2-gcc-8.3.0
 
-export NWCHEM_TOP=/home/rangsiman/nwchem-7.0.0
+export NWCHEM_TOP=/home/rketka/nwchem-7.0.0
 export NWCHEM_TARGET=LINUX64
 export USE_NOFSCHECK=TRUE
 export NWCHEM_FSCHECK=N
@@ -28,26 +29,28 @@ export PYTHONLIBTYPE=so
 export USE_PYTHON64=y
 export HAS_BLAS=yes
 export BLAS_SIZE=4
-export OPENBLAS_DIR=/home/michaelbishop/softwares/openblas/gnu-4.8.5/lib/
+export OPENBLAS_DIR=/opt/openblas/0.3.10-gcc-8.3.0/lib/
 export BLASOPT="-L$OPENBLAS_DIR -lopenblas"
 export LAPACK_LIB=$BLASOPT
 export USE_SCALAPACK=y
 export SCALAPACK_SIZE=4
-export SCALAPACK_DIR=/home/michaelbishop/softwares/scalapack/scalapack-2.0.2/
+export SCALAPACK_DIR=/opt/scalapack/2.0.2/
 export SCALAPACK="-L$SCALAPACK_DIR -lscalapack"
 export MAKE=/usr/bin/make
 #export LD_LIBRARY_PATH=/usr/lib64/openmpi/lib
 export USE_MPI=y
 export USE_MPIF=y
 export USE_MPIF4=y
-export MPIEXEC=/home/rketka/openmpi/3.1.3/bin/mpiexec/
-export MPI_LIB=/home/rketka/openmpi/3.1.3/lib/
-export MPI_INCLUDE=/home/rketka/openmpi/3.1.3/include/
-export LIBMPI="-lmpi_usempi -lmpi_mpifh -lmpi"
+export MPIEXEC=/home/rketka/openmpi/3.1.3-gcc-8.3.0/bin/mpiexec/
+export MPI_LIB=/home/rketka/openmpi/3.1.3-gcc-8.3.0/lib/
+export MPI_INCLUDE=/home/rketka/openmpi/3.1.3-gcc-8.3.0/include/
+## mpif90 -show
+export LIBMPI="-lmpi_usempif08 -lmpi_usempi_ignore_tkr -lmpi_mpifh -lmpi"
+export USE_OPENMP=y
 
 cd $NWCHEM_TOP/src
 
 $MAKE nwchem_config NWCHEM_MODULES="all python" 2>&1 | tee ../make_nwchem_config_openmpi.log
-$MAKE 64_to_32 2>&1 | tee ../make_64_to_32_openmpi.log
+$MAKE -j16 64_to_32 2>&1 | tee ../make_64_to_32_openmpi.log
 export MAKEOPTS="USE_64TO32=y"
-$MAKE ${MAKEOPTS} 2>&1
+$MAKE -j16 ${MAKEOPTS} 2>&1
