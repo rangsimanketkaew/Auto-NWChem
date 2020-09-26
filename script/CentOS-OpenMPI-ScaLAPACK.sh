@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# Compile and Install NWChem CentOS with OpenMPI, ScaLAPACK, and GPU enabled
+# Compile and Install NWChem CentOS with OpenMPI and ScaLAPACK.
 
 # Prerequisites
 # sudo yum install python-devel gcc-gfortran tcsh openssh-clients which
